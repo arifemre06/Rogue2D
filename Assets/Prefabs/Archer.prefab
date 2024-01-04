@@ -98,12 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d296d099b4409234ebdab8046733f35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
-  shootingDistance: 12
-  speedArrow: 1
   Health: 5
-  collisionDamage: 40
-  arrowPrefab: {fileID: 3265052173447294713, guid: 04c095420cd8b234ca5a6436b3618893, type: 3}
+  FireCooldown: 2
+  CollisionDamage: 30
+  Damage: 40
+  ShootingDistance: 20
+  speedArrow: 10
+  arrowPrefab: {fileID: 3265052173447294708, guid: 04c095420cd8b234ca5a6436b3618893, type: 3}
 --- !u!58 &731896332718982966
 CircleCollider2D:
   m_ObjectHideFlags: 0

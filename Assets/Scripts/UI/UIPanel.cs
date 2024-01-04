@@ -14,7 +14,6 @@ namespace DefaultNamespace.UI
 
         public virtual void DeActivatePanel()
         {
-            Debug.Log("eee sorun ne");
             gameObject.SetActive(false);
         }
     }

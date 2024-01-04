@@ -98,11 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0982722ec4d945bc5b7ee5dc683a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 2
-  shootingDistance: 3
   Health: 10
-  collisionDamage: 70
-  warriorattackPrefab: {fileID: 1670348308305128782, guid: 1ef9beb31fdb36143a6741debea09a41, type: 3}
+  FireCooldown: 1.5
+  CollisionDamage: 50
+  Damage: 20
+  ShootingDistance: 2
+  warriorattackPrefab: {fileID: 1795842453893537408, guid: 1ef9beb31fdb36143a6741debea09a41, type: 3}
 --- !u!58 &7790813071272426294
 CircleCollider2D:
   m_ObjectHideFlags: 0

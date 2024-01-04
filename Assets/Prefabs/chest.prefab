@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4539152854283289349}
   - component: {fileID: 4539152854283289350}
   - component: {fileID: 4539152854283289351}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: chest
   m_TagString: chest
   m_Icon: {fileID: 0}
@@ -61,9 +61,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.043921947}
+  m_Offset: {x: -0.015748829, y: -0.017335236}
   serializedVersion: 2
-  m_Radius: 0.97059226
+  m_Radius: 0.14691183
 --- !u!212 &4539152854283289351
 SpriteRenderer:
   m_ObjectHideFlags: 0

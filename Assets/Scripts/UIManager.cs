@@ -24,8 +24,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void OnGameStateChanged(GameState oldState, GameState newState)
-    {   
-        Debug.Log("panelleri kapat?");
+    {
         DeActivateAllPanels();
         if (newState == GameState.InGamePanel)
         {

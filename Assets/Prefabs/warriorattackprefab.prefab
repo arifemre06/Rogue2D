@@ -47,8 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ba61347ad5d8c49a7f1eed1f58f9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warriorAttackDamage: 30
-  destroyTime: 0.5
+  disappearCooldown: 1
 --- !u!212 &-2946954913754710949
 SpriteRenderer:
   m_ObjectHideFlags: 0
