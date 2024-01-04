@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8485a7f067a5514380bf02542a9459e, type: 3}
+  m_Name: RelicData
+  m_EditorClassIdentifier: 
+  relicTypes: 0000000001000000
+  sprites:
+  - {fileID: 21300000, guid: b60216f24a5d5d94b8c95f581a4e211c, type: 3}
+  - {fileID: 21300000, guid: 14ddbb104c802ed49b2062dd209452e5, type: 3}
+  itemDetailText:
+  - Attack Speed Increased
+  - Attack Damage Increased
