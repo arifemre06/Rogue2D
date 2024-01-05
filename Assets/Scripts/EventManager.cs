@@ -10,7 +10,8 @@ public class EventManager : MonoBehaviour
     public static event Action<float> AttackSpeedRelicCollected;
     public static event Action<float> AttackDamageRelicCollected;
 
-    public static event Action<int, int> EnemyKilled;
+    public static event Action<GameObject> EnemySpawned; 
+    public static event Action<GameObject,int, int> EnemyKilled;
     public static event Action<int, int> GoldAndExpChanged;
 
     public static event Action<GameState, GameState> GameStateChanged;
@@ -39,9 +40,9 @@ public class EventManager : MonoBehaviour
         GameStateChanged?.Invoke(arg1, arg2);
     }
 
-    public static void OnEnemyKilled(int arg1, int arg2)
+    public static void OnEnemyKilled(GameObject enemy,int arg1, int arg2)
     {
-        EnemyKilled?.Invoke(arg1, arg2);
+        EnemyKilled?.Invoke(enemy,arg1, arg2);
     }
 
     public static void OnGoldAndExpChanged(int arg1, int arg2)
@@ -77,5 +78,10 @@ public class EventManager : MonoBehaviour
     public static void OnMainMenuButtonClicked()
     {
         MainMenuButtonClicked?.Invoke();
+    }
+
+    public static void OnEnemySpawned(GameObject obj)
+    {
+        EnemySpawned?.Invoke(obj);
     }
 }

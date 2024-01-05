@@ -2504,7 +2504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95034b901bdcdf64b87ad86937ee1a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyPrefab: {fileID: 9013411336341682862, guid: db385aa3ea667154da7267df1c38cf6e, type: 3}
+  _enemyPrefab: {fileID: 9013411336341682862, guid: db385aa3ea667154da7267df1c38cf6e, type: 3}
   gold: 0
   exp: 0
   borderTop: {fileID: 702297338}
@@ -4512,6 +4512,50 @@ Transform:
   - {fileID: 105447592}
   m_Father: {fileID: 1860213852}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &886859365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 886859367}
+  - component: {fileID: 886859366}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &886859366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886859365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f17282ee10a14999c14f5e49f8400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &886859367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886859365}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6804853, y: 0.11255493, z: 91.11439}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &892461371
 GameObject:
@@ -10283,7 +10327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 731896332718982952, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
       propertyPath: ShootingDistance
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 731896332718982953, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
       propertyPath: m_RootOrder

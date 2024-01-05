@@ -37,7 +37,7 @@ public class enemyscript : MonoBehaviour
         enemyHealth -= damage;
         if (enemyHealth <= 0)
         {
-            EventManager.OnEnemyKilled(goldDrop, experienceDrop);
+            EventManager.OnEnemyKilled(this.gameObject,goldDrop, experienceDrop);
             Destroy(this.gameObject);
         }
     }

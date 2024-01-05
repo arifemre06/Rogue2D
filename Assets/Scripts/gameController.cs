@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class gameController : MonoBehaviour
 {
-    public GameObject EnemyPrefab;
+    [SerializeField] private GameObject _enemyPrefab;
     public int gold = 0;
     public int exp = 0;
 
@@ -127,7 +127,8 @@ public class gameController : MonoBehaviour
                 int aliveEnemyCount = GetEnemyCount();
                 int killedEnemyCount = (spawnedEnemyCount - aliveEnemyCount);
                 //Debug.Log("alive enemy count "+aliveEnemyCount + " spawned enemy count "+ spawnedEnemyCount + " killed enemy count "+killedEnemyCount);
-                GameObject newEnemy = (GameObject)Instantiate(EnemyPrefab, spawnPoint, Quaternion.identity);
+                GameObject newEnemy = (GameObject)Instantiate(_enemyPrefab, spawnPoint, Quaternion.identity);
+                EventManager.OnEnemySpawned(newEnemy);
                 
                 activeEnemies.Add(newEnemy);
                 enemyscript enemyscript = newEnemy.GetComponent<enemyscript>();
@@ -196,13 +197,17 @@ public class gameController : MonoBehaviour
             return GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
         
-        private void SubsriceOnEnemyKilled(int gainedGold,int gainedExp)
+        private void SubsriceOnEnemyKilled(GameObject enemy,int gainedGold,int gainedExp)
         {
             gold += gainedGold;
             exp += gainedExp;
             EventManager.OnGoldAndExpChanged(gold,exp);
             //Debug.Log("bana ulastı gold: "+gold +"exp: "+exp);
         }
+        
+        
+        
+        
 
         
     }

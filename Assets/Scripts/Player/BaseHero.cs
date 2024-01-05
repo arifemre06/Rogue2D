@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Cecil;
 using UnityEngine;
 
@@ -12,22 +13,32 @@ namespace DefaultNamespace
         [SerializeField] protected float CollisionDamage;
         [SerializeField] protected float Damage;
         [SerializeField] protected float ShootingDistance;
-        
+
+        private List<GameObject> allTargets;
         protected bool CanShoot = true;
         
         private void Awake()
         {
             EventManager.AttackSpeedRelicCollected += OnAttackSpeedRelicTaken;
             EventManager.AttackDamageRelicCollected += OnAttackDamageRelicTaken;
+            EventManager.EnemySpawned += OnEnemySpawnedUpdateEnemiesTransform;
+            EventManager.EnemyKilled += OnEnemyKilledUpdateEnemiesTransform;
             CanShoot = true;
         }
-        
+
         private void OnDestroy()
         {
             EventManager.AttackSpeedRelicCollected -= OnAttackSpeedRelicTaken;
             EventManager.AttackDamageRelicCollected -= OnAttackDamageRelicTaken;
+            EventManager.EnemySpawned -= OnEnemySpawnedUpdateEnemiesTransform;
+            EventManager.EnemyKilled += OnEnemyKilledUpdateEnemiesTransform;
         }
-        
+
+        private void Start()
+        {
+            allTargets = new List<GameObject>();
+        }
+
         protected abstract void Attack(GameObject target);
 
         protected void Update()
@@ -46,8 +57,7 @@ namespace DefaultNamespace
 
         protected GameObject GetClosestTargetInRange()
         {
-            GameObject[] allTargets = GameObject.FindGameObjectsWithTag("Enemy");
-            if (allTargets.Length != 0)
+            if (allTargets.Count != 0)
             {
                 GameObject target = allTargets[0];
                     //look for the closest
@@ -71,6 +81,16 @@ namespace DefaultNamespace
         {
             yield return new WaitForSeconds(FireCooldown);
             CanShoot = true;
+        }
+        
+        private void OnEnemySpawnedUpdateEnemiesTransform(GameObject obj)
+        {
+            allTargets.Add(obj);
+        }
+        
+        private void OnEnemyKilledUpdateEnemiesTransform(GameObject enemy,int arg1, int arg2)
+        {
+            allTargets.Remove(enemy);
         }
         
         protected void OnCollisionEnter2D(Collision2D col)
