@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2946954913754710949}
   - component: {fileID: 4060934766786507189}
   - component: {fileID: -6146104255243583436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: warriorattackprefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ba61347ad5d8c49a7f1eed1f58f9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  attackObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   disappearCooldown: 1
 --- !u!212 &-2946954913754710949
 SpriteRenderer:

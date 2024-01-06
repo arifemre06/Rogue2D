@@ -5,11 +5,10 @@ namespace DefaultNamespace
     public abstract class BaseAttackObject : MonoBehaviour
     {
         protected float Damage;
-        
+
         protected virtual void Start()
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");     
-            Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Hero"),LayerMask.NameToLayer("AttackObject"),true);
         }
         
         public void SetDamage(float damage)
@@ -26,7 +25,7 @@ namespace DefaultNamespace
                 GameObject tempEnemy = col.gameObject;
                 enemyscript enemyScript = tempEnemy.GetComponent<enemyscript>();
                 enemyScript.SetHealth(Damage);
-            
+                
                 if (enemyScript.GetHealth() <= 0)
                 {
                     Destroy(col.gameObject);

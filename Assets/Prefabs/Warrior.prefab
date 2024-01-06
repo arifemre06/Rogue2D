@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7790813071272426293}
   - component: {fileID: 7790813071272426292}
   - component: {fileID: 7790813071272426294}
-  m_Layer: 0
+  - component: {fileID: 786297381}
+  m_Layer: 8
   m_Name: Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +104,7 @@ MonoBehaviour:
   CollisionDamage: 50
   Damage: 20
   ShootingDistance: 2
+  Animator: {fileID: 786297381}
   warriorattackPrefab: {fileID: 1795842453893537408, guid: 1ef9beb31fdb36143a6741debea09a41, type: 3}
 --- !u!58 &7790813071272426294
 CircleCollider2D:
@@ -111,7 +113,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7790813071272426290}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -120,3 +122,23 @@ CircleCollider2D:
   m_Offset: {x: -0.19032368, y: -0.19417167}
   serializedVersion: 2
   m_Radius: 0.2950602
+--- !u!95 &786297381
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790813071272426290}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 962fdcd744a577a40a1091111e78a28a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

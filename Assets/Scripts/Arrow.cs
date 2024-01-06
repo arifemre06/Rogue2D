@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Arrow : BaseAttackObject
 {
-    [SerializeField] private LayerMask characterLayer;
     private float _speedArrowOriginal;
     
     void Update()

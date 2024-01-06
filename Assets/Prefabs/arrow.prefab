@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2435998371773292963}
   - component: {fileID: 5137960312175623647}
   - component: {fileID: 1547646549942727247}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,11 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89148310fc385d4ea3707826acc2698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  attackObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   characterLayer:
     serializedVersion: 2
     m_Bits: 1
-  speedArrowOriginal: 15
-  arrowDamage: 20
 --- !u!212 &2435998371773292963
 SpriteRenderer:
   m_ObjectHideFlags: 0

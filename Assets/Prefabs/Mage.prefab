@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3247709834868948647}
   - component: {fileID: 3247709834868948644}
   - component: {fileID: 3247709834868948646}
-  m_Layer: 0
+  - component: {fileID: 1887576693}
+  m_Layer: 8
   m_Name: Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +104,7 @@ MonoBehaviour:
   CollisionDamage: 20
   Damage: 15
   ShootingDistance: 4
+  Animator: {fileID: 1887576693}
   magicPrefab: {fileID: 6686382520302075000, guid: 1c74e36d5bfbcae438b89b0db546414a, type: 3}
 --- !u!58 &3247709834868948646
 CircleCollider2D:
@@ -111,7 +113,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3247709834868948642}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -120,3 +122,23 @@ CircleCollider2D:
   m_Offset: {x: -0.17670088, y: -0.19752014}
   serializedVersion: 2
   m_Radius: 0.2777436
+--- !u!95 &1887576693
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247709834868948642}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84f2492cb196b764288a0250d295a558, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

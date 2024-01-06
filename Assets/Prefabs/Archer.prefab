@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 731896332718982967}
   - component: {fileID: 731896332718982952}
   - component: {fileID: 731896332718982966}
-  m_Layer: 0
+  - component: {fileID: 1552269787}
+  m_Layer: 8
   m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +103,8 @@ MonoBehaviour:
   FireCooldown: 2
   CollisionDamage: 30
   Damage: 40
-  ShootingDistance: 20
+  ShootingDistance: 10
+  Animator: {fileID: 1552269787}
   speedArrow: 10
   arrowPrefab: {fileID: 3265052173447294708, guid: 04c095420cd8b234ca5a6436b3618893, type: 3}
 --- !u!58 &731896332718982966
@@ -112,7 +114,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 731896332718982954}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -121,3 +123,23 @@ CircleCollider2D:
   m_Offset: {x: 0.009308348, y: -0.03812137}
   serializedVersion: 2
   m_Radius: 0.34918782
+--- !u!95 &1552269787
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731896332718982954}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c43bba12a32960b4b9782802d97ac299, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

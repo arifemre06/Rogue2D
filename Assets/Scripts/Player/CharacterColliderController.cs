@@ -8,7 +8,6 @@ using UnityEngine;
 public class CharacterColliderController : MonoBehaviour
 {
     
-    private bool _canOpenChest = false;
     [SerializeField] private GameObject relicPrefab;
     [SerializeField] private LayerMask chestLayerMask;
     [SerializeField] private RelicScriptableObject relicScriptableObject;

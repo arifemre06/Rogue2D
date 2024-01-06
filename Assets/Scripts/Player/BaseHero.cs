@@ -14,6 +14,8 @@ namespace DefaultNamespace
         [SerializeField] protected float Damage;
         [SerializeField] protected float ShootingDistance;
 
+        [SerializeField] protected Animator Animator;
+
         private List<GameObject> allTargets;
         protected bool CanShoot = true;
         
@@ -40,6 +42,7 @@ namespace DefaultNamespace
         }
 
         protected abstract void Attack(GameObject target);
+        
 
         protected void Update()
         {
@@ -101,7 +104,7 @@ namespace DefaultNamespace
                 enemyscript enemyScript = tempEnemy.GetComponent<enemyscript>();
                 enemyScript.SetHealth(CollisionDamage);
                 Health -= enemyScript.GetCollisionDamage();
-            
+
                 if (enemyScript.GetHealth() <= 0)
                 {
                     Destroy(col.gameObject);
