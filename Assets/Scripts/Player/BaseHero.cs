@@ -96,7 +96,7 @@ namespace DefaultNamespace
             allTargets.Remove(enemy);
         }
         
-        protected void OnCollisionEnter2D(Collision2D col)
+        protected virtual void OnCollisionEnter2D(Collision2D col)
         {
             if (col.collider.CompareTag("Enemy"))
             {   
@@ -104,7 +104,7 @@ namespace DefaultNamespace
                 enemyscript enemyScript = tempEnemy.GetComponent<enemyscript>();
                 enemyScript.SetHealth(CollisionDamage);
                 Health -= enemyScript.GetCollisionDamage();
-
+                
                 if (enemyScript.GetHealth() <= 0)
                 {
                     Destroy(col.gameObject);

@@ -103,7 +103,7 @@ MonoBehaviour:
   FireCooldown: 4
   CollisionDamage: 20
   Damage: 15
-  ShootingDistance: 4
+  ShootingDistance: 6
   Animator: {fileID: 1887576693}
   magicPrefab: {fileID: 6686382520302075000, guid: 1c74e36d5bfbcae438b89b0db546414a, type: 3}
 --- !u!58 &3247709834868948646

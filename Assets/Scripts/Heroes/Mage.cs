@@ -18,5 +18,11 @@ namespace DefaultNamespace.Heroes
             tmpMagic.SetDamage(Damage);
             
         }
+
+        protected override void OnCollisionEnter2D(Collision2D col)
+        {
+            base.OnCollisionEnter2D(col);
+            Animator.Play("Hurt");
+        }
     }
 }

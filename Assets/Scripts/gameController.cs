@@ -132,7 +132,7 @@ public class gameController : MonoBehaviour
                 
                 activeEnemies.Add(newEnemy);
                 enemyscript enemyscript = newEnemy.GetComponent<enemyscript>();
-                yield return new WaitForSeconds(Random.Range(4, 6));
+                yield return new WaitForSeconds(Random.Range(2, 4));
             }
         }
 

@@ -18,5 +18,11 @@ namespace DefaultNamespace.Heroes
                 Quaternion.LookRotation(target.transform.position - middlePoint) * Quaternion.Euler(0, 90, 0));
             tmpAttack.SetDamage(Damage);
         }
+        
+        protected override void OnCollisionEnter2D(Collision2D col)
+        {
+            base.OnCollisionEnter2D(col);
+            Animator.Play("Hurt");
+        }
     }
 }

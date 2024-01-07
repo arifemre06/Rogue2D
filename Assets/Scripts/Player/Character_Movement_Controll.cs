@@ -8,12 +8,19 @@ using UnityEngine;
 public class Character_Movement_Controll : MonoBehaviour
 {
     [SerializeField] private float speed;
+    private Rigidbody2D _rigidbody2D;
 
     private float _horizontal;
     private float _vertical;
     private bool _facingRight = true;
     private bool _facingUp = true;
-    
+
+
+    private void Start()
+    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
 
     // Update is called once per frame
     void Update()
