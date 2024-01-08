@@ -7,5 +7,5 @@ using UnityEngine.Serialization;
 
 public class WarriorAttackObject : TimedBaseAttackObject
 {
-
+    
 }

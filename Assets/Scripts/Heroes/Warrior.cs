@@ -15,7 +15,7 @@ namespace DefaultNamespace.Heroes
             Animator.Play("Attack");
             var middlePoint = (target.transform.position + transform.position) / 2;
             WarriorAttackObject tmpAttack = Instantiate(warriorattackPrefab, middlePoint,
-                Quaternion.LookRotation(target.transform.position - middlePoint) * Quaternion.Euler(0, 90, 0));
+                Quaternion.LookRotation(target.transform.position - middlePoint) * Quaternion.Euler(0, 90, -90));
             tmpAttack.SetDamage(Damage);
         }
         

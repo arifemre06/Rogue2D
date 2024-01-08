@@ -47,6 +47,12 @@ TagManager:
   - name: TileSet
     uniqueID: 3500874277
     locked: 0
+  - name: Characters
+    uniqueID: 4049638841
+    locked: 0
+  - name: AttackObject
+    uniqueID: 378763929
+    locked: 0
   - name: UIPanel
     uniqueID: 2204111665
     locked: 0

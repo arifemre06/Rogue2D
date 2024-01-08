@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemies;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -18,7 +19,7 @@ namespace DefaultNamespace
             if (col.CompareTag("Enemy"))
             {
                 GameObject tempEnemy = col.gameObject;
-                enemyscript enemyScript = tempEnemy.GetComponent<enemyscript>();
+                BaseEnemy enemyScript = tempEnemy.GetComponent<BaseEnemy>();
                 enemyScript.SetHealth(Damage);
                 
                 if (enemyScript.GetHealth() <= 0)

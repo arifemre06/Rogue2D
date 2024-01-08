@@ -20,7 +20,6 @@ namespace DefaultNamespace.Heroes
             Vector3 direction = (target.transform.position - position);
             
             Quaternion rotation2 = Quaternion.FromToRotation(transform.up,direction);
-            
             Arrow tmpArrow = Instantiate(arrowPrefab, new Vector3(position.x+0.5f,position.y,position.z), rotation2);
             tmpArrow.SetDamage(Damage);
             tmpArrow.SetArrowSpeed(speedArrow);
