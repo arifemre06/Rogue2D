@@ -15,11 +15,14 @@ public class CharacterColliderController : MonoBehaviour
 
     [SerializeField] private float chestSearchRange;
     private Collider2D[] _chestHits;
+    private int _waitSecondsBetweenChestOpen;
+    private bool _canOpenChest;
 
 
     private void Awake()
     {
         _chestHits = new Collider2D[1];
+        _canOpenChest = true;
     }
 
     private void Update()
@@ -32,9 +35,12 @@ public class CharacterColliderController : MonoBehaviour
                 Chest chest = _chestHits[0].GetComponent<Chest>();
                 int price = chest.GetPrice();
                 
-                if (gameController.gold >= price)
+                if (gameController.gold >= price && _canOpenChest)
                 {
-                        OpenChest(chest, price, _chestHits[0]);
+                    _canOpenChest = false;
+                    StartCoroutine(WaitBetweenChests());
+                    OpenChest(chest, price, _chestHits[0]);
+                    
                 }
                 
             }
@@ -42,15 +48,15 @@ public class CharacterColliderController : MonoBehaviour
     }
 
     private void OpenChest(Chest chest,int price,Collider2D other)
-    {   
+    {
         gameController.gold -= price;
         RelicTypes relictoinstantiate = chest.GetRandomRelic();
         
         GameObject newRelic = Instantiate(relicPrefab, other.transform.position, Quaternion.identity);
+        Destroy(other.gameObject);
         relics relic = newRelic.GetComponent<relics>();
         relic.GetComponent<SpriteRenderer>().sprite = relicScriptableObject.GetPrefab(relictoinstantiate);
         relic.SetRelicType(relictoinstantiate);
-        Destroy(other.gameObject);
     }
 
    
@@ -58,5 +64,11 @@ public class CharacterColliderController : MonoBehaviour
     private void OnColliderEnter2D(Collider2D other)
     {   
         
+    }
+
+    private IEnumerator WaitBetweenChests()
+    {
+        yield return new WaitForSeconds(1);
+        _canOpenChest = true;
     }
 }

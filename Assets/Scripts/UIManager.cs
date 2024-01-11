@@ -10,10 +10,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIPanel inGamePanel;
     [SerializeField] private UIPanel mainMenuPanel;
     [SerializeField] private UIPanel settingsPanel;
+    [SerializeField] private UIPanel infoPanel;
+    [SerializeField] private UIPanel upgradePanel;
     
     private void Awake()
     {
         EventManager.GameStateChanged += OnGameStateChanged;
+        EventManager.InfoPanelOpenOrClose += OnInfoPanelStatusChanged;
         DeActivateAllPanels();
             
     }
@@ -21,6 +24,7 @@ public class UIManager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.GameStateChanged -= OnGameStateChanged;
+        EventManager.InfoPanelOpenOrClose -= OnInfoPanelStatusChanged;
     }
 
     private void OnGameStateChanged(GameState oldState, GameState newState)
@@ -28,7 +32,6 @@ public class UIManager : MonoBehaviour
         DeActivateAllPanels();
         if (newState == GameState.InGamePanel)
         {
-
             ActivatePanel(inGamePanel);
         }
         else if (newState == GameState.Settings)
@@ -41,6 +44,10 @@ public class UIManager : MonoBehaviour
 
             ActivatePanel(mainMenuPanel);
         }
+        else if (newState == GameState.UpgradePanel)
+        {
+            ActivatePanel(upgradePanel);
+        }
     }
     
     private void DeActivateAllPanels()
@@ -49,15 +56,28 @@ public class UIManager : MonoBehaviour
         inGamePanel.DeActivatePanel();
         mainMenuPanel.DeActivatePanel();
         settingsPanel.DeActivatePanel();
-        
+        infoPanel.DeActivatePanel();
+        upgradePanel.DeActivatePanel();
         
     }
     
     private void ActivatePanel(UIPanel panel)
     {
         panel.ActivatePanel();
-        
-        
+
+    }
+    
+    private void OnInfoPanelStatusChanged(bool isOpen)
+    {
+        if (isOpen)
+        {
+            infoPanel.ActivatePanel();
+        }
+        else
+        {
+            infoPanel.DeActivatePanel();
+        }
+       
     }
     
 

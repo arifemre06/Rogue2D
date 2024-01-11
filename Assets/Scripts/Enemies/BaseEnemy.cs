@@ -52,7 +52,8 @@ namespace Enemies
                 UpdateHealthBar(enemyHealth);
                 if (enemyHealth <= 0)
                 {
-                    EventManager.OnEnemyKilled(this.gameObject,goldDrop, experienceDrop);
+                    //bura sıkıntı cıkarabılır
+                    EventManager.OnEnemyKilled(this,goldDrop, experienceDrop);
                     Destroy(this.gameObject);
                 }
             }

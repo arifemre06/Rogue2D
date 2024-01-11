@@ -12,11 +12,16 @@ namespace DefaultNamespace
         private float _mainAttackSpeedModifier = 1;
         private float _mainAttackDamageModifier = 1;
 
+        private bool _collidedWithRelic;
+
        
         private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("Relic"))
+        {   
+            
+            if (other.CompareTag("Relic") && !_collidedWithRelic)
             {
+                _collidedWithRelic = true;
+                StartCoroutine(WaitBetweenRelicCollides());
                 RelicTypes relicString = other.GetComponent<relics>().GetRelicString();
                 switch (relicString)
                 {
@@ -33,7 +38,11 @@ namespace DefaultNamespace
             }
         }
         
-        
+        private IEnumerator WaitBetweenRelicCollides()
+        {
+            yield return new WaitForSeconds(1);
+            _collidedWithRelic = false;
+        }
         private void AttackSpeedRelicCollected()
         {
             _mainAttackSpeedModifier -= 0.05f;

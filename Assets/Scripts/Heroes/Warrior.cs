@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using Enemies;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,7 +11,7 @@ namespace DefaultNamespace.Heroes
     {
         [SerializeField] WarriorAttackObject warriorattackPrefab;
 
-        protected override void Attack(GameObject target)
+        protected override void Attack(BaseEnemy target)
         {
             Animator.Play("Attack");
             var middlePoint = (target.transform.position + transform.position) / 2;

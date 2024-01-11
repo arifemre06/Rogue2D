@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using Enemies;
 using UnityEngine;
 
 namespace DefaultNamespace.Heroes
@@ -9,7 +10,7 @@ namespace DefaultNamespace.Heroes
     {
         [SerializeField] MagicAttackObject magicPrefab;
 
-        protected override void Attack(GameObject target)
+        protected override void Attack(BaseEnemy target)
         {   
             Animator.Play("Attack");
             Quaternion rotation2 = transform.rotation;

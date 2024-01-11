@@ -11,6 +11,7 @@ public class Chest : MonoBehaviour
 {
     [SerializeField] private int price;
     [SerializeField] private RelicScriptableObject relicScriptableObject;
+    
     public int GetPrice()
     {
         return price;
@@ -22,4 +23,5 @@ public class Chest : MonoBehaviour
         int randomNumber = Random.Range(0, relicTypesList.Count);
         return relicTypesList[randomNumber];
     }
+    
 }

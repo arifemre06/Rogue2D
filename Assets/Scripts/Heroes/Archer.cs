@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using Enemies;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -13,7 +14,7 @@ namespace DefaultNamespace.Heroes
         [SerializeField] private float speedArrow;
         [SerializeField] Arrow arrowPrefab;
         
-        protected override void Attack(GameObject target)
+        protected override void Attack(BaseEnemy target)
         {
             Animator.Play("Attack");
             var position = transform.position;

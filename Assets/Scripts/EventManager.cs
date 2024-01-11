@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using ScriptableObjectsScripts;
 using UnityEngine;
 
@@ -10,13 +11,15 @@ public class EventManager : MonoBehaviour
     public static event Action<float> AttackSpeedRelicCollected;
     public static event Action<float> AttackDamageRelicCollected;
 
-    public static event Action<GameObject> EnemySpawned; 
-    public static event Action<GameObject,int, int> EnemyKilled;
+    public static event Action<BaseEnemy> EnemySpawned; 
+    public static event Action<BaseEnemy,int, int> EnemyKilled;
     public static event Action<int, int> GoldAndExpChanged;
 
     public static event Action<GameState, GameState> GameStateChanged;
+    public static event Action<bool> InfoPanelOpenOrClose;
     public static event Action MainMenuButtonClicked; 
     public static event Action GameStarted;
+    public static event Action<int> UpGradePanelOpened;
     public static event Action Quit;
 
     public static event Action<float> MusicVolumeChanged;
@@ -40,7 +43,7 @@ public class EventManager : MonoBehaviour
         GameStateChanged?.Invoke(arg1, arg2);
     }
 
-    public static void OnEnemyKilled(GameObject enemy,int arg1, int arg2)
+    public static void OnEnemyKilled(BaseEnemy enemy,int arg1, int arg2)
     {
         EnemyKilled?.Invoke(enemy,arg1, arg2);
     }
@@ -80,8 +83,18 @@ public class EventManager : MonoBehaviour
         MainMenuButtonClicked?.Invoke();
     }
 
-    public static void OnEnemySpawned(GameObject obj)
+    public static void OnEnemySpawned(BaseEnemy obj)
     {
         EnemySpawned?.Invoke(obj);
+    }
+
+    public static void OnInfoPanelOpened(bool isOpen)
+    {
+        InfoPanelOpenOrClose?.Invoke(isOpen);
+    }
+
+    public static void OnUpGradePanelOpened(int wave)
+    {
+        UpGradePanelOpened?.Invoke(wave);
     }
 }

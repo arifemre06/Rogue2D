@@ -24,11 +24,14 @@ namespace DefaultNamespace
 
         private float _heroMaxHealth;
 
-        private List<GameObject> allTargets;
+        private List<BaseEnemy> allTargets;
         protected bool CanShoot = true;
+
+        protected bool CollidedWithEnemies;
         
         private void Awake()
         {
+            EventManager.GameStarted += OnGameStarted;
             EventManager.AttackSpeedRelicCollected += OnAttackSpeedRelicTaken;
             EventManager.AttackDamageRelicCollected += OnAttackDamageRelicTaken;
             EventManager.EnemySpawned += OnEnemySpawnedUpdateEnemiesTransform;
@@ -38,6 +41,7 @@ namespace DefaultNamespace
 
         private void OnDestroy()
         {
+            EventManager.GameStarted -= OnGameStarted;
             EventManager.AttackSpeedRelicCollected -= OnAttackSpeedRelicTaken;
             EventManager.AttackDamageRelicCollected -= OnAttackDamageRelicTaken;
             EventManager.EnemySpawned -= OnEnemySpawnedUpdateEnemiesTransform;
@@ -46,19 +50,19 @@ namespace DefaultNamespace
 
         private void Start()
         {
-            allTargets = new List<GameObject>();
+            allTargets = new List<BaseEnemy>();
             _heroMaxHealth = Health;
             heroCanvas.enabled = false;
         }
 
-        protected abstract void Attack(GameObject target);
+        protected abstract void Attack(BaseEnemy target);
         
 
         protected void Update()
         {
             if (CanShoot)
             {
-                GameObject target = GetClosestTargetInRange();
+                BaseEnemy target = GetClosestTargetInRange();
                 CanShoot = false;
                 StartCoroutine(StartAttackCooldown());
                 if (target != null)
@@ -68,13 +72,13 @@ namespace DefaultNamespace
             }
         }
 
-        protected GameObject GetClosestTargetInRange()
+        protected BaseEnemy GetClosestTargetInRange()
         {
             if (allTargets.Count != 0)
             {
-                GameObject target = allTargets[0];
+                BaseEnemy target = allTargets[0];
                     //look for the closest
-                    foreach (GameObject tmpTarget in allTargets)
+                    foreach (BaseEnemy tmpTarget in allTargets)
                     {
                         if (Vector2.Distance(transform.position, tmpTarget.transform.position) < Vector2.Distance(transform.position, target.transform.position))
                         {
@@ -96,20 +100,21 @@ namespace DefaultNamespace
             CanShoot = true;
         }
         
-        private void OnEnemySpawnedUpdateEnemiesTransform(GameObject obj)
+        private void OnEnemySpawnedUpdateEnemiesTransform(BaseEnemy obj)
         {
             allTargets.Add(obj);
         }
         
-        private void OnEnemyKilledUpdateEnemiesTransform(GameObject enemy,int arg1, int arg2)
+        private void OnEnemyKilledUpdateEnemiesTransform(BaseEnemy enemy,int arg1, int arg2)
         {
             allTargets.Remove(enemy);
         }
         
         protected virtual void OnCollisionEnter2D(Collision2D col)
         {
-            if (col.collider.CompareTag("Enemy"))
-            {   
+            if (col.collider.CompareTag("Enemy") && !CollidedWithEnemies)
+            {
+                CollidedWithEnemies = true;
                 GameObject tempEnemy = col.gameObject;
                 BaseEnemy enemyScript = tempEnemy.GetComponent<BaseEnemy>();
                 enemyScript.SetHealth(CollisionDamage);
@@ -123,10 +128,22 @@ namespace DefaultNamespace
             }
         }
         
+        private IEnumerator WaitBetweenEnemyCollides()
+        {
+            yield return new WaitForSeconds(0.5f);
+            CollidedWithEnemies = false;
+        }
+        
         private void UpdateHealthBar(float currentHealth)
         {
             heroCanvas.enabled = true;
             healthBar.fillAmount = currentHealth / _heroMaxHealth;
+        }
+        
+        private void OnGameStarted()
+        {
+            Health = _heroMaxHealth;
+            UpdateHealthBar(Health);
         }
         
         
