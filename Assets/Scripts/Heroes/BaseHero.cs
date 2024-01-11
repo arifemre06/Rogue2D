@@ -126,11 +126,25 @@ namespace DefaultNamespace
                     Destroy(col.gameObject);
                 }
             }
+            if (col.collider.CompareTag("EnemyAttack"))
+            {
+                if (!CollidedWithEnemies)
+                {
+                    CollidedWithEnemies = true;
+                    GameObject tempEnemy = col.gameObject;
+                    EnemyRangedAttackObject rangedAttackScript = tempEnemy.GetComponent<EnemyRangedAttackObject>();
+                    Health -= rangedAttackScript.GetDamage();
+                    UpdateHealthBar(Health);
+                    
+                    Debug.Log("ee biz buraya gırıyozzzz???");
+                }
+                Destroy(col.gameObject);
+            }
         }
         
         private IEnumerator WaitBetweenEnemyCollides()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             CollidedWithEnemies = false;
         }
         

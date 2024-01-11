@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: -5169984486817881941}
   - component: {fileID: -7639449531704439027}
   - component: {fileID: 7028651028979974887}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -326,6 +326,7 @@ MonoBehaviour:
   experienceDrop: 10
   healthBar: {fileID: 8485236027188785433}
   enemyCanvas: {fileID: 6651061738790516181}
+  Animator: {fileID: 0}
 --- !u!58 &8093077982277274754
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -239,6 +239,9 @@ public class gameController : MonoBehaviour
              case EnemyType.Golem:
                  return enemyPrefabs[1];
              break;
+             case EnemyType.Wraith:
+                 return enemyPrefabs[2];
+                 break;
             }
 
             return null;
@@ -313,10 +316,10 @@ public class gameController : MonoBehaviour
             EventManager.OnGoldAndExpChanged(gold,exp);
             int killedEnemyCount = GetEnemyCount();
             int aliveEnemyCount = (spawnedEnemyCount - killedEnemyCount);
-            Debug.Log("alive enemy count "+aliveEnemyCount + " spawned enemy count "+ spawnedEnemyCount + " killed enemy count "+killedEnemyCount);
+            //Debug.Log("alive enemy count "+aliveEnemyCount + " spawned enemy count "+ spawnedEnemyCount + " killed enemy count "+killedEnemyCount);
             if (killedEnemyCount >= _enemyCountForThatWave)
             {
-                Debug.Log("level is over wave index "+_waveIndex);
+                //Debug.Log("level is over wave index "+_waveIndex);
                 _waveIndex += 1;
                 if (_waveIndex < enemySpawnDataList.Count)
                 {
@@ -345,7 +348,8 @@ public enum GameState
 public enum EnemyType
 {
     Ogre,
-    Golem
+    Golem,
+    Wraith
 }
 
         

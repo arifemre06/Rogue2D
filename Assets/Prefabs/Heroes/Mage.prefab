@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3415447322487776924}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960.23206, y: -539.17456}
+  m_AnchoredPosition: {x: -960.23206, y: -539.2011}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1651756898462189607
@@ -50,7 +50,8 @@ GameObject:
   - component: {fileID: 1580006128484736857}
   - component: {fileID: 2169522541579176364}
   - component: {fileID: 4101884980859399675}
-  m_Layer: 0
+  - component: {fileID: 290658432}
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +140,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!210 &290658432
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651756898462189607}
+  m_Enabled: 1
+  m_SortingLayerID: -2090855631
+  m_SortingLayer: 4
+  m_SortingOrder: 0
 --- !u!1 &3247709834868948642
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +166,7 @@ GameObject:
   - component: {fileID: 1887576693}
   m_Layer: 8
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -295,7 +307,7 @@ GameObject:
   - component: {fileID: 3004785604825810672}
   - component: {fileID: 6108446005651601835}
   - component: {fileID: 586450612920030283}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealtBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +384,7 @@ GameObject:
   - component: {fileID: 6558268509887149236}
   - component: {fileID: 5051764814304452291}
   - component: {fileID: 799724348305864013}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8315000682634010060}
   - component: {fileID: 2850300153019616198}
   - component: {fileID: 7944475055801280577}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealtBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7853218541172370686}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960.0566, y: -539.6624}
+  m_AnchoredPosition: {x: -960.0212, y: -539.57385}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &731896332718982954
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 1552269787}
   m_Layer: 8
   m_Name: Archer
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,7 +191,7 @@ SpriteRenderer:
   m_SortingLayerID: -245328455
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -184153831, guid: 5f344d3a75039344fb968729820ecd55, type: 3}
+  m_Sprite: {fileID: 1264757676, guid: 4df45c3663f5f884d9da0ba786b18aa7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -237,9 +237,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.060504563, y: -0.2583005}
+  m_Offset: {x: -0.021816708, y: -0.03691979}
   serializedVersion: 2
-  m_Radius: 0.3491879
+  m_Radius: 0.35563645
 --- !u!95 &1552269787
 Animator:
   serializedVersion: 4
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 4902695538288442964}
   - component: {fileID: 9162903733252857318}
   - component: {fileID: 8781105820566106569}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,8 @@ GameObject:
   - component: {fileID: 2992696891055077555}
   - component: {fileID: 7988596725854883897}
   - component: {fileID: 8791673031004468889}
-  m_Layer: 0
+  - component: {fileID: 848097631}
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,3 +454,14 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!210 &848097631
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7494610754227876543}
+  m_Enabled: 1
+  m_SortingLayerID: -2090855631
+  m_SortingLayer: 4
+  m_SortingOrder: 0

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6321803161151328043}
   - component: {fileID: 7769490595670219089}
   - component: {fileID: 5470412748165768616}
-  m_Layer: 0
+  - component: {fileID: 1706569454}
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +102,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!210 &1706569454
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4511349135037923917}
+  m_Enabled: 1
+  m_SortingLayerID: -2090855631
+  m_SortingLayer: 4
+  m_SortingOrder: 0
 --- !u!1 &5200253496523401349
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6867609154964788551}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960.42944, y: -539.5455}
+  m_AnchoredPosition: {x: -960.42944, y: -539.5809}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6293455596644249139
@@ -150,7 +162,7 @@ GameObject:
   - component: {fileID: 6776559548906870475}
   - component: {fileID: 7355332854763787141}
   - component: {fileID: 6598000225623854536}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealtBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +242,7 @@ GameObject:
   - component: {fileID: 786297381}
   m_Layer: 8
   m_Name: Warrior
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -372,7 +384,7 @@ GameObject:
   - component: {fileID: 973307763734832957}
   - component: {fileID: 716841189424238146}
   - component: {fileID: 761502966327953929}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HealthBarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}

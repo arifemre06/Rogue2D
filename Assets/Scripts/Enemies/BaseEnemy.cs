@@ -19,8 +19,9 @@ namespace Enemies
         [SerializeField] protected Image healthBar;
 
         [SerializeField] protected Canvas enemyCanvas;
-        
-        private GameObject character;
+
+        [SerializeField] protected Animator Animator;
+        protected GameObject Character;
         
         private float _enemyMaxHealth;
         private int _notHitForOneSecCount;
@@ -28,15 +29,15 @@ namespace Enemies
         
         void Start()
         {
-            character = GameObject.FindGameObjectWithTag("Player");
+            Character = GameObject.FindGameObjectWithTag("Player");
             _enemyMaxHealth = enemyHealth;
             enemyCanvas.enabled = false;
             _oneSecondPassed = true;
         }
         
-        void Update()
+        protected virtual void  Update()
             {
-                Vector3 direction = character.transform.position - transform.position;
+                Vector3 direction = Character.transform.position - transform.position;
                 Quaternion rotation2 = Quaternion.LookRotation(direction);
                 transform.position += direction.normalized * (enemySpeed * Time.deltaTime);
                 if (_oneSecondPassed)
