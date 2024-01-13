@@ -53,6 +53,5 @@ namespace Enemies
             return false;
         }
         
-        
     }
 }

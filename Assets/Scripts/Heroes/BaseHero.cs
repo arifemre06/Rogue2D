@@ -135,8 +135,6 @@ namespace DefaultNamespace
                     EnemyRangedAttackObject rangedAttackScript = tempEnemy.GetComponent<EnemyRangedAttackObject>();
                     Health -= rangedAttackScript.GetDamage();
                     UpdateHealthBar(Health);
-                    
-                    Debug.Log("ee biz buraya gırıyozzzz???");
                 }
                 Destroy(col.gameObject);
             }

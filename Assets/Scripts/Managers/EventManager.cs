@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using Enemies;
 using ScriptableObjectsScripts;
 using UnityEngine;
@@ -10,6 +11,10 @@ public class EventManager : MonoBehaviour
     public static event Action<Sprite,string> RelicCollected; 
     public static event Action<float> AttackSpeedRelicCollected;
     public static event Action<float> AttackDamageRelicCollected;
+
+    public static event Action<RuinTypes> RuinEffectTaken;
+    public static event Action RuinGiveMeTrioTaken;
+    public static event Action RuinHighRiskHighRewardTaken;
 
     public static event Action<BaseEnemy> EnemySpawned; 
     public static event Action<BaseEnemy,int, int> EnemyKilled;
@@ -96,5 +101,20 @@ public class EventManager : MonoBehaviour
     public static void OnUpGradePanelOpened(int wave)
     {
         UpGradePanelOpened?.Invoke(wave);
+    }
+
+    public static void OnRuinEffectTaken(RuinTypes obj)
+    {
+        RuinEffectTaken?.Invoke(obj);
+    }
+
+    public static void OnRuinGiveMeTrioTaken()
+    {
+        RuinGiveMeTrioTaken?.Invoke();
+    }
+
+    public static void OnRuinHighRiskHighRewardTaken()
+    {
+        RuinHighRiskHighRewardTaken?.Invoke();
     }
 }

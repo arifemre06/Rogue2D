@@ -383,7 +383,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -245328455
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f0bfd79d48eee614aaa1ccf427c7c5dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -453,6 +453,7 @@ MonoBehaviour:
   healthBar: {fileID: 4510966352885060197}
   enemyCanvas: {fileID: 6162304254394406847}
   Animator: {fileID: 6618112530720914769}
+  ruinEffectData: {fileID: 11400000, guid: 453c04b10376f4d48a4faf07fc66d8da, type: 2}
   AttackObjectPrefab: {fileID: 4512614296592721457, guid: 2f32abb94713695438ad989f5849fb99, type: 3}
   AttackObjectSpeed: 4
   FireCooldown: 2

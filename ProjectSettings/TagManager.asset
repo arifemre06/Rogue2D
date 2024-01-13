@@ -9,6 +9,7 @@ TagManager:
   - chest
   - EnemyAttack
   - Hero
+  - Ruin
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - AttackObject
   - EnemyAttackObject
   - Enemy
-  - 
+  - Ruin
   - 
   - 
   - 
@@ -43,11 +44,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: TileSet
     uniqueID: 3500874277
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Characters
     uniqueID: 4049638841

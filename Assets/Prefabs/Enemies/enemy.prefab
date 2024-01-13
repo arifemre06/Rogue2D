@@ -326,7 +326,8 @@ MonoBehaviour:
   experienceDrop: 10
   healthBar: {fileID: 8485236027188785433}
   enemyCanvas: {fileID: 6651061738790516181}
-  Animator: {fileID: 0}
+  Animator: {fileID: 7028651028979974887}
+  ruinEffectData: {fileID: 11400000, guid: 453c04b10376f4d48a4faf07fc66d8da, type: 2}
 --- !u!58 &8093077982277274754
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -403,7 +404,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -245328455
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5141ee579cc08b84b8e3dd73a7eeb915, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

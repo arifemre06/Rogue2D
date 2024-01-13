@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,20 +24,36 @@ namespace Enemies
         [SerializeField] protected Canvas enemyCanvas;
 
         [SerializeField] protected Animator Animator;
+
+        [SerializeField] private RuinStatueData ruinEffectData;
         protected GameObject Character;
         
         private float _enemyMaxHealth;
         private int _notHitForOneSecCount;
         private bool _oneSecondPassed;
-        
-        void Start()
+
+        private void Awake()
         {
+            EventManager.RuinHighRiskHighRewardTaken += OnHighRiskHighRewardTaken;
+            EventManager.RuinGiveMeTrioTaken += OnGiveTrioTaken;
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.RuinHighRiskHighRewardTaken -= OnHighRiskHighRewardTaken;
+            EventManager.RuinGiveMeTrioTaken -= OnGiveTrioTaken;
+        }
+
+        private void Start()
+        {   
             Character = GameObject.FindGameObjectWithTag("Player");
             _enemyMaxHealth = enemyHealth;
             enemyCanvas.enabled = false;
             _oneSecondPassed = true;
+            CheckTakenRuins();
+            
         }
-        
+
         protected virtual void  Update()
             {
                 Vector3 direction = Character.transform.position - transform.position;
@@ -90,6 +109,36 @@ namespace Enemies
                 if (_notHitForOneSecCount > 2)
                 {
                     enemyCanvas.enabled = false;
+                }
+            }
+            
+            private void OnHighRiskHighRewardTaken()
+            {
+                //list order (damage,health,gold drop)
+                List<float> highRiskHighRewardData = new List<float>();
+                highRiskHighRewardData = ruinEffectData.GetHighRiskHighRewardData();
+                enemyColDamage *= highRiskHighRewardData[0];
+                enemyHealth *= highRiskHighRewardData[1];
+                float tempGoldDrop = goldDrop * highRiskHighRewardData[2];
+                goldDrop = (int)tempGoldDrop;
+            }
+
+            private void OnGiveTrioTaken()
+            {
+                
+            }
+            
+            
+            private void CheckTakenRuins()
+            {
+                if (TakenRuins.HighRiskHighRewardTaken)
+                {
+                    OnHighRiskHighRewardTaken();
+                }
+
+                if (TakenRuins.GiveMeTrioTaken)
+                {
+                    OnGiveTrioTaken();
                 }
             }
     }

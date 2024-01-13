@@ -111,6 +111,8 @@ MonoBehaviour:
   experienceDrop: 50
   healthBar: {fileID: 7998095318136800572}
   enemyCanvas: {fileID: 5148244448762757616}
+  Animator: {fileID: 8842154563091068610}
+  ruinEffectData: {fileID: 11400000, guid: 453c04b10376f4d48a4faf07fc66d8da, type: 2}
 --- !u!114 &7998095318136800572 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8485236027188785433, guid: db385aa3ea667154da7267df1c38cf6e, type: 3}
@@ -122,3 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &8842154563091068610 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7028651028979974887, guid: db385aa3ea667154da7267df1c38cf6e, type: 3}
+  m_PrefabInstance: {fileID: 1963407144387441701}
+  m_PrefabAsset: {fileID: 0}
