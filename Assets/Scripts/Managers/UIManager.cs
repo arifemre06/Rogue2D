@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
     private void DeActivateAllPanels()
     {   
         
-        inGamePanel.DeActivatePanel();
+        //inGamePanel.DeActivatePanel();
         mainMenuPanel.DeActivatePanel();
         settingsPanel.DeActivatePanel();
         infoPanel.DeActivatePanel();

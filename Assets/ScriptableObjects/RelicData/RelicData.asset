@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8485a7f067a5514380bf02542a9459e, type: 3}
   m_Name: RelicData
   m_EditorClassIdentifier: 
-  relicTypes: 0000000001000000
+  relicTypes: 00000000010000000300000004000000050000000600000007000000
   sprites:
   - {fileID: 21300000, guid: b60216f24a5d5d94b8c95f581a4e211c, type: 3}
   - {fileID: 21300000, guid: 14ddbb104c802ed49b2062dd209452e5, type: 3}
+  - {fileID: 21300000, guid: 0902fe0a602bac24ea8550f7779f2a1f, type: 3}
+  - {fileID: 21300000, guid: f06d9961e6cb41a4597dea32d8cc1275, type: 3}
+  - {fileID: 21300000, guid: 3f08a90f11f109a4c90eb30b5bbd9f0c, type: 3}
+  - {fileID: 21300000, guid: cbc68ea2bee4684438545781c744103c, type: 3}
+  - {fileID: 21300000, guid: 32c64713d5b490c40bd6395b4d72a038, type: 3}
   itemDetailText:
   - Attack Speed Increased
   - Attack Damage Increased
+  - Movement Speed Increased
+  - Life Regen Increased
+  - Range Increased
+  - Dodge Chance Increased
+  - Damage Protection Increased

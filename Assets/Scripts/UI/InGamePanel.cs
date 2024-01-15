@@ -49,7 +49,13 @@ namespace DefaultNamespace.UI
         
         private void OnGoldChanged(int gold, int exp)
         {
-            goldText.text = gold.ToString();
+            StartCoroutine(UpdateGoldText());
+        }
+
+        private IEnumerator UpdateGoldText()
+        {
+            yield return new WaitForSeconds(0.5f);
+            goldText.text = gameController.GetGold().ToString();
         }
     }
 }

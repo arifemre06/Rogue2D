@@ -41,7 +41,7 @@ public class CharacterColliderController : MonoBehaviour
                     Chest chest = _chestHits[0].GetComponent<Chest>();
                     int price = chest.GetPrice();
                 
-                    if (gameController.gold >= price && _canOpenChest)
+                    if (gameController.GetGold() >= price && _canOpenChest)
                     {
                         _canOpenChest = false;
                         StartCoroutine(WaitBetweenChests());
@@ -72,7 +72,7 @@ public class CharacterColliderController : MonoBehaviour
     }
     private void OpenChest(Chest chest,int price,Collider2D other)
     {
-        gameController.gold -= price;
+        EventManager.OnGoldAndExpChanged(-price,0);
         RelicTypes relictoinstantiate = chest.GetRandomRelic();
         
         GameObject newRelic = Instantiate(relicPrefab, other.transform.position, Quaternion.identity);

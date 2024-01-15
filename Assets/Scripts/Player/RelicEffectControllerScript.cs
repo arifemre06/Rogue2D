@@ -20,7 +20,48 @@ namespace DefaultNamespace
 
         private bool _collidedWithRelic;
 
-       
+        private void Awake()
+        {
+            EventManager.RelicTaken += OnRelicCollected;
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.RelicTaken -= OnRelicCollected;
+        }
+        
+        private void OnRelicCollected(RelicTypes relicTypes)
+        {
+            switch (relicTypes)
+            {
+                case RelicTypes.AttackSpeed:
+                    AttackSpeedRelicCollected();
+                    break;
+
+                case RelicTypes.AttackDamage:
+                    AttackDamageRelicCollected();
+                    break;
+                case RelicTypes.LifeSteal:
+                    LifeStealRelicCollected();
+                    break;
+                case RelicTypes.LifeRegen:
+                    LifeRegenRelicCollected();
+                    break;
+                case RelicTypes.MovementSpeed:
+                    MovementSpeedRelicCollected();
+                    break;
+                case RelicTypes.MoreShootingDistance:
+                    MoreShootingDistanceRelicCollected();
+                    break;
+                case RelicTypes.DodgeChance:
+                    DodgeChanceRelicCollected();
+                    break;
+                case RelicTypes.DamageProtection:
+                    DamageProtectionRelicCollected();
+                    break;
+            }
+        }
+        
         private void OnTriggerEnter2D(Collider2D other)
         {   
             
@@ -29,35 +70,7 @@ namespace DefaultNamespace
                 _collidedWithRelic = true;
                 StartCoroutine(WaitBetweenRelicCollides());
                 RelicTypes relicString = other.GetComponent<relics>().GetRelicString();
-                switch (relicString)
-                {
-                    case RelicTypes.AttackSpeed:
-                        AttackSpeedRelicCollected();
-                        break;
-
-                    case RelicTypes.AttackDamage:
-                        AttackDamageRelicCollected();
-                        break;
-                    case RelicTypes.LifeSteal:
-                        LifeStealRelicCollected();
-                        break;
-                    case RelicTypes.LifeRegen:
-                        LifeRegenRelicCollected();
-                        break;
-                    case RelicTypes.MovementSpeed:
-                        MovementSpeedRelicCollected();
-                        break;
-                    case RelicTypes.MoreShootingDistance:
-                        MoreShootingDistanceRelicCollected();
-                        break;
-                    case RelicTypes.DodgeChance:
-                        DodgeChanceRelicCollected();
-                        break;
-                    case RelicTypes.DamageProtection:
-                        DamageProtectionRelicCollected();
-                        break;
-                }
-
+                OnRelicCollected(relicString);
                 Destroy(other.gameObject);
             }
         }

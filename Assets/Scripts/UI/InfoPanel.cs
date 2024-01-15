@@ -20,8 +20,7 @@ namespace DefaultNamespace
         private bool _panelOpen;
         private List<Transform> _UITemplates;
 
-
-
+        
         private void Awake()
         {
             _relicImage = new List<Sprite>();
@@ -30,9 +29,15 @@ namespace DefaultNamespace
             EventManager.RelicCollected += OnRelicCollected;
         }
 
+        private void OnDestroy()
+        {
+            EventManager.RelicCollected -= OnRelicCollected;
+        }
+
         private void Start()
         {
             relicInfoUITemplate.gameObject.SetActive(false);
+            UpdateInfoPanel();
         }
 
         private void FixedUpdate()

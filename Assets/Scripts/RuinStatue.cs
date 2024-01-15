@@ -39,7 +39,7 @@ public class RuinStatue : MonoBehaviour
         if (hitCount > 0)
         {
             CanvasVisible(true);
-            Debug.Log("bir umuttur yasamak desem");
+            
         }
         else
         {

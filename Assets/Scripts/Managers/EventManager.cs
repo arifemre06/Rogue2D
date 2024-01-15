@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    public static event Action<Sprite,string> RelicCollected; 
+    public static event Action<Sprite,string> RelicCollected;
+    public static event Action<RelicTypes> RelicTaken;
     public static event Action<float> AttackSpeedRelicCollected;
     public static event Action<float> AttackDamageRelicCollected;
     public static event Action<float> LifeStealRelicCollected;
@@ -153,5 +154,10 @@ public class EventManager : MonoBehaviour
     public static void OnDamageProtectionRelicCollected(int obj)
     {
         DamageProtectionRelicCollected?.Invoke(obj);
+    }
+
+    public static void OnRelicTaken(RelicTypes obj)
+    {
+        RelicTaken?.Invoke(obj);
     }
 }

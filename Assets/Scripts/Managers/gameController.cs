@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class gameController : MonoBehaviour
 {
     [SerializeField] private List<BaseEnemy> enemyPrefabs;
-    public int gold = 0;
+    private static int Gold;
     public int exp = 0;
 
     public static GameState gameState{get; private set;}
@@ -60,7 +60,7 @@ public class gameController : MonoBehaviour
         _enemyCountForThatWave = 0;
         ChangeEnemySpawnData(_waveIndex);
         OnMainMenuButtonClicked();
-        gold = 0;
+        Gold = 0;
         exp = 0;
         
         // if the player has not been set in the inspector log it
@@ -104,6 +104,7 @@ public class gameController : MonoBehaviour
             EventManager.Quit += OnQuit;
             EventManager.MainMenuButtonClicked += OnMainMenuButtonClicked;
             EventManager.UpGradePanelOpened += OnUpgradePanelOpened;
+            EventManager.GoldAndExpChanged += OnGoldAndExpChanged;
 
         }
     
@@ -115,8 +116,9 @@ public class gameController : MonoBehaviour
         EventManager.Quit -= OnQuit;
         EventManager.MainMenuButtonClicked -= OnMainMenuButtonClicked;
         EventManager.UpGradePanelOpened -= OnUpgradePanelOpened;
+        EventManager.GoldAndExpChanged -= OnGoldAndExpChanged;
     }
-    
+
     private void OnGameStart()
     {
         ChangeGameState(GameState.InGamePanel);
@@ -134,7 +136,6 @@ public class gameController : MonoBehaviour
     {
         ChangeEnemySpawnData(wave);
         ChangeGameState(GameState.UpgradePanel);
-        Time.timeScale = 0;
     }
     
     private void OnQuit()
@@ -310,10 +311,8 @@ public class gameController : MonoBehaviour
         
         private void SubsriceOnEnemyKilled(BaseEnemy enemy,int gainedGold,int gainedExp)
         {
-            gold += gainedGold;
-            exp += gainedExp;
             activeEnemies.Remove(enemy);
-            EventManager.OnGoldAndExpChanged(gold,exp);
+            EventManager.OnGoldAndExpChanged(gainedGold,gainedExp);
             int killedEnemyCount = GetEnemyCount();
             int aliveEnemyCount = (spawnedEnemyCount - killedEnemyCount);
             //Debug.Log("alive enemy count "+aliveEnemyCount + " spawned enemy count "+ spawnedEnemyCount + " killed enemy count "+killedEnemyCount);
@@ -327,6 +326,17 @@ public class gameController : MonoBehaviour
                 }
                 
             }
+        }
+        
+        private void OnGoldAndExpChanged(int arg1, int arg2)
+        {
+            Gold += arg1;
+            exp += arg2;
+        }
+
+        public static int GetGold()
+        {
+            return Gold;
         }
         
         
