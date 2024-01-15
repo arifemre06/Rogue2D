@@ -11,6 +11,12 @@ namespace DefaultNamespace
         [SerializeField] private RelicScriptableObject relicScriptableObject;
         private float _mainAttackSpeedModifier = 1;
         private float _mainAttackDamageModifier = 1;
+        private float _mainLifeStealModifier = 0;
+        private float _mainHealtRegenModifier = 0;
+        private float _mainMovementSpeedModifier = 1;
+        private float _mainShootingDistanceModifier = 1;
+        private float _mainDodgeChanceModifier = 0;
+        private int _mainDamageProtectionAmount = 0;
 
         private bool _collidedWithRelic;
 
@@ -32,12 +38,32 @@ namespace DefaultNamespace
                     case RelicTypes.AttackDamage:
                         AttackDamageRelicCollected();
                         break;
+                    case RelicTypes.LifeSteal:
+                        LifeStealRelicCollected();
+                        break;
+                    case RelicTypes.LifeRegen:
+                        LifeRegenRelicCollected();
+                        break;
+                    case RelicTypes.MovementSpeed:
+                        MovementSpeedRelicCollected();
+                        break;
+                    case RelicTypes.MoreShootingDistance:
+                        MoreShootingDistanceRelicCollected();
+                        break;
+                    case RelicTypes.DodgeChance:
+                        DodgeChanceRelicCollected();
+                        break;
+                    case RelicTypes.DamageProtection:
+                        DamageProtectionRelicCollected();
+                        break;
                 }
 
                 Destroy(other.gameObject);
             }
         }
+
         
+
         private IEnumerator WaitBetweenRelicCollides()
         {
             yield return new WaitForSeconds(1);
@@ -56,6 +82,51 @@ namespace DefaultNamespace
             EventManager.OnAttackDamageRelicCollected(_mainAttackDamageModifier);
             RaiseRelicCollected(RelicTypes.AttackDamage);
         }
+
+        private void LifeStealRelicCollected()
+        {
+            _mainLifeStealModifier += 0.05f;
+            EventManager.OnLifeStealRelicCollected(_mainLifeStealModifier);
+            RaiseRelicCollected(RelicTypes.LifeSteal);
+            
+        }
+        
+        private void MovementSpeedRelicCollected()
+        {
+            _mainMovementSpeedModifier += 0.05f;
+            EventManager.OnMovementSpeedRelicCollected(_mainMovementSpeedModifier);
+            RaiseRelicCollected(RelicTypes.MovementSpeed);
+        }
+
+        private void LifeRegenRelicCollected()
+        {
+
+            _mainHealtRegenModifier += 0.02f;
+            EventManager.OnLifeRegenRelicCollected(_mainHealtRegenModifier);
+            RaiseRelicCollected(RelicTypes.LifeRegen);
+        }
+        
+        private void DamageProtectionRelicCollected()
+        {
+            _mainDamageProtectionAmount += 1;
+            EventManager.OnDamageProtectionRelicCollected(_mainDamageProtectionAmount);
+            RaiseRelicCollected(RelicTypes.DamageProtection);
+        }
+
+        private void DodgeChanceRelicCollected()
+        {
+            _mainDodgeChanceModifier += 0.05f;
+            EventManager.OnDodgeChanceRelicCollected(_mainDodgeChanceModifier);
+            RaiseRelicCollected(RelicTypes.DodgeChance);
+        }
+
+        private void MoreShootingDistanceRelicCollected()
+        {
+            _mainShootingDistanceModifier += 0.05f;
+            EventManager.OnMoreShootingDistanceRelicCollected(_mainShootingDistanceModifier);
+            RaiseRelicCollected(RelicTypes.MoreShootingDistance);
+        }
+
 
         private void RaiseRelicCollected(RelicTypes type)
         {

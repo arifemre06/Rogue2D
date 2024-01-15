@@ -11,6 +11,12 @@ public class EventManager : MonoBehaviour
     public static event Action<Sprite,string> RelicCollected; 
     public static event Action<float> AttackSpeedRelicCollected;
     public static event Action<float> AttackDamageRelicCollected;
+    public static event Action<float> LifeStealRelicCollected;
+    public static event Action<float> LifeRegenRelicCollected;
+    public static event Action<float> MovementSpeedRelicCollected;
+    public static event Action<float> MoreShootingDistanceRelicCollected;
+    public static event Action<float> DodgeChanceRelicCollected;
+    public static event Action<int> DamageProtectionRelicCollected;
 
     public static event Action<RuinTypes> RuinEffectTaken;
     public static event Action RuinGiveMeTrioTaken;
@@ -41,6 +47,11 @@ public class EventManager : MonoBehaviour
     public static void OnAttackDamageRelicCollected(float obj)
     {
         AttackDamageRelicCollected?.Invoke(obj);
+    }
+
+    public static void OnLifeStealRelicCollected(float obj)
+    {
+        LifeStealRelicCollected?.Invoke(obj);
     }
 
     public static void OnGameStateChanged(GameState arg1, GameState arg2)
@@ -116,5 +127,31 @@ public class EventManager : MonoBehaviour
     public static void OnRuinHighRiskHighRewardTaken()
     {
         RuinHighRiskHighRewardTaken?.Invoke();
+    }
+
+    public static void OnLifeRegenRelicCollected(float obj)
+    {
+        LifeRegenRelicCollected?.Invoke(obj);
+        
+    }
+
+    public static void OnMovementSpeedRelicCollected(float obj)
+    {
+        MovementSpeedRelicCollected?.Invoke(obj);
+    }
+
+    public static void OnMoreShootingDistanceRelicCollected(float obj)
+    {
+        MoreShootingDistanceRelicCollected?.Invoke(obj);
+    }
+
+    public static void OnDodgeChanceRelicCollected(float obj)
+    {
+        DodgeChanceRelicCollected?.Invoke(obj);
+    }
+
+    public static void OnDamageProtectionRelicCollected(int obj)
+    {
+        DamageProtectionRelicCollected?.Invoke(obj);
     }
 }

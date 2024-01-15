@@ -149,7 +149,7 @@ SortingGroup:
   m_GameObject: {fileID: 1651756898462189607}
   m_Enabled: 1
   m_SortingLayerID: -2090855631
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
 --- !u!1 &3247709834868948642
 GameObject:
@@ -226,7 +226,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -245328455
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b7ae3ea303f6e8f4ca64fbe576fd250a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -253,9 +253,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 5
   FireCooldown: 3
-  CollisionDamage: 20
+  CollisionDamage: 50
   Damage: 15
   ShootingDistance: 6
+  DamageProtectionRegenCooldown: 5
   Animator: {fileID: 1887576693}
   healthBar: {fileID: 586450612920030283}
   heroCanvas: {fileID: 1580006128484736857}

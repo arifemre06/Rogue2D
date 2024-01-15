@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Enemies;
 using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace DefaultNamespace
 {
@@ -15,6 +17,12 @@ namespace DefaultNamespace
         [SerializeField] protected float CollisionDamage;
         [SerializeField] protected float Damage;
         [SerializeField] protected float ShootingDistance;
+        [SerializeField] protected float DamageProtectionRegenCooldown;
+        protected float LifeSteal = 0;
+        protected float LifeRegen = 0;
+        protected int MaxDamageProtectionAmount = 0;
+        protected int CurrentDamageProtectionAmount = 0;
+        protected float DodgeChance = 0;
 
         [SerializeField] protected Animator Animator;
         
@@ -26,6 +34,8 @@ namespace DefaultNamespace
 
         private List<BaseEnemy> allTargets;
         protected bool CanShoot = true;
+        protected bool CanLifeRegen = true;
+        protected bool CanDamageProtection = true;
 
         protected bool CollidedWithEnemies;
         
@@ -34,6 +44,12 @@ namespace DefaultNamespace
             EventManager.GameStarted += OnGameStarted;
             EventManager.AttackSpeedRelicCollected += OnAttackSpeedRelicTaken;
             EventManager.AttackDamageRelicCollected += OnAttackDamageRelicTaken;
+            EventManager.LifeStealRelicCollected += OnLifeStealRelicTaken;
+            EventManager.LifeRegenRelicCollected += OnLifeRegenRelicCollected;
+            EventManager.MovementSpeedRelicCollected += OnMovementSpeedRelicCollected;
+            EventManager.MoreShootingDistanceRelicCollected += OnMoreShootingDistanceRelicCollected;
+            EventManager.DodgeChanceRelicCollected += OnDodgeChanceRelicCollected;
+            EventManager.DamageProtectionRelicCollected += OnDamageProtectionRelicCollected;
             EventManager.EnemySpawned += OnEnemySpawnedUpdateEnemiesTransform;
             EventManager.EnemyKilled += OnEnemyKilledUpdateEnemiesTransform;
             CanShoot = true;
@@ -44,6 +60,12 @@ namespace DefaultNamespace
             EventManager.GameStarted -= OnGameStarted;
             EventManager.AttackSpeedRelicCollected -= OnAttackSpeedRelicTaken;
             EventManager.AttackDamageRelicCollected -= OnAttackDamageRelicTaken;
+            EventManager.LifeStealRelicCollected -= OnLifeStealRelicTaken;
+            EventManager.LifeRegenRelicCollected -= OnLifeRegenRelicCollected;
+            EventManager.MovementSpeedRelicCollected -= OnMovementSpeedRelicCollected;
+            EventManager.MoreShootingDistanceRelicCollected += OnMoreShootingDistanceRelicCollected;
+            EventManager.DodgeChanceRelicCollected += OnDodgeChanceRelicCollected;
+            EventManager.DamageProtectionRelicCollected += OnDamageProtectionRelicCollected;
             EventManager.EnemySpawned -= OnEnemySpawnedUpdateEnemiesTransform;
             EventManager.EnemyKilled -= OnEnemyKilledUpdateEnemiesTransform;
         }
@@ -69,6 +91,18 @@ namespace DefaultNamespace
                 {
                     Attack(target);
                 }
+            }
+            if (LifeRegen > 0 && CanLifeRegen && (Health < _heroMaxHealth))
+            {
+                CanLifeRegen = false;
+                StartCoroutine(LifeRegenCooldown());
+            }
+
+            if (MaxDamageProtectionAmount > 0 && CanDamageProtection &&
+                (CurrentDamageProtectionAmount < MaxDamageProtectionAmount))
+            {
+                CanDamageProtection = false;
+                StartCoroutine(DamageProtectionCooldown());
             }
         }
 
@@ -100,6 +134,20 @@ namespace DefaultNamespace
             CanShoot = true;
         }
         
+        protected IEnumerator LifeRegenCooldown()
+        {
+            yield return new WaitForSeconds(1);
+            RegenLife();
+            CanLifeRegen = true;
+        }
+
+        protected IEnumerator DamageProtectionCooldown()
+        {
+            yield return new WaitForSeconds(DamageProtectionRegenCooldown);
+            CurrentDamageProtectionAmount += 1;
+            CanDamageProtection = true;
+        }
+        
         private void OnEnemySpawnedUpdateEnemiesTransform(BaseEnemy obj)
         {
             allTargets.Add(obj);
@@ -114,13 +162,22 @@ namespace DefaultNamespace
         {
             if (col.collider.CompareTag("Enemy") && !CollidedWithEnemies)
             {
-                CollidedWithEnemies = true;
+                //CollidedWithEnemies = true;
                 GameObject tempEnemy = col.gameObject;
                 BaseEnemy enemyScript = tempEnemy.GetComponent<BaseEnemy>();
                 enemyScript.SetHealth(CollisionDamage);
-                Health -= enemyScript.GetCollisionDamage();
-                UpdateHealthBar(Health);
-
+                if (!CheckDodge())
+                {
+                    if (CheckDamageProtection())
+                    {
+                        Debug.Log("hasardan korunduk");
+                    }
+                    else
+                    {
+                        Health -= enemyScript.GetCollisionDamage();
+                        UpdateHealthBar(Health);
+                    }
+                }
                 if (enemyScript.GetHealth() <= 0)
                 {
                     Destroy(col.gameObject);
@@ -130,11 +187,22 @@ namespace DefaultNamespace
             {
                 if (!CollidedWithEnemies)
                 {
-                    CollidedWithEnemies = true;
+                    //CollidedWithEnemies = true;
                     GameObject tempEnemy = col.gameObject;
                     EnemyRangedAttackObject rangedAttackScript = tempEnemy.GetComponent<EnemyRangedAttackObject>();
-                    Health -= rangedAttackScript.GetDamage();
-                    UpdateHealthBar(Health);
+                    
+                    if (!CheckDodge())
+                    {
+                        if (CheckDamageProtection())
+                        {
+                            Debug.Log("hasardan korunduk");
+                        }
+                        else
+                        {
+                            Health -= rangedAttackScript.GetDamage();
+                            UpdateHealthBar(Health);
+                        }
+                    }
                 }
                 Destroy(col.gameObject);
             }
@@ -151,11 +219,43 @@ namespace DefaultNamespace
             heroCanvas.enabled = true;
             healthBar.fillAmount = currentHealth / _heroMaxHealth;
         }
+
+        private void RegenLife()
+        {
+            Health += _heroMaxHealth * LifeRegen;
+            UpdateHealthBar(Health);
+        }
         
         private void OnGameStarted()
         {
             Health = _heroMaxHealth;
             UpdateHealthBar(Health);
+        }
+
+        private bool CheckDodge()
+        {
+            if (DodgeChance > 0)
+            {
+                Debug.Log("dodgelama sorgusuna hosgeldınız");
+                int randomNumber = Random.Range(0, 100);
+                if (randomNumber < DodgeChance * 100)
+                {
+                    Debug.Log("saldırıyı dodgeladık");
+                    return true;
+                } 
+            }
+            return false;
+        }
+
+        private bool CheckDamageProtection()
+        {
+            if (CurrentDamageProtectionAmount > 0)
+            {
+                CurrentDamageProtectionAmount -= 1;
+                return true;
+            }
+
+            return false;
         }
         
         
@@ -182,6 +282,37 @@ namespace DefaultNamespace
         {
             FireCooldown = FireCooldown * mainModifier;
         }
+        
+        private void OnLifeStealRelicTaken(float obj)
+        {
+            LifeSteal = LifeSteal + obj;
+        }
+        
+        private void OnMovementSpeedRelicCollected(float obj)
+        {
+            
+        }
+
+        private void OnLifeRegenRelicCollected(float obj)
+        {
+            LifeRegen = obj;
+        }
+        
+        private void OnDamageProtectionRelicCollected(int obj)
+        {
+            MaxDamageProtectionAmount = obj;
+        }
+
+        private void OnDodgeChanceRelicCollected(float obj)
+        {
+            DodgeChance = obj;
+        }
+
+        private void OnMoreShootingDistanceRelicCollected(float obj)
+        {
+            ShootingDistance *= obj;
+        }
+
         
         
     }

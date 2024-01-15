@@ -6,6 +6,8 @@ namespace DefaultNamespace
     public abstract class BaseAttackObject : MonoBehaviour
     {
         protected float Damage;
+        //Sonra Bakılacak
+        protected float StealingLifeAmount;
 
         protected virtual void Start()
         {

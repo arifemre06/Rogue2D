@@ -3,6 +3,12 @@
     public enum RelicTypes
     {
         AttackSpeed,
-        AttackDamage
+        AttackDamage,
+        LifeSteal,
+        MovementSpeed,
+        LifeRegen,
+        MoreShootingDistance,
+        DodgeChance,
+        DamageProtection,
     }
 }

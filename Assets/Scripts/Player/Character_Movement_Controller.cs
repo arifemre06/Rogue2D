@@ -5,7 +5,7 @@ using DefaultNamespace;
 using ScriptableObjectsScripts;
 using UnityEngine;
 
-public class Character_Movement_Controll : MonoBehaviour
+public class Character_Movement_Controller : MonoBehaviour
 {
     [SerializeField] private float speed;
     private Rigidbody2D _rigidbody2D;
@@ -15,7 +15,20 @@ public class Character_Movement_Controll : MonoBehaviour
     private bool _facingRight = true;
     private bool _facingUp = true;
 
+    private void Awake()
+    {
+        EventManager.MovementSpeedRelicCollected += OnMovementSpeedRelicTaken;
+    }
 
+    private void OnDestroy()
+    {
+        EventManager.MovementSpeedRelicCollected -= OnMovementSpeedRelicTaken;
+    }
+    
+    private void OnMovementSpeedRelicTaken(float obj)
+    {
+        speed *= obj;
+    }
     private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
