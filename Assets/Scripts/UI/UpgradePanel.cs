@@ -26,7 +26,7 @@ namespace DefaultNamespace
 
         private void Start()
         {
-            goldText.text = gameController.GetGold().ToString();
+            goldText.text = "Gold:" + gameController.GetGold();
         }
 
         private void OnNextLevelClicked()

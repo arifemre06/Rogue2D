@@ -162,7 +162,8 @@ namespace DefaultNamespace
         {
             if (col.collider.CompareTag("Enemy") && !CollidedWithEnemies)
             {
-                //CollidedWithEnemies = true;
+                CollidedWithEnemies = true;
+                StartCoroutine(WaitBetweenEnemyCollides());
                 GameObject tempEnemy = col.gameObject;
                 BaseEnemy enemyScript = tempEnemy.GetComponent<BaseEnemy>();
                 enemyScript.SetHealth(CollisionDamage);
@@ -186,8 +187,9 @@ namespace DefaultNamespace
             if (col.collider.CompareTag("EnemyAttack"))
             {
                 if (!CollidedWithEnemies)
-                {
-                    //CollidedWithEnemies = true;
+                {   
+                    CollidedWithEnemies = true;
+                    StartCoroutine(WaitBetweenEnemyCollides());
                     GameObject tempEnemy = col.gameObject;
                     EnemyRangedAttackObject rangedAttackScript = tempEnemy.GetComponent<EnemyRangedAttackObject>();
                     

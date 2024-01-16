@@ -27,6 +27,9 @@ public class EventManager : MonoBehaviour
     public static event Action<BaseEnemy,int, int> EnemyKilled;
     public static event Action<int, int> GoldAndExpChanged;
 
+    public static event Action UpdateShopPrices;
+    public static event Action ReRollShop;
+
     public static event Action<GameState, GameState> GameStateChanged;
     public static event Action<bool> InfoPanelOpenOrClose;
     public static event Action MainMenuButtonClicked; 
@@ -159,5 +162,15 @@ public class EventManager : MonoBehaviour
     public static void OnRelicTaken(RelicTypes obj)
     {
         RelicTaken?.Invoke(obj);
+    }
+
+    public static void OnUpdateShopPrices()
+    {
+        UpdateShopPrices?.Invoke();
+    }
+
+    public static void OnReRollShop()
+    {
+        ReRollShop?.Invoke();
     }
 }
