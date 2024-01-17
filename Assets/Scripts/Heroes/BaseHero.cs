@@ -18,6 +18,10 @@ namespace DefaultNamespace
         [SerializeField] protected float Damage;
         [SerializeField] protected float ShootingDistance;
         [SerializeField] protected float DamageProtectionRegenCooldown;
+        
+        [SerializeField] protected float BaseDamage;
+        [SerializeField] protected float BaseShootingDistance;
+            
         protected float LifeSteal = 0;
         protected float LifeRegen = 0;
         protected int MaxDamageProtectionAmount = 0;
@@ -260,44 +264,32 @@ namespace DefaultNamespace
             return false;
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        protected void OnAttackDamageRelicTaken(float mainModifier)
+        protected void OnAttackDamageRelicTaken(float mainModifier,int amount)
         {
-            Damage = Damage * mainModifier;
-            Debug.Log("main modifier "+mainModifier);
+            Damage = LineerStatsIncrease(BaseDamage, mainModifier, amount);
         }
 
-        protected void OnAttackSpeedRelicTaken(float mainModifier)
-        {
-            FireCooldown = FireCooldown * mainModifier;
+        protected void OnAttackSpeedRelicTaken(float mainModifier,int amount)
+        {   
+            //we will turn back here to look for adjustment
+            //attack speed doesnt use basestats so it doesnt have a lineer increase
+            float decreaseAmount = FireCooldown * mainModifier;
+            FireCooldown = FireCooldown - decreaseAmount;
         }
         
-        private void OnLifeStealRelicTaken(float obj)
+        private void OnLifeStealRelicTaken(float mainModifier,int amount)
         {
-            LifeSteal = LifeSteal + obj;
+            LifeSteal = HyperBolicIncrease(mainModifier, amount);
         }
         
-        private void OnMovementSpeedRelicCollected(float obj)
+        private void OnMovementSpeedRelicCollected(float mainModifier,int amount)
         {
             
         }
 
-        private void OnLifeRegenRelicCollected(float obj)
+        private void OnLifeRegenRelicCollected(float mainModifier,int amount)
         {
-            LifeRegen = obj;
+            LifeRegen = HyperBolicIncrease(mainModifier, amount);
         }
         
         private void OnDamageProtectionRelicCollected(int obj)
@@ -305,14 +297,25 @@ namespace DefaultNamespace
             MaxDamageProtectionAmount = obj;
         }
 
-        private void OnDodgeChanceRelicCollected(float obj)
+        private void OnDodgeChanceRelicCollected(float mainModifier,int amount)
         {
-            DodgeChance = obj;
+            DodgeChance = HyperBolicIncrease(mainModifier, amount);
         }
 
-        private void OnMoreShootingDistanceRelicCollected(float obj)
+        private void OnMoreShootingDistanceRelicCollected(float mainModifier,int amount)
+        {   
+            //we are increasing range with percentage we add 1 to the hyperbolic increase because we take base range %100
+            ShootingDistance = BaseShootingDistance * (1 + HyperBolicIncrease(mainModifier, amount));
+        }
+
+        private float LineerStatsIncrease(float baseStat ,float mainModifier,int amount)
         {
-            ShootingDistance *= obj;
+            return baseStat + baseStat * mainModifier * amount;
+        }
+        //In HyperBolic Stacking we take baseStat = 1;
+        private float HyperBolicIncrease(float mainModifier, int amount)
+        {
+            return 1 - 1 / (1 + mainModifier * amount);
         }
 
         

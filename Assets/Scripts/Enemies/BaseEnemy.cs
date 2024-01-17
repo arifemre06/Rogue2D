@@ -26,6 +26,11 @@ namespace Enemies
         [SerializeField] protected Animator Animator;
 
         [SerializeField] private RuinStatueData ruinEffectData;
+
+        public const float LevelDamageIncreaseModifier = 0.02f;
+        public const float LevelHealthIncreaseModifier = 0.05f;
+        public const float LevelGoldIncreaseModifier = 0.03f;
+        
         protected GameObject Character;
         
         private float _enemyMaxHealth;
@@ -36,12 +41,14 @@ namespace Enemies
         {
             EventManager.RuinHighRiskHighRewardTaken += OnHighRiskHighRewardTaken;
             EventManager.RuinGiveMeTrioTaken += OnGiveTrioTaken;
+            EventManager.NextLevel += OnNextLevel;
         }
 
         private void OnDestroy()
         {
             EventManager.RuinHighRiskHighRewardTaken -= OnHighRiskHighRewardTaken;
             EventManager.RuinGiveMeTrioTaken -= OnGiveTrioTaken;
+            EventManager.NextLevel -= OnNextLevel;
         }
 
         private void Start()
@@ -50,6 +57,7 @@ namespace Enemies
             _enemyMaxHealth = enemyHealth;
             enemyCanvas.enabled = false;
             _oneSecondPassed = true;
+            UpdateBaseStatsAccordingToLevelIndex(gameController.LevelIndex);
             CheckTakenRuins();
             
         }
@@ -128,7 +136,6 @@ namespace Enemies
                 
             }
             
-            
             private void CheckTakenRuins()
             {
                 if (TakenRuins.HighRiskHighRewardTaken)
@@ -140,6 +147,18 @@ namespace Enemies
                 {
                     OnGiveTrioTaken();
                 }
+            }
+
+            protected virtual void OnNextLevel(int levelIndex)
+            {
+                UpdateBaseStatsAccordingToLevelIndex(levelIndex);
+            }
+            private void UpdateBaseStatsAccordingToLevelIndex(int levelIndex)
+            {
+                enemyColDamage = enemyColDamage + enemyColDamage * (levelIndex * LevelDamageIncreaseModifier);
+                enemyHealth = enemyHealth + enemyHealth *(levelIndex * LevelHealthIncreaseModifier);
+                float tempGoldDrop = goldDrop + goldDrop * (levelIndex * LevelGoldIncreaseModifier);
+                goldDrop = (int)tempGoldDrop;
             }
     }
 }

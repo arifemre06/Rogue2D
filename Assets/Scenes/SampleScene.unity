@@ -7287,7 +7287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241c92808cac8634fa25ad60c5719ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  baseSpeed: 5
 --- !u!114 &800628700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18503,8 +18503,16 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 731896332718982952, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
+      propertyPath: BaseDamage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 731896332718982952, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
       propertyPath: CollisionDamage
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 731896332718982952, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
+      propertyPath: BaseShootingDistance
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 731896332718982953, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
       propertyPath: m_RootOrder
@@ -18572,8 +18580,16 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3247709834868948644, guid: 1dbe5fdf280dcf9458e4b50b43d7e5c6, type: 3}
+      propertyPath: BaseDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247709834868948644, guid: 1dbe5fdf280dcf9458e4b50b43d7e5c6, type: 3}
       propertyPath: CollisionDamage
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247709834868948644, guid: 1dbe5fdf280dcf9458e4b50b43d7e5c6, type: 3}
+      propertyPath: BaseShootingDistance
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3247709834868948645, guid: 1dbe5fdf280dcf9458e4b50b43d7e5c6, type: 3}
       propertyPath: m_RootOrder
@@ -18795,8 +18811,16 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7790813071272426292, guid: 21691ae227c7c08449610b46e7698ce4, type: 3}
+      propertyPath: BaseDamage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790813071272426292, guid: 21691ae227c7c08449610b46e7698ce4, type: 3}
       propertyPath: CollisionDamage
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790813071272426292, guid: 21691ae227c7c08449610b46e7698ce4, type: 3}
+      propertyPath: BaseShootingDistance
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21691ae227c7c08449610b46e7698ce4, type: 3}

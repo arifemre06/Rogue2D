@@ -9,19 +9,29 @@ namespace DefaultNamespace
     public class RelicEffectControllerScript : MonoBehaviour
     {
         [SerializeField] private RelicScriptableObject relicScriptableObject;
-        private float _mainAttackSpeedModifier = 1;
-        private float _mainAttackDamageModifier = 1;
-        private float _mainLifeStealModifier = 0;
-        private float _mainHealtRegenModifier = 0;
-        private float _mainMovementSpeedModifier = 1;
-        private float _mainShootingDistanceModifier = 1;
-        private float _mainDodgeChanceModifier = 0;
+        private float _mainAttackSpeedModifier = 0.1f;
+        private float _mainAttackDamageModifier = 0.2f;
+        private float _mainLifeStealModifier = 0.05f;
+        private float _mainHealtRegenModifier = 0.02f;
+        private float _mainMovementSpeedModifier = 0.1f;
+        private float _mainShootingDistanceModifier = 0.1f;
+        private float _mainDodgeChanceModifier = 0.05f;
         private int _mainDamageProtectionAmount = 0;
+
+        private Dictionary<RelicTypes, int> _relicAmountDictionary;
 
         private bool _collidedWithRelic;
 
         private void Awake()
         {
+            _relicAmountDictionary = new Dictionary<RelicTypes, int>();
+
+            List<RelicTypes> relicTypesList = relicScriptableObject.GetRelicTypesList();
+            
+            foreach (RelicTypes relicTypes in relicTypesList)
+            {
+                _relicAmountDictionary[relicTypes] = 0;
+            }
             EventManager.RelicTaken += OnRelicCollected;
         }
 
@@ -32,6 +42,7 @@ namespace DefaultNamespace
         
         private void OnRelicCollected(RelicTypes relicTypes)
         {
+            _relicAmountDictionary[relicTypes] += 1;
             switch (relicTypes)
             {
                 case RelicTypes.AttackSpeed:
@@ -84,30 +95,27 @@ namespace DefaultNamespace
         }
         private void AttackSpeedRelicCollected()
         {
-            _mainAttackSpeedModifier -= 0.05f;
-            EventManager.OnAttackSpeedRelicCollected(_mainAttackSpeedModifier);
+            EventManager.OnAttackSpeedRelicCollected(_mainAttackSpeedModifier,_relicAmountDictionary[RelicTypes.AttackSpeed]);
             RaiseRelicCollected(RelicTypes.AttackSpeed);
         }
 
         private void AttackDamageRelicCollected()
         {
-            _mainAttackDamageModifier += 0.1f;
-            EventManager.OnAttackDamageRelicCollected(_mainAttackDamageModifier);
+            EventManager.OnAttackDamageRelicCollected(_mainAttackDamageModifier,_relicAmountDictionary[RelicTypes.AttackDamage]);
             RaiseRelicCollected(RelicTypes.AttackDamage);
         }
 
         private void LifeStealRelicCollected()
         {
             _mainLifeStealModifier += 0.05f;
-            EventManager.OnLifeStealRelicCollected(_mainLifeStealModifier);
+            EventManager.OnLifeStealRelicCollected(_mainLifeStealModifier,_relicAmountDictionary[RelicTypes.LifeSteal]);
             RaiseRelicCollected(RelicTypes.LifeSteal);
             
         }
         
         private void MovementSpeedRelicCollected()
         {
-            _mainMovementSpeedModifier += 0.05f;
-            EventManager.OnMovementSpeedRelicCollected(_mainMovementSpeedModifier);
+            EventManager.OnMovementSpeedRelicCollected(_mainMovementSpeedModifier,_relicAmountDictionary[RelicTypes.MovementSpeed]);
             RaiseRelicCollected(RelicTypes.MovementSpeed);
         }
 
@@ -115,7 +123,7 @@ namespace DefaultNamespace
         {
 
             _mainHealtRegenModifier += 0.02f;
-            EventManager.OnLifeRegenRelicCollected(_mainHealtRegenModifier);
+            EventManager.OnLifeRegenRelicCollected(_mainHealtRegenModifier,_relicAmountDictionary[RelicTypes.LifeRegen]);
             RaiseRelicCollected(RelicTypes.LifeRegen);
         }
         
@@ -129,14 +137,14 @@ namespace DefaultNamespace
         private void DodgeChanceRelicCollected()
         {
             _mainDodgeChanceModifier += 0.05f;
-            EventManager.OnDodgeChanceRelicCollected(_mainDodgeChanceModifier);
+            EventManager.OnDodgeChanceRelicCollected(_mainDodgeChanceModifier,_relicAmountDictionary[RelicTypes.DodgeChance]);
             RaiseRelicCollected(RelicTypes.DodgeChance);
         }
 
         private void MoreShootingDistanceRelicCollected()
         {
             _mainShootingDistanceModifier += 0.05f;
-            EventManager.OnMoreShootingDistanceRelicCollected(_mainShootingDistanceModifier);
+            EventManager.OnMoreShootingDistanceRelicCollected(_mainShootingDistanceModifier,_relicAmountDictionary[RelicTypes.MoreShootingDistance]);
             RaiseRelicCollected(RelicTypes.MoreShootingDistance);
         }
 

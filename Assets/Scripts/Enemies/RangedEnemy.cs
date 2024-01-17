@@ -11,6 +11,7 @@ namespace Enemies
         [SerializeField] protected float AttackObjectSpeed;
         [SerializeField] protected float FireCooldown;
         [SerializeField] private float range;
+        [SerializeField] private float attackObjectDamage;
         private bool _canShoot = true;
         protected void Attack()
         {
@@ -22,6 +23,7 @@ namespace Enemies
             Quaternion rotation2 = Quaternion.FromToRotation(transform.up,direction);
             EnemyRangedAttackObject tmpObject = Instantiate(AttackObjectPrefab, new Vector3(position.x,position.y,position.z), rotation2);
             tmpObject.SetSpeed(AttackObjectSpeed);
+            tmpObject.SetDamage(attackObjectDamage);
         }
 
          protected override void Update()
@@ -52,6 +54,11 @@ namespace Enemies
 
             return false;
         }
-        
+
+        protected override void OnNextLevel(int levelIndex)
+        {
+            base.OnNextLevel(levelIndex);
+            attackObjectDamage = attackObjectDamage + (attackObjectDamage * levelIndex * LevelDamageIncreaseModifier);
+        }
     }
 }

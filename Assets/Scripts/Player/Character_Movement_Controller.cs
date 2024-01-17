@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class Character_Movement_Controller : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    private float speed;
+    [SerializeField] private float baseSpeed;
     private Rigidbody2D _rigidbody2D;
 
     private float _horizontal;
@@ -25,12 +26,13 @@ public class Character_Movement_Controller : MonoBehaviour
         EventManager.MovementSpeedRelicCollected -= OnMovementSpeedRelicTaken;
     }
     
-    private void OnMovementSpeedRelicTaken(float obj)
+    private void OnMovementSpeedRelicTaken(float increaseModifier,int amount)
     {
-        speed *= obj;
+        speed = baseSpeed + increaseModifier * amount;
     }
     private void Start()
     {
+        speed = baseSpeed;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
     }

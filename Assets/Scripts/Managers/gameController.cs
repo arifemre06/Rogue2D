@@ -42,7 +42,7 @@ public class gameController : MonoBehaviour
     private int _enemyCounter;
     private int _enemyGroupIndex = 0;
     private int _enemyCountForThatWave = 0;
-    private int _waveIndex;
+    public static int LevelIndex{get; private set;}
     private List<Vector3> _enemySpawnTransforms;
     private List<EnemyType> _enemyToSpawn;
     private List<float> _secondsBetweenSpawn;
@@ -51,14 +51,14 @@ public class gameController : MonoBehaviour
     
     void Start()
     {
-        _waveIndex = 0;
+        LevelIndex = 0;
         _spawnIndex = 0;
         _spawnCounter = 0;
         spawnedEnemyCount = 0;
         _enemyCounter = 0;
         _enemyGroupIndex = 0;
         _enemyCountForThatWave = 0;
-        ChangeEnemySpawnData(_waveIndex);
+        ChangeEnemySpawnData(LevelIndex);
         OnMainMenuButtonClicked();
         Gold = 0;
         exp = 0;
@@ -319,10 +319,10 @@ public class gameController : MonoBehaviour
             if (killedEnemyCount >= _enemyCountForThatWave)
             {
                 //Debug.Log("level is over wave index "+_waveIndex);
-                _waveIndex += 1;
-                if (_waveIndex < enemySpawnDataList.Count)
+                LevelIndex += 1;
+                if (LevelIndex < enemySpawnDataList.Count)
                 {
-                    EventManager.OnUpGradePanelOpened(_waveIndex);
+                    EventManager.OnUpGradePanelOpened(LevelIndex);
                 }
                 
             }

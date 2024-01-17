@@ -458,6 +458,7 @@ MonoBehaviour:
   AttackObjectSpeed: 4
   FireCooldown: 2
   range: 5
+  attackObjectDamage: 5
 --- !u!95 &6618112530720914769
 Animator:
   serializedVersion: 4

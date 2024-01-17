@@ -10,13 +10,13 @@ public class EventManager : MonoBehaviour
 {
     public static event Action<Sprite,string> RelicCollected;
     public static event Action<RelicTypes> RelicTaken;
-    public static event Action<float> AttackSpeedRelicCollected;
-    public static event Action<float> AttackDamageRelicCollected;
-    public static event Action<float> LifeStealRelicCollected;
-    public static event Action<float> LifeRegenRelicCollected;
-    public static event Action<float> MovementSpeedRelicCollected;
-    public static event Action<float> MoreShootingDistanceRelicCollected;
-    public static event Action<float> DodgeChanceRelicCollected;
+    public static event Action<float,int> AttackSpeedRelicCollected;
+    public static event Action<float,int> AttackDamageRelicCollected;
+    public static event Action<float,int> LifeStealRelicCollected;
+    public static event Action<float,int> LifeRegenRelicCollected;
+    public static event Action<float,int> MovementSpeedRelicCollected;
+    public static event Action<float,int> MoreShootingDistanceRelicCollected;
+    public static event Action<float,int> DodgeChanceRelicCollected;
     public static event Action<int> DamageProtectionRelicCollected;
 
     public static event Action<RuinTypes> RuinEffectTaken;
@@ -30,6 +30,7 @@ public class EventManager : MonoBehaviour
     public static event Action UpdateShopPrices;
     public static event Action ReRollShop;
 
+    public static event Action<int> NextLevel; 
     public static event Action<GameState, GameState> GameStateChanged;
     public static event Action<bool> InfoPanelOpenOrClose;
     public static event Action MainMenuButtonClicked; 
@@ -43,19 +44,19 @@ public class EventManager : MonoBehaviour
 
 
 
-    public static void OnAttackSpeedRelicCollected(float obj)
+    public static void OnAttackSpeedRelicCollected(float increaseModifier,int amount)
     {
-        AttackSpeedRelicCollected?.Invoke(obj);
+        AttackSpeedRelicCollected?.Invoke(increaseModifier,amount);
     }
 
-    public static void OnAttackDamageRelicCollected(float obj)
+    public static void OnAttackDamageRelicCollected(float increaseModifier,int amount)
     {
-        AttackDamageRelicCollected?.Invoke(obj);
+        AttackDamageRelicCollected?.Invoke(increaseModifier,amount);
     }
 
-    public static void OnLifeStealRelicCollected(float obj)
+    public static void OnLifeStealRelicCollected(float increaseModifier,int amount)
     {
-        LifeStealRelicCollected?.Invoke(obj);
+        LifeStealRelicCollected?.Invoke(increaseModifier,amount);
     }
 
     public static void OnGameStateChanged(GameState arg1, GameState arg2)
@@ -133,25 +134,25 @@ public class EventManager : MonoBehaviour
         RuinHighRiskHighRewardTaken?.Invoke();
     }
 
-    public static void OnLifeRegenRelicCollected(float obj)
+    public static void OnLifeRegenRelicCollected(float increaseModifier,int amount)
     {
-        LifeRegenRelicCollected?.Invoke(obj);
+        LifeRegenRelicCollected?.Invoke(increaseModifier,amount);
         
     }
 
-    public static void OnMovementSpeedRelicCollected(float obj)
+    public static void OnMovementSpeedRelicCollected(float increaseModifier,int amount)
     {
-        MovementSpeedRelicCollected?.Invoke(obj);
+        MovementSpeedRelicCollected?.Invoke(increaseModifier,amount);
     }
 
-    public static void OnMoreShootingDistanceRelicCollected(float obj)
+    public static void OnMoreShootingDistanceRelicCollected(float increaseModifier,int amount)
     {
-        MoreShootingDistanceRelicCollected?.Invoke(obj);
+        MoreShootingDistanceRelicCollected?.Invoke(increaseModifier,amount);
     }
 
-    public static void OnDodgeChanceRelicCollected(float obj)
+    public static void OnDodgeChanceRelicCollected(float increaseModifier,int amount)
     {
-        DodgeChanceRelicCollected?.Invoke(obj);
+        DodgeChanceRelicCollected?.Invoke(increaseModifier,amount);
     }
 
     public static void OnDamageProtectionRelicCollected(int obj)
@@ -172,5 +173,10 @@ public class EventManager : MonoBehaviour
     public static void OnReRollShop()
     {
         ReRollShop?.Invoke();
+    }
+
+    public static void OnNextLevel(int obj)
+    {
+        NextLevel?.Invoke(obj);
     }
 }

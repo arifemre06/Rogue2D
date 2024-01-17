@@ -7,7 +7,7 @@ namespace DefaultNamespace
     public class EnemyRangedAttackObject : MonoBehaviour
     {
         protected float Speed;
-        [SerializeField] private float _attackObjectDamage;
+        private float _attackObjectDamage;
         [SerializeField] private RuinStatueData ruinStatueData;
 
         private void Awake()
@@ -31,6 +31,11 @@ namespace DefaultNamespace
             Speed = speed;
         }
 
+        public void SetDamage(float value)
+        {
+            _attackObjectDamage = value;
+            CheckTakenRuins();
+        }
         public float GetDamage()
         {
             return _attackObjectDamage;
