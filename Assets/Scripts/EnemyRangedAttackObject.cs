@@ -8,17 +8,7 @@ namespace DefaultNamespace
     {
         protected float Speed;
         private float _attackObjectDamage;
-        [SerializeField] private RuinStatueData ruinStatueData;
 
-        private void Awake()
-        {
-            EventManager.RuinHighRiskHighRewardTaken += OnHighRiskHighRewardTaken;
-        }
-
-        private void OnDestroy()
-        {
-            EventManager.RuinHighRiskHighRewardTaken += OnHighRiskHighRewardTaken;
-        }
 
         private void Start()
         {
@@ -34,28 +24,12 @@ namespace DefaultNamespace
         public void SetDamage(float value)
         {
             _attackObjectDamage = value;
-            CheckTakenRuins();
         }
         public float GetDamage()
         {
             return _attackObjectDamage;
         }
         
-        private void OnHighRiskHighRewardTaken()
-        {   
-            //list order (damage,health,gold drop)
-            List<float> highRiskHighRewardData = new List<float>();
-            highRiskHighRewardData = ruinStatueData.GetHighRiskHighRewardData();
-            _attackObjectDamage *= highRiskHighRewardData[0];
-        }
-
-        private void CheckTakenRuins()
-        {
-            if (TakenRuins.HighRiskHighRewardTaken)
-            {
-                OnHighRiskHighRewardTaken();
-            }
-        }
         
     }
 }

@@ -3,29 +3,66 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using ScriptableObjectsScripts;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Character_Movement_Controller : MonoBehaviour
 {
     private float speed;
     [SerializeField] private float baseSpeed;
+
+    [SerializeField] private List<GameObject> heroes;
+    private List<GameObject> heroesInScene;
     private Rigidbody2D _rigidbody2D;
 
     private float _horizontal;
     private float _vertical;
     private bool _facingRight = true;
     private bool _facingUp = true;
+    private bool _gameLostBefore = false;
 
     private void Awake()
     {
         EventManager.MovementSpeedRelicCollected += OnMovementSpeedRelicTaken;
+        EventManager.PreGameStarted += OnPreGameStarted;
+        EventManager.GameOver += OnGameOver;
+        heroesInScene = new List<GameObject>();
     }
 
     private void OnDestroy()
     {
         EventManager.MovementSpeedRelicCollected -= OnMovementSpeedRelicTaken;
+        EventManager.PreGameStarted -= OnPreGameStarted;
+        EventManager.GameOver -= OnGameOver;
     }
-    
+
+    private void OnGameOver()
+    {
+        _gameLostBefore = true;
+        transform.position = Vector3.zero;
+        heroesInScene.Clear();
+    }
+
+    private void OnPreGameStarted()
+    {
+        int xIndex = 0;
+        int yIndex = 0;
+        float xOffset = 0.5f;
+        float yOffset = 0.3f;
+        
+            for (var i = 0; i < heroes.Count; i++)
+            {   
+                if (xIndex % 2 == 0 && xIndex != 0)
+                {
+                    yIndex += 1;
+                    xIndex = 0;
+                }
+                GameObject tempHero = Instantiate(heroes[i], new Vector2(xIndex * xOffset, yIndex * yOffset), quaternion.identity,transform);
+                heroesInScene.Add(tempHero);
+                xIndex++;
+            }
+            
+    }
     private void OnMovementSpeedRelicTaken(float increaseModifier,int amount)
     {
         speed = baseSpeed + increaseModifier * amount;
@@ -87,11 +124,21 @@ public class Character_Movement_Controller : MonoBehaviour
     {
         // Switch the way the player is labelled as facing.
         _facingRight = !_facingRight;
-
         // Multiply the player's x local scale by -1.
+        foreach (GameObject baseHero in heroesInScene)
+        {
+            if (baseHero != null)
+            {
+                Vector3 theScale = baseHero.transform.localScale;
+                theScale.x *= -1;
+                baseHero.transform.localScale = theScale;
+            }
+        }
+        /*
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+        */
     }
     
     private void FlipVertical()
@@ -105,5 +152,11 @@ public class Character_Movement_Controller : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    
+    public List<GameObject> GetHeroes()
+    {
+        return heroesInScene;
+    }
+
+
+
 }

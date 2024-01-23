@@ -28,5 +28,11 @@ namespace DefaultNamespace
         {
             HighRiskHighRewardTaken = true;
         }
+
+        public static void ClearTakenRuins()
+        {
+            HighRiskHighRewardTaken = false;
+            GiveMeTrioTaken = false;
+        }
     }
 }

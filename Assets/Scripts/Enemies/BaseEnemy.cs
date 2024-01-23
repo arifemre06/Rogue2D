@@ -9,6 +9,7 @@ namespace Enemies
 {
     public abstract class BaseEnemy : MonoBehaviour
     {
+        [SerializeField] private int power;
         [SerializeField] protected float enemyHealth = 100;
     
         [SerializeField] protected float enemySpeed = 0.05f;
@@ -25,7 +26,7 @@ namespace Enemies
 
         [SerializeField] protected Animator Animator;
 
-        [SerializeField] private RuinStatueData ruinEffectData;
+        [SerializeField] protected RuinStatueData ruinEffectData;
 
         public const float LevelDamageIncreaseModifier = 0.02f;
         public const float LevelHealthIncreaseModifier = 0.05f;
@@ -36,6 +37,7 @@ namespace Enemies
         private float _enemyMaxHealth;
         private int _notHitForOneSecCount;
         private bool _oneSecondPassed;
+        private bool _facingRight;
 
         private void Awake()
         {
@@ -67,11 +69,27 @@ namespace Enemies
                 Vector3 direction = Character.transform.position - transform.position;
                 Quaternion rotation2 = Quaternion.LookRotation(direction);
                 transform.position += direction.normalized * (enemySpeed * Time.deltaTime);
+                if (direction.x < 0 && !_facingRight)
+                {
+                    FlipHorizontal();
+                }
+                else if(direction.x > 0 && _facingRight)
+                {
+                    FlipHorizontal();
+                }
                 if (_oneSecondPassed)
                 {
                     StartCoroutine(HideHealthBarUI());
                 }
             }
+
+        private void FlipHorizontal()
+        {
+            _facingRight = !_facingRight;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
             
             
             public void SetHealth(float damage)
@@ -120,7 +138,7 @@ namespace Enemies
                 }
             }
             
-            private void OnHighRiskHighRewardTaken()
+            protected virtual void OnHighRiskHighRewardTaken()
             {
                 //list order (damage,health,gold drop)
                 List<float> highRiskHighRewardData = new List<float>();
@@ -129,11 +147,15 @@ namespace Enemies
                 enemyHealth *= highRiskHighRewardData[1];
                 float tempGoldDrop = goldDrop * highRiskHighRewardData[2];
                 goldDrop = (int)tempGoldDrop;
+                Debug.Log("datanın içinde ne var "+ highRiskHighRewardData[0]+" "+highRiskHighRewardData[1] +" "+highRiskHighRewardData[2]);
             }
 
-            private void OnGiveTrioTaken()
+            protected virtual void OnGiveTrioTaken()
             {
-                
+                //list order (damage)
+                List<float> giveMeTrioData = new List<float>();
+                giveMeTrioData = ruinEffectData.GetGiveMeTrioData();
+                enemyColDamage *= giveMeTrioData[0];
             }
             
             private void CheckTakenRuins()
@@ -159,6 +181,11 @@ namespace Enemies
                 enemyHealth = enemyHealth + enemyHealth *(levelIndex * LevelHealthIncreaseModifier);
                 float tempGoldDrop = goldDrop + goldDrop * (levelIndex * LevelGoldIncreaseModifier);
                 goldDrop = (int)tempGoldDrop;
+            }
+
+            public int GetPower()
+            {
+                return power;
             }
     }
 }

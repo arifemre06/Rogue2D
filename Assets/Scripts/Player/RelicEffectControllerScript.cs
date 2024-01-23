@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ScriptableObjectsScripts;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DefaultNamespace
 {
@@ -33,11 +34,13 @@ namespace DefaultNamespace
                 _relicAmountDictionary[relicTypes] = 0;
             }
             EventManager.RelicTaken += OnRelicCollected;
+            EventManager.RuinGiveMeTrioTaken += OnGiveMeTrioTaken;
         }
 
         private void OnDestroy()
         {
             EventManager.RelicTaken -= OnRelicCollected;
+            EventManager.RuinGiveMeTrioTaken -= OnGiveMeTrioTaken;
         }
         
         private void OnRelicCollected(RelicTypes relicTypes)
@@ -72,7 +75,6 @@ namespace DefaultNamespace
                     break;
             }
         }
-        
         private void OnTriggerEnter2D(Collider2D other)
         {   
             
@@ -81,13 +83,19 @@ namespace DefaultNamespace
                 _collidedWithRelic = true;
                 StartCoroutine(WaitBetweenRelicCollides());
                 RelicTypes relicString = other.GetComponent<relics>().GetRelicString();
+                EventManager.OnRelicTaken(relicString);
                 OnRelicCollected(relicString);
                 Destroy(other.gameObject);
             }
         }
-
+        private void OnGiveMeTrioTaken()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                EventManager.OnRelicTaken(GetRandomRelic());
+            }
+        }
         
-
         private IEnumerator WaitBetweenRelicCollides()
         {
             yield return new WaitForSeconds(1);
@@ -107,7 +115,6 @@ namespace DefaultNamespace
 
         private void LifeStealRelicCollected()
         {
-            _mainLifeStealModifier += 0.05f;
             EventManager.OnLifeStealRelicCollected(_mainLifeStealModifier,_relicAmountDictionary[RelicTypes.LifeSteal]);
             RaiseRelicCollected(RelicTypes.LifeSteal);
             
@@ -121,8 +128,7 @@ namespace DefaultNamespace
 
         private void LifeRegenRelicCollected()
         {
-
-            _mainHealtRegenModifier += 0.02f;
+            
             EventManager.OnLifeRegenRelicCollected(_mainHealtRegenModifier,_relicAmountDictionary[RelicTypes.LifeRegen]);
             RaiseRelicCollected(RelicTypes.LifeRegen);
         }
@@ -136,14 +142,12 @@ namespace DefaultNamespace
 
         private void DodgeChanceRelicCollected()
         {
-            _mainDodgeChanceModifier += 0.05f;
             EventManager.OnDodgeChanceRelicCollected(_mainDodgeChanceModifier,_relicAmountDictionary[RelicTypes.DodgeChance]);
             RaiseRelicCollected(RelicTypes.DodgeChance);
         }
 
         private void MoreShootingDistanceRelicCollected()
         {
-            _mainShootingDistanceModifier += 0.05f;
             EventManager.OnMoreShootingDistanceRelicCollected(_mainShootingDistanceModifier,_relicAmountDictionary[RelicTypes.MoreShootingDistance]);
             RaiseRelicCollected(RelicTypes.MoreShootingDistance);
         }
@@ -155,6 +159,13 @@ namespace DefaultNamespace
             Sprite sprite = relicScriptableObject.GetPrefab(type);
             string text = relicScriptableObject.GetRelicText(type);
             EventManager.OnRelicCollected(sprite,text);
+        }
+        
+        public RelicTypes GetRandomRelic()
+        {
+            List<RelicTypes> relicTypesList = relicScriptableObject.GetRelicTypesList();
+            int randomNumber = Random.Range(0, relicTypesList.Count);
+            return relicTypesList[randomNumber];
         }
     }
 }

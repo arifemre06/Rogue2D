@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
 
@@ -15,7 +16,6 @@ namespace Enemies
         private bool _canShoot = true;
         protected void Attack()
         {
-            
             Animator.Play("Attack");
             var position = transform.position;
             Vector3 direction = (Character.transform.position - position);
@@ -51,7 +51,6 @@ namespace Enemies
             {
                 return true;
             }
-
             return false;
         }
 
@@ -59,6 +58,21 @@ namespace Enemies
         {
             base.OnNextLevel(levelIndex);
             attackObjectDamage = attackObjectDamage + (attackObjectDamage * levelIndex * LevelDamageIncreaseModifier);
+        }
+
+        protected override void OnHighRiskHighRewardTaken()
+        {   
+            List<float> highRiskHighRewardData = new List<float>();
+            highRiskHighRewardData = ruinEffectData.GetHighRiskHighRewardData();
+            attackObjectDamage *= highRiskHighRewardData[0];
+            base.OnHighRiskHighRewardTaken();
+        }
+
+        protected override void OnGiveTrioTaken()
+        {   
+            List<float> giveMeTrioData = ruinEffectData.GetGiveMeTrioData();
+            attackObjectDamage = attackObjectDamage * giveMeTrioData[0];
+            base.OnGiveTrioTaken();
         }
     }
 }

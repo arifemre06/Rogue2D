@@ -33,9 +33,11 @@ public class EventManager : MonoBehaviour
     public static event Action<int> NextLevel; 
     public static event Action<GameState, GameState> GameStateChanged;
     public static event Action<bool> InfoPanelOpenOrClose;
-    public static event Action MainMenuButtonClicked; 
+    public static event Action MainMenuButtonClicked;
+    public static event Action PreGameStarted;
     public static event Action GameStarted;
     public static event Action<int> UpGradePanelOpened;
+    public static event Action GameOver;
     public static event Action Quit;
 
     public static event Action<float> MusicVolumeChanged;
@@ -178,5 +180,15 @@ public class EventManager : MonoBehaviour
     public static void OnNextLevel(int obj)
     {
         NextLevel?.Invoke(obj);
+    }
+
+    public static void OnGameOver()
+    {
+        GameOver?.Invoke();
+    }
+
+    public static void OnPreGameStarted()
+    {
+        PreGameStarted?.Invoke();
     }
 }

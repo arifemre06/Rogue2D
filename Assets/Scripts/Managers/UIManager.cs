@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using DefaultNamespace.UI;
 using UnityEngine;
 
@@ -12,11 +13,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIPanel settingsPanel;
     [SerializeField] private UIPanel infoPanel;
     [SerializeField] private UIPanel upgradePanel;
+    [SerializeField] private UIPanel gameOverPanel;
+
+    private InfoPanel _infoPanelScript;
+    private bool _infoPanelOpened;
     
     private void Awake()
     {
         EventManager.GameStateChanged += OnGameStateChanged;
         EventManager.InfoPanelOpenOrClose += OnInfoPanelStatusChanged;
+        _infoPanelScript = infoPanel.GetComponent<InfoPanel>();
         DeActivateAllPanels();
             
     }
@@ -25,6 +31,21 @@ public class UIManager : MonoBehaviour
     {
         EventManager.GameStateChanged -= OnGameStateChanged;
         EventManager.InfoPanelOpenOrClose -= OnInfoPanelStatusChanged;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.K) && !_infoPanelOpened)
+        {
+            OnInfoPanelStatusChanged(true);
+            _infoPanelScript.UpdateInfoPanel();
+            _infoPanelOpened = true;
+        }
+        else if (!Input.GetKey(KeyCode.K) && _infoPanelOpened)
+        {
+            OnInfoPanelStatusChanged(false);
+            _infoPanelOpened = false;
+        }
     }
 
     private void OnGameStateChanged(GameState oldState, GameState newState)
@@ -36,17 +57,19 @@ public class UIManager : MonoBehaviour
         }
         else if (newState == GameState.Settings)
         {
-
             ActivatePanel(settingsPanel);
         }
         else if (newState == GameState.MainMenu)
         {
-
             ActivatePanel(mainMenuPanel);
         }
         else if (newState == GameState.UpgradePanel)
         {
             ActivatePanel(upgradePanel);
+        }
+        else if (newState == GameState.GameOver)
+        {
+            ActivatePanel(gameOverPanel);
         }
     }
     
@@ -58,6 +81,7 @@ public class UIManager : MonoBehaviour
         settingsPanel.DeActivatePanel();
         infoPanel.DeActivatePanel();
         upgradePanel.DeActivatePanel();
+        gameOverPanel.DeActivatePanel();
         
     }
     
@@ -79,7 +103,4 @@ public class UIManager : MonoBehaviour
         }
        
     }
-    
-
-    
 }

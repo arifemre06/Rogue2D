@@ -29,15 +29,31 @@ namespace DefaultNamespace
             goldText.text = "Gold:" + gameController.GetGold();
         }
 
-        private void OnNextLevelClicked()
+        public override void ActivatePanel()
+        {  
+            
+            EventManager.GoldAndExpChanged += OnGoldChanged;
+            goldText.text ="Gold:" + gameController.GetGold();
+            base.ActivatePanel();
+        }
+
+        public override void DeActivatePanel()
         {
-            EventManager.OnGameStarted();
+            
+            EventManager.GoldAndExpChanged -= OnGoldChanged;
+            base.DeActivatePanel();
+        }
+
+        private void OnNextLevelClicked()
+        {   
+            Debug.Log("level ındex "+gameController.LevelIndex);
+            EventManager.OnNextLevel(gameController.LevelIndex);
         }
         
         private void OnGoldChanged(int gold, int exp)
-        {
+        {   
+            Debug.Log("ee biz abonelikten cıktık ama");
             StartCoroutine(UpdateGoldText());
-            Debug.Log("gold ne suan "+gold);
         }
 
         private IEnumerator UpdateGoldText()

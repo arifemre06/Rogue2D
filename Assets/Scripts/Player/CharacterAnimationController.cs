@@ -1,19 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
 {
-    [SerializeField] private List<Animator> charactersAnimatorList;
+    private List<Animator> _charactersAnimatorList;
+    private bool _isMoving;
+
+    private void Awake()
+    {
+        _charactersAnimatorList = new List<Animator>();
+    }
+
+    public void SetAnimators(List<Animator> animators )
+    {
+        if (_charactersAnimatorList != null)
+        {
+            _charactersAnimatorList.Clear();
+        }
+        foreach (Animator animator in animators)
+        {
+            _charactersAnimatorList.Add(animator);
+        }
+
+        for (var i = 0; i < _charactersAnimatorList.Count; i++)
+        {
+            Debug.Log(_charactersAnimatorList[i].gameObject.activeSelf);
+        }
+    }
 
     public void PlayWalkAnimation()
     {
-        SetBoolParameter("IsMoving",true);
+        if (!_isMoving)
+        {
+            SetBoolParameter("IsMoving",true);
+            _isMoving = true;
+        }
     }
 
     public void PlayIdleAnimation()
     {
-        SetBoolParameter("IsMoving",false);
+        if (_isMoving)
+        {
+            SetBoolParameter("IsMoving",false);
+            _isMoving = false;
+        }
     }
 
     public void PlayAttackAnimation()
@@ -27,9 +60,12 @@ public class CharacterAnimationController : MonoBehaviour
 
     private void SetBoolParameter(string parameter,bool boolValue)
     {
-        for (int i = 0; i < charactersAnimatorList.Count; i++)
+        for (int i = 0; i < _charactersAnimatorList.Count; i++)
         {
-            charactersAnimatorList[i].SetBool(parameter,boolValue);
+            if (_charactersAnimatorList[i] != null)
+            {
+                _charactersAnimatorList[i].SetBool(parameter,boolValue);
+            }
         }
     }
     

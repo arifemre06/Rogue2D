@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960.23206, y: -539.2011}
+  m_AnchoredPosition: {x: -960.1218, y: -539.0846}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1651756898462189607
@@ -162,8 +162,8 @@ GameObject:
   - component: {fileID: 3247709834868948645}
   - component: {fileID: 3247709834868948647}
   - component: {fileID: 3247709834868948644}
-  - component: {fileID: 3247709834868948646}
   - component: {fileID: 1887576693}
+  - component: {fileID: 7395707056455152498}
   m_Layer: 8
   m_Name: Mage
   m_TagString: Hero
@@ -179,9 +179,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3247709834868948642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: 0.664, z: 0}
+  m_LocalPosition: {x: -0.163, y: 0.527, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2074957227717258816}
   m_Father: {fileID: 0}
@@ -228,12 +228,12 @@ SpriteRenderer:
   m_SortingLayerID: -245328455
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b7ae3ea303f6e8f4ca64fbe576fd250a, type: 3}
+  m_Sprite: {fileID: -1383730268, guid: b7ae3ea303f6e8f4ca64fbe576fd250a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.9, y: 2.22}
+  m_Size: {x: 0.5, y: 0.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -251,32 +251,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5b04344fd6fdb4d8fc5aec86dccff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 5
   FireCooldown: 3
-  CollisionDamage: 50
+  CollisionDamage: 0
   Damage: 15
   ShootingDistance: 6
-  DamageProtectionRegenCooldown: 5
+  DamageProtectionRegenCooldown: 20
+  BaseDamage: 15
+  BaseShootingDistance: 6
   Animator: {fileID: 1887576693}
   healthBar: {fileID: 586450612920030283}
   heroCanvas: {fileID: 1580006128484736857}
+  _heroMaxHealth: 20
   magicPrefab: {fileID: 6686382520302075000, guid: 1c74e36d5bfbcae438b89b0db546414a, type: 3}
---- !u!58 &3247709834868948646
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3247709834868948642}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.17670088, y: -0.19752014}
-  serializedVersion: 2
-  m_Radius: 0.2777436
 --- !u!95 &1887576693
 Animator:
   serializedVersion: 4
@@ -297,6 +283,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &7395707056455152498
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247709834868948642}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.040485293, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.47, y: 0.56}
+    newSize: {x: 0.5, y: 0.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4190294, y: 0.56}
+  m_EdgeRadius: 0
 --- !u!1 &6794926512222042533
 GameObject:
   m_ObjectHideFlags: 0

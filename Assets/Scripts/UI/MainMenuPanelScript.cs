@@ -43,7 +43,7 @@ namespace DefaultNamespace.UI
 
         private void OnStartButtonClicked()
         {
-            EventManager.OnGameStarted();
+            EventManager.OnPreGameStarted();
         }
     }
 }

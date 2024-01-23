@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Enemies;
 using Mono.Cecil;
+using ScriptableObjectsScripts;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -11,8 +12,8 @@ using Random = UnityEngine.Random;
 namespace DefaultNamespace
 {
     public abstract class BaseHero : MonoBehaviour
-    {   
-        [SerializeField] protected float Health;
+    { 
+        protected float Health;
         [SerializeField] protected float FireCooldown;
         [SerializeField] protected float CollisionDamage;
         [SerializeField] protected float Damage;
@@ -21,9 +22,11 @@ namespace DefaultNamespace
         
         [SerializeField] protected float BaseDamage;
         [SerializeField] protected float BaseShootingDistance;
+        
             
         protected float LifeSteal = 0;
         protected float LifeRegen = 0;
+        protected const int LifeRegenTimeInterval = 5;
         protected int MaxDamageProtectionAmount = 0;
         protected int CurrentDamageProtectionAmount = 0;
         protected float DodgeChance = 0;
@@ -34,7 +37,7 @@ namespace DefaultNamespace
 
         [SerializeField] protected Canvas heroCanvas;
 
-        private float _heroMaxHealth;
+        [SerializeField] private float _heroMaxHealth;
 
         private List<BaseEnemy> allTargets;
         protected bool CanShoot = true;
@@ -42,6 +45,7 @@ namespace DefaultNamespace
         protected bool CanDamageProtection = true;
 
         protected bool CollidedWithEnemies;
+        private bool _isDead;
         
         private void Awake()
         {
@@ -56,7 +60,10 @@ namespace DefaultNamespace
             EventManager.DamageProtectionRelicCollected += OnDamageProtectionRelicCollected;
             EventManager.EnemySpawned += OnEnemySpawnedUpdateEnemiesTransform;
             EventManager.EnemyKilled += OnEnemyKilledUpdateEnemiesTransform;
+            EventManager.NextLevel += OnNextLevel;
+            EventManager.GameOver += OnGameOver;
             CanShoot = true;
+            gameController.HeroCountOnScene += 1;
         }
 
         private void OnDestroy()
@@ -72,13 +79,17 @@ namespace DefaultNamespace
             EventManager.DamageProtectionRelicCollected += OnDamageProtectionRelicCollected;
             EventManager.EnemySpawned -= OnEnemySpawnedUpdateEnemiesTransform;
             EventManager.EnemyKilled -= OnEnemyKilledUpdateEnemiesTransform;
+            EventManager.NextLevel -= OnNextLevel;
+            EventManager.GameOver -= OnGameOver;
         }
+
 
         private void Start()
         {
             allTargets = new List<BaseEnemy>();
-            _heroMaxHealth = Health;
-            heroCanvas.enabled = false;
+            //_heroMaxHealth = Health;
+            Health = _heroMaxHealth;
+            UpdateHealthBar(Health);
         }
 
         protected abstract void Attack(BaseEnemy target);
@@ -86,30 +97,69 @@ namespace DefaultNamespace
 
         protected void Update()
         {
-            if (CanShoot)
+            if (!_isDead)
             {
-                BaseEnemy target = GetClosestTargetInRange();
-                CanShoot = false;
-                StartCoroutine(StartAttackCooldown());
-                if (target != null)
+                if (CanShoot)
                 {
-                    Attack(target);
+                    BaseEnemy target = GetClosestTargetInRange();
+                    CanShoot = false;
+                    StartCoroutine(StartAttackCooldown());
+                    if (target != null)
+                    {
+                        Attack(target);
+                    }
+                }
+
+                if (LifeRegen > 0 && CanLifeRegen && (Health < _heroMaxHealth))
+                {
+                    CanLifeRegen = false;
+                    StartCoroutine(LifeRegenCooldown());
+                }
+
+                if (MaxDamageProtectionAmount > 0 && CanDamageProtection &&
+                    (CurrentDamageProtectionAmount < MaxDamageProtectionAmount))
+                {
+                    CanDamageProtection = false;
+                    StartCoroutine(DamageProtectionCooldown());
                 }
             }
-            if (LifeRegen > 0 && CanLifeRegen && (Health < _heroMaxHealth))
-            {
-                CanLifeRegen = false;
-                StartCoroutine(LifeRegenCooldown());
-            }
-
-            if (MaxDamageProtectionAmount > 0 && CanDamageProtection &&
-                (CurrentDamageProtectionAmount < MaxDamageProtectionAmount))
-            {
-                CanDamageProtection = false;
-                StartCoroutine(DamageProtectionCooldown());
-            }
+        }
+        
+        private void OnGameStarted()
+        {
+            ReviveHero();
+        }
+        private void OnNextLevel(int obj)
+        {
+            ReviveHero();
+        }
+        
+        private void OnGameOver()
+        {
+            ClearTargetArray();
+            Destroy(gameObject);
         }
 
+        private void ClearTargetArray()
+        {
+            allTargets.Clear();
+        }
+
+        private void ReviveHero()
+        {
+            if (_isDead)
+            {
+                CanShoot = true;
+                gameObject.GetComponent<Collider2D>().enabled = true;
+                heroCanvas.enabled = true;
+                _isDead = false;
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                gameController.HeroCountOnScene += 1;
+            }
+            Health = _heroMaxHealth;
+            UpdateHealthBar(Health);
+        }
+        
         protected BaseEnemy GetClosestTargetInRange()
         {
             if (allTargets.Count != 0)
@@ -140,7 +190,7 @@ namespace DefaultNamespace
         
         protected IEnumerator LifeRegenCooldown()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(LifeRegenTimeInterval);
             RegenLife();
             CanLifeRegen = true;
         }
@@ -178,9 +228,22 @@ namespace DefaultNamespace
                         Debug.Log("hasardan korunduk");
                     }
                     else
-                    {
-                        Health -= enemyScript.GetCollisionDamage();
-                        UpdateHealthBar(Health);
+                    {   
+                        if (Health - enemyScript.GetCollisionDamage() < 0)
+                        {
+                            if (gameController.HeroCountOnScene <= 1)
+                            {
+                                EventManager.OnGameOver();
+                            }
+
+                            HeroDeadState();
+                            //Destroy(gameObject);
+                        }
+                        else
+                        {
+                            Health -= enemyScript.GetCollisionDamage();
+                            UpdateHealthBar(Health);
+                        }
                     }
                 }
                 if (enemyScript.GetHealth() <= 0)
@@ -205,8 +268,21 @@ namespace DefaultNamespace
                         }
                         else
                         {
-                            Health -= rangedAttackScript.GetDamage();
-                            UpdateHealthBar(Health);
+                            if (Health - rangedAttackScript.GetDamage() < 0)
+                            {
+                                if (gameController.HeroCountOnScene <= 1)
+                                {
+                                    EventManager.OnGameOver();
+                                }
+
+                                HeroDeadState();
+                                //Destroy(gameObject);
+                            }
+                            else
+                            {
+                                Health -= rangedAttackScript.GetDamage();
+                                UpdateHealthBar(Health);
+                            }
                         }
                     }
                 }
@@ -222,21 +298,22 @@ namespace DefaultNamespace
         
         private void UpdateHealthBar(float currentHealth)
         {
-            heroCanvas.enabled = true;
             healthBar.fillAmount = currentHealth / _heroMaxHealth;
         }
 
         private void RegenLife()
         {
-            Health += _heroMaxHealth * LifeRegen;
+            if ((Health + _heroMaxHealth * LifeRegen) > _heroMaxHealth)
+            {
+                Health = _heroMaxHealth;
+            }
+            else
+            {
+                Health += _heroMaxHealth * LifeRegen;
+            }
             UpdateHealthBar(Health);
         }
         
-        private void OnGameStarted()
-        {
-            Health = _heroMaxHealth;
-            UpdateHealthBar(Health);
-        }
 
         private bool CheckDodge()
         {
@@ -318,6 +395,14 @@ namespace DefaultNamespace
             return 1 - 1 / (1 + mainModifier * amount);
         }
 
+        private void HeroDeadState()
+        {
+            _isDead = true;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            heroCanvas.enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameController.HeroCountOnScene -= 1;
+        }
         
         
     }

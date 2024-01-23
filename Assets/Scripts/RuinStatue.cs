@@ -21,7 +21,6 @@ public class RuinStatue : MonoBehaviour
     [SerializeField] private LayerMask heroLayerMask;
     private Collider2D[] _overlapHits;
     
-
     private void Start()
     {
         _ruinType = GetRandomEffect();
@@ -46,7 +45,7 @@ public class RuinStatue : MonoBehaviour
             CanvasVisible(false);
         }
     }
-
+    
     private RuinTypes GetRandomEffect()
     {
         int randomNumber = Random.Range(0, ruinTypeList.Count);

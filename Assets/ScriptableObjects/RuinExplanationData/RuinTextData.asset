@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ruinExplanation:
   - Enemy Health and Damage +%20  Gold Drop +%20
-  - bla bla give me trio
+  - 'Enemy Damage +%100 Take 3 Relic '
   ruinTypes: 0000000001000000

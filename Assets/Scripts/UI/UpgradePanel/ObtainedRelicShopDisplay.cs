@@ -1,35 +1,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DefaultNamespace.UI;
+using DefaultNamespace;
 using ScriptableObjectsScripts;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using Unity.Mathematics;
 
-
-
-
-namespace DefaultNamespace
+public class ObtainedRelicShopDisplay : MonoBehaviour
 {
-    public class InfoPanel : UIPanel
-    {
-
         [SerializeField] private Transform relicInfoUITemplate;
         [SerializeField] private RelicScriptableObject _relicScriptableObject;
         private List<Sprite> _relicImage;
-        private bool _panelOpen;
         private List<Transform> _UITemplates;
-
         
         private void Awake()
         {
             _relicImage = new List<Sprite>();
             _UITemplates = new List<Transform>();
-            
+            EventManager.RelicCollected += OnRelicCollected;
+            EventManager.UpGradePanelOpened += OnUpgradePanelOpened;
         }
-        
+
+        private void OnDestroy()
+        {
+            EventManager.RelicCollected -= OnRelicCollected;
+            EventManager.UpGradePanelOpened -= OnUpgradePanelOpened;
+        }
+
+        private void OnUpgradePanelOpened(int obj)
+        {
+            UpdateInfoPanel();
+        }
+
+        private void OnRelicCollected(Sprite arg1, string arg2)
+        {
+            UpdateInfoPanel();
+        }
 
         private void Start()
         {
@@ -37,7 +43,6 @@ namespace DefaultNamespace
             UpdateInfoPanel();
         }
         
-
         public void UpdateInfoPanel()
         {
             for (var i = 0; i < _UITemplates.Count; i++)
@@ -58,6 +63,7 @@ namespace DefaultNamespace
             takenRelics = TakenRelics.TakenRelicsList;
             if (takenRelics == null)
             {
+                Debug.Log("tam olarak burdan donmuyoz mu");
                 return;
             }
             foreach (RelicTypes takenRelic in takenRelics)
@@ -73,9 +79,9 @@ namespace DefaultNamespace
                 _UITemplates.Add(collectableUITransform);
                 collectableUITransform.gameObject.SetActive(true);
                 float offset = -160f;
-                float xoffset = 120f;
+                float xoffset = 100f;
                 
-                if (xindex % 5 == 0 && xindex != 0)
+                if (xindex % 10 == 0 && xindex != 0)
                 {
                     _index += 1;
                     xindex = 0;
@@ -88,5 +94,4 @@ namespace DefaultNamespace
 
             }
         }
-    }
 }

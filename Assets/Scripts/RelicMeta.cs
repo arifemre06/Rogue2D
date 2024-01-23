@@ -6,14 +6,14 @@ namespace DefaultNamespace
     [Serializable]
     public class RelicMeta
     {
-        [SerializeField] private Mesh mesh;
+        [SerializeField] private Sprite sprite;
 
-        [SerializeField] private MeshRenderer renderer;
+        [SerializeField] private string description;
 
 
-        public Mesh Mesh => mesh;
+        public Sprite Sprite => sprite;
 
-        public MeshRenderer Renderer => renderer;
+        public string Description => description;
 
     }
 }

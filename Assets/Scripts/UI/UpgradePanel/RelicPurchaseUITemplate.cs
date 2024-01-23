@@ -20,31 +20,46 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private RelicScriptableObject relicScriptableObject;
-    [SerializeField] private int price;
+    private int price;
     [SerializeField] private float priceIncreaseModifier;
+    [SerializeField] private int basePrice;
     private bool _clicked;
     private RelicTypes _relicTypes;
+    private const float priceIncreaseModifierForLevelUp = 1.3f;
+    private ColorBlock _purchaseButtonBaseColors;
 
     private void Awake()
     {
+        price = basePrice;
         purchaseButton.onClick.AddListener(OnPurchaseButtonClicked);
         EventManager.ReRollShop += OnReRollShop;
         EventManager.UpdateShopPrices += UpdatePrice;
+        EventManager.NextLevel += OnNextLevel;
     }
 
     private void OnDestroy()
     {
         EventManager.ReRollShop -= OnReRollShop;
         EventManager.UpdateShopPrices -= UpdatePrice;
+        EventManager.NextLevel -= OnNextLevel;
     }
 
     void Start()
-    {
+    {   
+        _purchaseButtonBaseColors = purchaseButton.colors;
         SetUIWhenStart();
+    }
+    
+    private void OnNextLevel(int obj)
+    {
+        price = (int)(basePrice * priceIncreaseModifierForLevelUp * obj);
+        priceText.text = price.ToString();
+        SetUIWhenStart();
+        purchaseButton.colors = _purchaseButtonBaseColors;
     }
     private void OnPurchaseButtonClicked()
     {
-        if (gameController.GetGold() > price && !_clicked)
+        if (gameController.GetGold() >= price && !_clicked)
         {
             _clicked = true;
             EventManager.OnGoldAndExpChanged(-price,0);
@@ -65,13 +80,14 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     
     private void OnReRollShop()
     {
-        if (!_clicked)
-        {
-            _relicTypes = GetRandomRelic();
+        _relicTypes = GetRandomRelic();
             itemImage.sprite = relicScriptableObject.GetPrefab(_relicTypes);
             headerText.text = _relicTypes.ToString();
             descriptionText.text = relicScriptableObject.GetRelicText(_relicTypes);
-        }
+            soldImage.enabled = false;
+            SetUIWhenStart();
+            purchaseButton.colors = _purchaseButtonBaseColors;
+            _clicked = false;
     }
     private RelicTypes GetRandomRelic()
     {

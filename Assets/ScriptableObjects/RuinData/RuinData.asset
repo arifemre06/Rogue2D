@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceea334cf72f4bf8a6ec1b81cd4b91d8, type: 3}
   m_Name: RuinData
   m_EditorClassIdentifier: 
-  enemyDamageMultiplier: 1.2
-  enemyHealthMultiplier: 1.2
-  enemyGoldDropMultiplier: 1.2
+  highRiskHighRewardenemyDamageMultiplier: 1.2
+  highRiskHighRewardenemyHealthMultiplier: 1.2
+  highRiskHighRewardenemyGoldDropMultiplier: 1.2
+  giveMeTrieDataDamageMultiplier: 2

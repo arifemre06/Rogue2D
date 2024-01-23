@@ -148,7 +148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960.42944, y: -539.5809}
+  m_AnchoredPosition: {x: -960.3482, y: -539.4421}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6293455596644249139
@@ -238,8 +238,8 @@ GameObject:
   - component: {fileID: 7790813071272426291}
   - component: {fileID: 7790813071272426293}
   - component: {fileID: 7790813071272426292}
-  - component: {fileID: 7790813071272426294}
   - component: {fileID: 786297381}
+  - component: {fileID: 1691358140839467241}
   m_Layer: 8
   m_Name: Warrior
   m_TagString: Hero
@@ -255,7 +255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7790813071272426290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 0.3, z: 0}
+  m_LocalPosition: {x: -0.365, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -304,7 +304,7 @@ SpriteRenderer:
   m_SortingLayerID: -245328455
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c2c6a79c0be3bc44da5e1c4fef149338, type: 3}
+  m_Sprite: {fileID: -862128013, guid: c2c6a79c0be3bc44da5e1c4fef149338, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -327,32 +327,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0982722ec4d945bc5b7ee5dc683a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 10
   FireCooldown: 1.5
-  CollisionDamage: 50
+  CollisionDamage: 0
   Damage: 30
   ShootingDistance: 2
-  DamageProtectionRegenCooldown: 5
+  DamageProtectionRegenCooldown: 20
+  BaseDamage: 30
+  BaseShootingDistance: 2
   Animator: {fileID: 786297381}
   healthBar: {fileID: 6598000225623854536}
   heroCanvas: {fileID: 6321803161151328043}
+  _heroMaxHealth: 30
   warriorattackPrefab: {fileID: 1795842453893537408, guid: 1ef9beb31fdb36143a6741debea09a41, type: 3}
---- !u!58 &7790813071272426294
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7790813071272426290}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.19032368, y: -0.19417167}
-  serializedVersion: 2
-  m_Radius: 0.2950602
 --- !u!95 &786297381
 Animator:
   serializedVersion: 4
@@ -373,6 +359,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &1691358140839467241
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790813071272426290}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.09672216, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.61, y: 0.56}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4165557, y: 0.56}
+  m_EdgeRadius: 0
 --- !u!1 &8738874955423756629
 GameObject:
   m_ObjectHideFlags: 0

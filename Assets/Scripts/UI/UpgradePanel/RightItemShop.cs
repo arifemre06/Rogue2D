@@ -15,33 +15,50 @@ public class RightItemShop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private RelicScriptableObject relicScriptableObject;
     [SerializeField] private float priceIncreaseModifier;
-    [SerializeField] private int price;
+    [SerializeField] private int Baseprice;
     [SerializeField] private TextMeshProUGUI headerText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image obtainedRelicImage;
     [SerializeField] private Image chestImage;
+    private const float priceIncreaseModifierForLevelUp = 1.3f;
+    private int _price;
     private RelicTypes _obtainedRelic;
     private bool _canPurchase;
 
     private void Awake()
     {
+        _price = Baseprice;
         purchaseButton.onClick.AddListener(OnPurchaseButtonClicked);
+        EventManager.NextLevel += OnNextLevel;
     }
+
+    private void OnDestroy()
+    {
+        EventManager.NextLevel += OnNextLevel;
+    }
+    
 
     private void Start()
     {
         obtainedRelicImage.enabled = false;
         _canPurchase = true;
-        priceText.text = price.ToString();
+        priceText.text = _price.ToString();
+    }
+    
+    private void OnNextLevel(int obj)
+    {
+        _price = (int)(Baseprice * priceIncreaseModifierForLevelUp * obj);
+        priceText.text = _price.ToString();
+        
     }
 
     private void OnPurchaseButtonClicked()
     {   
-        Debug.Log("game controller gold "+ gameController.GetGold()+"PRİCE "+price);
-        if (gameController.GetGold() > price && _canPurchase)
+        Debug.Log("game controller gold "+ gameController.GetGold()+"PRİCE "+_price);
+        if (gameController.GetGold() >= _price && _canPurchase)
         {
             _canPurchase = false;
-            EventManager.OnGoldAndExpChanged(-price,0);
+            EventManager.OnGoldAndExpChanged(-_price,0);
             _obtainedRelic = GetRandomRelic();
             EventManager.OnRelicTaken(_obtainedRelic);
             UpdatePrice();
@@ -66,8 +83,8 @@ public class RightItemShop : MonoBehaviour
     private void UpdatePrice()
     {
         
-        price =(int)(price * priceIncreaseModifier);
-        priceText.text = price.ToString();
+        _price =(int)(_price * priceIncreaseModifier);
+        priceText.text = _price.ToString();
     }
     
     public RelicTypes GetRandomRelic()
@@ -94,7 +111,7 @@ public class RightItemShop : MonoBehaviour
     {
         chestImage.enabled = true;
         obtainedRelicImage.enabled = false;
-        priceText.text = price.ToString();
+        priceText.text = _price.ToString();
         headerText.text = "Chest";
         descriptionText.text = "Get A Random Relic";
     }

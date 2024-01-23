@@ -125,8 +125,8 @@ GameObject:
   - component: {fileID: 731896332718982953}
   - component: {fileID: 731896332718982967}
   - component: {fileID: 731896332718982952}
-  - component: {fileID: 731896332718982966}
   - component: {fileID: 1552269787}
+  - component: {fileID: 7100157892446863977}
   m_Layer: 8
   m_Name: Archer
   m_TagString: Hero
@@ -142,7 +142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 731896332718982954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.023, y: 0.174, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -214,33 +214,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d296d099b4409234ebdab8046733f35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 5
   FireCooldown: 2
-  CollisionDamage: 50
-  Damage: 40
+  CollisionDamage: 0
+  Damage: 50
   ShootingDistance: 8
-  DamageProtectionRegenCooldown: 5
+  DamageProtectionRegenCooldown: 20
+  BaseDamage: 50
+  BaseShootingDistance: 8
   Animator: {fileID: 1552269787}
   healthBar: {fileID: 7944475055801280577}
   heroCanvas: {fileID: 2992696891055077555}
+  _heroMaxHealth: 20
   speedArrow: 10
   arrowPrefab: {fileID: 3265052173447294708, guid: 04c095420cd8b234ca5a6436b3618893, type: 3}
---- !u!58 &731896332718982966
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 731896332718982954}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.021816708, y: -0.03691979}
-  serializedVersion: 2
-  m_Radius: 0.35563645
 --- !u!95 &1552269787
 Animator:
   serializedVersion: 4
@@ -261,6 +247,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &7100157892446863977
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731896332718982954}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0038017035, y: -0.015206873}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.51, y: 0.76}
+    newSize: {x: 0.65, y: 0.8}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4415691, y: 0.72958624}
+  m_EdgeRadius: 0
 --- !u!1 &2138771851793303102
 GameObject:
   m_ObjectHideFlags: 0

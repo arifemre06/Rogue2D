@@ -740,5 +740,5 @@ MonoBehaviour:
   priceText: {fileID: 51847523146104575}
   descriptionText: {fileID: 6764390683449606267}
   relicScriptableObject: {fileID: 11400000, guid: 451c2385387629748a9602d5712c125a, type: 2}
-  price: 30
   priceIncreaseModifier: 1.2
+  basePrice: 30
