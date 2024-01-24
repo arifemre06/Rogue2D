@@ -104,11 +104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65832ac5a77ce14c841d145f59e8097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 30
-  enemyHealth: 400
-  enemySpeed: 1
-  enemyColDamage: 10
-  goldDrop: 30
+  power: 10
+  enemyHealth: 130
+  enemySpeed: 1.3
+  enemyColDamage: 5
+  goldDrop: 10
   experienceDrop: 50
   healthBar: {fileID: 7998095318136800572}
   enemyCanvas: {fileID: 5148244448762757616}

@@ -38,7 +38,6 @@ public class RuinStatue : MonoBehaviour
         if (hitCount > 0)
         {
             CanvasVisible(true);
-            
         }
         else
         {

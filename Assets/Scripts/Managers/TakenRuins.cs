@@ -11,12 +11,19 @@ namespace DefaultNamespace
         {
             EventManager.RuinHighRiskHighRewardTaken += OnHighRiskHighRewardTaken;
             EventManager.RuinGiveMeTrioTaken += OnGiveMeTrioTaken;
+            EventManager.NextLevel += OnNextLevel;
         }
 
         private void OnDestroy()
         {
             EventManager.RuinHighRiskHighRewardTaken -= OnHighRiskHighRewardTaken;
             EventManager.RuinGiveMeTrioTaken -= OnGiveMeTrioTaken;
+            EventManager.NextLevel -= OnNextLevel;
+        }
+
+        private void OnNextLevel(int obj)
+        {
+            ClearTakenRuins();
         }
 
         private void OnGiveMeTrioTaken()

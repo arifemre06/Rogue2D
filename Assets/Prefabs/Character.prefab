@@ -136,11 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241c92808cac8634fa25ad60c5719ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 5
+  baseSpeed: 3
   heroes:
-  - {fileID: 731896332718982952, guid: 65e0da600a36ce944bdba13168e24325, type: 3}
-  - {fileID: 7790813071272426292, guid: 21691ae227c7c08449610b46e7698ce4, type: 3}
-  - {fileID: 3247709834868948644, guid: 1dbe5fdf280dcf9458e4b50b43d7e5c6, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &6413781451747229021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,9 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d0e99461f34ac46b1796381e797c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charactersAnimatorList:
-  - {fileID: 786297381, guid: 21691ae227c7c08449610b46e7698ce4, type: 3}
-  - {fileID: 1887576693, guid: 1dbe5fdf280dcf9458e4b50b43d7e5c6, type: 3}
 --- !u!1 &9042747403298744355
 GameObject:
   m_ObjectHideFlags: 0

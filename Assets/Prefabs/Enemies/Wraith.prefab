@@ -445,11 +445,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e21e84d1d0a13343abef88dc56dfd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
-  enemyHealth: 100
-  enemySpeed: 1
-  enemyColDamage: 4
-  goldDrop: 10
+  power: 3
+  enemyHealth: 35
+  enemySpeed: 1.5
+  enemyColDamage: 2
+  goldDrop: 4
   experienceDrop: 20
   healthBar: {fileID: 4510966352885060197}
   enemyCanvas: {fileID: 6162304254394406847}
@@ -457,9 +457,9 @@ MonoBehaviour:
   ruinEffectData: {fileID: 11400000, guid: 453c04b10376f4d48a4faf07fc66d8da, type: 2}
   AttackObjectPrefab: {fileID: 4512614296592721457, guid: 2f32abb94713695438ad989f5849fb99, type: 3}
   AttackObjectSpeed: 4
-  FireCooldown: 2
+  FireCooldown: 1.5
   range: 5
-  attackObjectDamage: 5
+  attackObjectDamage: 3
 --- !u!95 &6618112530720914769
 Animator:
   serializedVersion: 4

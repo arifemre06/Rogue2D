@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using Enemies;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -11,8 +12,10 @@ public class EnemyManager : MonoBehaviour
     private static List<BaseEnemy> activeEnemies;
     private int spawnedEnemyCount;
 
+    [SerializeField] private RuinStatue ruinStatue;
+    private RuinStatue _ruinToInstantiate;
     [SerializeField] private Transform player; // player transform
-    [SerializeField] private float minDistance; // minimum distance from spawnpoint to object
+     
     [SerializeField] private List<BaseEnemy> enemyPrefabs;
     [SerializeField] private int totalEnemyPowerForFirstLevel;
     
@@ -21,11 +24,14 @@ public class EnemyManager : MonoBehaviour
     private int _spawnIndex;
     private bool _spawnFinished;
     
-    private const float SpawnDistanceToPlayer = 3;
-    private const int MaxEnemyCountForOneSpawn = 8;
-    private const int MinEnemyCountForOneSpawn = 3;
-    private const int MaxWaitTimeBetweenSpawns = 5;
-    private const int MinWaitTimeBetweenSpawns = 2;
+    // minimum distance from spawnpoint to object
+    private const float MinDistance = 1;
+    private const float SpawnDistanceToPlayer = 4;
+    private const float GroupSpawnRange = 2;
+    private const int MaxEnemyCountForOneSpawn = 15;
+    private const int MinEnemyCountForOneSpawn = 5;
+    private const int MaxWaitTimeBetweenSpawns = 3;
+    private const int MinWaitTimeBetweenSpawns = 1;
     private const float PowerIncreaseModifier = 1.2f;
 
     private void Awake()
@@ -55,6 +61,7 @@ public class EnemyManager : MonoBehaviour
     private void OnNextLevel(int level)
     {
         ChangeEnemySpawnData(level);
+        InstantiateRuins(level);
         SpawnEnemiesForThatLevel();
     }
     
@@ -111,7 +118,13 @@ public class EnemyManager : MonoBehaviour
                     {   
                         yield return new WaitForSeconds(0.2f);
                         int whichEnemyWillSpawn = (int)UnityEngine.Random.Range(0, enemyPrefabs.Count);
-                        BaseEnemy newEnemy = (BaseEnemy)Instantiate(enemyPrefabs[whichEnemyWillSpawn], spawnPoint, Quaternion.identity);
+                        Vector2 spawnPosition =
+                            new Vector2(
+                                UnityEngine.Random.Range(spawnPoint.x - GroupSpawnRange,
+                                    spawnPoint.x + GroupSpawnRange),
+                                UnityEngine.Random.Range(spawnPoint.y - GroupSpawnRange,
+                                    spawnPoint.y + GroupSpawnRange));
+                        BaseEnemy newEnemy = (BaseEnemy)Instantiate(enemyPrefabs[whichEnemyWillSpawn],spawnPosition , Quaternion.identity);
                         _remainingEnemyPowerToSpawn -= newEnemy.GetPower();
                         Debug.Log("remaining "+ _remainingEnemyPowerToSpawn);
                         spawnedEnemyCount += 1;
@@ -162,7 +175,7 @@ public class EnemyManager : MonoBehaviour
                     centerPosition.y + SpawnDistanceToPlayer);
                 randomPosition.z = 0;
                 
-                done = ((minDistance == 0) || ValidMinimumDistance(randomPosition));
+                done = ((MinDistance == 0) || ValidMinimumDistance(randomPosition));
             }
             return randomPosition;
         }
@@ -170,13 +183,13 @@ public class EnemyManager : MonoBehaviour
         bool ValidMinimumDistance(Vector3 enemyPosition)
         {
             bool isValid = true;
-                minDistance = Mathf.Abs(minDistance);
+                
             float dist;
  
             if (player != null)
             {
                 dist = Mathf.Abs(Vector3.Distance(player.position, enemyPosition));
-                isValid = (dist > minDistance);
+                isValid = (dist > MinDistance);
             }
  
             if (isValid && (activeEnemies.Count > 0))
@@ -187,7 +200,7 @@ public class EnemyManager : MonoBehaviour
                     {
                         dist = Mathf.Abs(Vector3.Distance(t.transform.position, enemyPosition));
                         //Debug.Log("activeEnemies[" + i + "].position = " + activeEnemies[i].transform.position + ", spawned position = " + enemyPosition + ", calculated distance = " + dist + ", isValid = " + (isValid ? "True" : False"));
-                        if (dist < minDistance)
+                        if (dist < MinDistance)
                         {
                             isValid = false;
                             break;
@@ -224,5 +237,18 @@ public class EnemyManager : MonoBehaviour
                 Destroy(activeEnemy.gameObject);
             }
             activeEnemies.Clear();
+        }
+
+        private void InstantiateRuins(int level)
+        {
+            if (level % 5 == 0)
+            {
+                _ruinToInstantiate = Instantiate(ruinStatue, new Vector2(1, 2), quaternion.identity);
+            }
+            else if (level % 5 != 0 && _ruinToInstantiate != null)
+            {
+                Destroy(_ruinToInstantiate.gameObject);
+            }
+            
         }
 }

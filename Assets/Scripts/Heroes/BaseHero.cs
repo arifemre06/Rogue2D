@@ -158,6 +158,7 @@ namespace DefaultNamespace
             }
             Health = _heroMaxHealth;
             UpdateHealthBar(Health);
+            CurrentDamageProtectionAmount = MaxDamageProtectionAmount;
         }
         
         protected BaseEnemy GetClosestTargetInRange()
