@@ -25,13 +25,13 @@ public class EnemyManager : MonoBehaviour
     private bool _spawnFinished;
     
     // minimum distance from spawnpoint to object
-    private const float MinDistance = 1;
-    private const float SpawnDistanceToPlayer = 4;
+    private const float MinDistance = 2;
+    private const float SpawnDistanceToPlayer = 5;
     private const float GroupSpawnRange = 2;
-    private const int MaxEnemyCountForOneSpawn = 15;
-    private const int MinEnemyCountForOneSpawn = 5;
-    private const int MaxWaitTimeBetweenSpawns = 3;
-    private const int MinWaitTimeBetweenSpawns = 1;
+    private const int MaxEnemyCountForOneSpawn = 2;
+    private const int MinEnemyCountForOneSpawn = 1;
+    private const float MaxWaitTimeBetweenSpawns = 0.4f;
+    private const float MinWaitTimeBetweenSpawns = 0.2f;
     private const float PowerIncreaseModifier = 1.2f;
 
     private void Awake()

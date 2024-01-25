@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Enemies;
-using Mono.Cecil;
 using ScriptableObjectsScripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -320,7 +319,6 @@ namespace DefaultNamespace
         {
             if (DodgeChance > 0)
             {
-                Debug.Log("dodgelama sorgusuna hosgeldınız");
                 int randomNumber = Random.Range(0, 100);
                 if (randomNumber < DodgeChance * 100)
                 {
