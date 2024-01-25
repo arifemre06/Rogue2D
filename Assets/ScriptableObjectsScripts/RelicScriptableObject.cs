@@ -11,7 +11,11 @@ namespace DefaultNamespace
         [SerializeField] private List<RelicTypes> relicTypes;
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private List<string> itemDetailText;
-        
+        [SerializeField] private List<relics.RelicRarity> rarity;
+        [SerializeField] private List<RelicTypes> commonRelics;
+        [SerializeField] private List<RelicTypes> rareRelics;
+        [SerializeField] private List<RelicTypes> legendaryRelics;
+
 
         public Sprite GetPrefab(RelicTypes relicType)
         {
@@ -42,6 +46,31 @@ namespace DefaultNamespace
             }
 
             return null;
+        }
+
+        public relics.RelicRarity GetRarity(RelicTypes relicType)
+        {
+            for (int i = 0; i < relicTypes.Count; i++)
+            {
+                if (relicTypes[i].Equals(relicType))
+                {
+                    return rarity[i];
+                }
+            }
+            return relics.RelicRarity.Common;
+        }
+
+        public List<RelicTypes> GetCommonRelics()
+        {
+            return commonRelics;
+        }
+        public List<RelicTypes> GetRareRelics()
+        {
+            return rareRelics;
+        }
+        public List<RelicTypes> GetLegendaryRelics()
+        {
+            return legendaryRelics;
         }
 
 

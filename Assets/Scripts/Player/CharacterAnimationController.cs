@@ -24,11 +24,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             _charactersAnimatorList.Add(animator);
         }
-
-        for (var i = 0; i < _charactersAnimatorList.Count; i++)
-        {
-            Debug.Log(_charactersAnimatorList[i].gameObject.activeSelf);
-        }
+        
     }
 
     public void PlayWalkAnimation()

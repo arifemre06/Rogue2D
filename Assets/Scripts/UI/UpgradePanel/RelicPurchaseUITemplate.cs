@@ -21,12 +21,21 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private RelicScriptableObject relicScriptableObject;
     private int price;
-    [SerializeField] private float priceIncreaseModifier;
     [SerializeField] private int basePrice;
     private bool _clicked;
     private RelicTypes _relicTypes;
-    private const float priceIncreaseModifierForLevelUp = 1.3f;
+    
     private ColorBlock _purchaseButtonBaseColors;
+    
+    private const float priceIncreaseModifier = 1.05f;
+    private const float priceIncreaseModifierForLevelUp = 1.2f;
+    
+    private const float CommonPossibilities = 50;
+    private const float RarePossibilities = 40;
+    private const float LegendaryPossibilities = 10;
+
+    private const float RareRelicPriceIncreaseMultiplier = 3;
+    private const float LegendaryRelicPriceIncreaseMultiplier = 5;
 
     private void Awake()
     {
@@ -81,17 +90,55 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     private void OnReRollShop()
     {
         _relicTypes = GetRandomRelic();
-            itemImage.sprite = relicScriptableObject.GetPrefab(_relicTypes);
-            headerText.text = _relicTypes.ToString();
-            descriptionText.text = relicScriptableObject.GetRelicText(_relicTypes);
-            soldImage.enabled = false;
-            SetUIWhenStart();
-            purchaseButton.colors = _purchaseButtonBaseColors;
-            _clicked = false;
+        itemImage.sprite = relicScriptableObject.GetPrefab(_relicTypes);
+        headerText.text = _relicTypes.ToString();
+        descriptionText.text = relicScriptableObject.GetRelicText(_relicTypes);
+        soldImage.enabled = false;
+        price = (int)(basePrice * priceIncreaseModifierForLevelUp * gameController.LevelIndex);
+        SetUIWhenStart();
+        purchaseButton.colors = _purchaseButtonBaseColors;
+        _clicked = false;
     }
-    private RelicTypes GetRandomRelic()
+    public RelicTypes GetRandomRelic()
     {
-        List<RelicTypes> relicTypesList = relicScriptableObject.GetRelicTypesList();
+        float randomRarity = Random.Range(0,100);
+        Debug.Log("kac attık reis "+randomRarity);
+        if (randomRarity < LegendaryPossibilities)
+        {
+            price = (int)(price * LegendaryRelicPriceIncreaseMultiplier);
+            priceText.text = price.ToString();
+            return GetRandomLegendaryRelic();
+            
+        }
+        else if (randomRarity is > LegendaryPossibilities and < RarePossibilities)
+        {
+            price = (int)(price * RareRelicPriceIncreaseMultiplier);
+            priceText.text = price.ToString();
+            return GetRandomRareRelic(); 
+        }
+        else
+        {
+            return GetRandomCommonRelic(); 
+        }
+    }
+
+    private RelicTypes GetRandomLegendaryRelic()
+    {
+        List<RelicTypes> relicTypesList = relicScriptableObject.GetLegendaryRelics();
+        int randomNumber = Random.Range(0, relicTypesList.Count);
+        return relicTypesList[randomNumber];
+    }
+    
+    private RelicTypes GetRandomRareRelic()
+    {
+        List<RelicTypes> relicTypesList = relicScriptableObject.GetRareRelics();
+        int randomNumber = Random.Range(0, relicTypesList.Count);
+        return relicTypesList[randomNumber];
+    }
+    
+    private RelicTypes GetRandomCommonRelic()
+    {
+        List<RelicTypes> relicTypesList = relicScriptableObject.GetCommonRelics();
         int randomNumber = Random.Range(0, relicTypesList.Count);
         return relicTypesList[randomNumber];
     }

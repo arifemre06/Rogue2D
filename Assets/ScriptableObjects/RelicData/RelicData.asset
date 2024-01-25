@@ -29,3 +29,7 @@ MonoBehaviour:
   - Range Increased
   - Dodge Chance Increased
   - Damage Protection Increased
+  rarity: 
+  commonRelics: 0000000001000000030000000400000005000000
+  rareRelics: 06000000
+  legendaryRelics: 07000000

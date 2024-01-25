@@ -14,7 +14,13 @@ namespace DefaultNamespace
         [SerializeField] private RelicScriptableObject relicScriptableObject;
 
         private SpriteRenderer _sprite;
-        
+
+        public enum RelicRarity
+        {
+            Common,
+            Rare,
+            Legendary
+        }
 
         public RelicTypes GetRelicString()
         {
