@@ -58,6 +58,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: -2090855631
   m_SortingOrder: 0
@@ -327,9 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0982722ec4d945bc5b7ee5dc683a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireCooldown: 1.5
+  FireCooldown: 0.5
   CollisionDamage: 0
-  Damage: 30
+  Damage: 10
   ShootingDistance: 2
   DamageProtectionRegenCooldown: 20
   BaseDamage: 30
@@ -341,7 +342,7 @@ MonoBehaviour:
   warriorattackPrefab: {fileID: 1795842453893537408, guid: 1ef9beb31fdb36143a6741debea09a41, type: 3}
 --- !u!95 &786297381
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -358,7 +359,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &1691358140839467241
 BoxCollider2D:
   m_ObjectHideFlags: 0

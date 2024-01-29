@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 3793010914782108771}
   - component: {fileID: 7632533671998303949}
   - component: {fileID: 2340778581075262111}
+  - component: {fileID: 2518771103554642134}
   m_Layer: 7
   m_Name: RuinStatue
   m_TagString: Ruin
@@ -163,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 3787987730085455597}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.69, y: 0.56, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2, y: 2, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6706801916881927937}
@@ -211,7 +212,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 850320f992a8eef4598cf8a69ff8712f, type: 3}
+  m_Sprite: {fileID: -884473321, guid: fa63e672306d6bb46ac43af1dc2e40e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,8 +236,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.014571333, y: 0.009714246}
-  m_Size: {x: 0.34076262, y: 0.601143}
+  m_Offset: {x: -0.01457133, y: -0.086768866}
+  m_Size: {x: 0.34076262, y: 0.7941097}
   m_Direction: 0
 --- !u!114 &2340778581075262111
 MonoBehaviour:
@@ -259,6 +260,27 @@ MonoBehaviour:
   heroLayerMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!95 &2518771103554642134
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787987730085455597}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 718be03dc77ca4143b1d0a692c89be17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4040016968584391388
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +416,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0

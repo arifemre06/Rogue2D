@@ -3,7 +3,7 @@ guid: 322ff86fa112f494a958ae2f118aab75
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -131,10 +132,10 @@ TextureImporter:
       name: Walk_0
       rect:
         serializedVersion: 2
-        x: 20
+        x: 31
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,10 +153,10 @@ TextureImporter:
       name: Walk_1
       rect:
         serializedVersion: 2
-        x: 145
+        x: 158
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +174,10 @@ TextureImporter:
       name: Walk_2
       rect:
         serializedVersion: 2
-        x: 270
+        x: 287
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +195,10 @@ TextureImporter:
       name: Walk_3
       rect:
         serializedVersion: 2
-        x: 395
+        x: 417
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,10 +216,10 @@ TextureImporter:
       name: Walk_4
       rect:
         serializedVersion: 2
-        x: 520
+        x: 552
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +237,10 @@ TextureImporter:
       name: Walk_5
       rect:
         serializedVersion: 2
-        x: 645
+        x: 682
         y: 0
-        width: 125
-        height: 128
+        width: 65
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,10 +258,10 @@ TextureImporter:
       name: Walk_6
       rect:
         serializedVersion: 2
-        x: 770
+        x: 809
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,10 +279,10 @@ TextureImporter:
       name: Walk_7
       rect:
         serializedVersion: 2
-        x: 895
+        x: 929
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -306,14 +307,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Walk_5: -131088226
       Walk_0: -1210300601
-      Walk_4: 1541985691
-      Walk_6: 1603546052
-      Walk_2: -1555127015
-      Walk_7: 807519634
-      Walk_3: 102990624
       Walk_1: 1785177900
+      Walk_2: -1555127015
+      Walk_3: 102990624
+      Walk_4: 1541985691
+      Walk_5: -131088226
+      Walk_6: 1603546052
+      Walk_7: 807519634
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

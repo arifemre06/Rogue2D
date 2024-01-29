@@ -36,7 +36,7 @@ public class gameController : MonoBehaviour
     void Start()
     {
         LevelIndex = 0;
-        OnMainMenuButtonClicked();
+        EventManager.OnMainMenuButtonClicked();
         Gold = 0;
         exp = 0;
     }
@@ -72,7 +72,7 @@ public class gameController : MonoBehaviour
     private void OnMainMenuButtonClicked()
     {
         ChangeGameState(GameState.MainMenu);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
     
     private void OnUpgradePanelOpened(int wave)

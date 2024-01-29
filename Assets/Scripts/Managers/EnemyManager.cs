@@ -23,7 +23,8 @@ public class EnemyManager : MonoBehaviour
     private int _totalEnemyPowerForThatLevel;
     private int _spawnIndex;
     private bool _spawnFinished;
-    
+
+    private const int WaitSecondsFirstSpawn = 4;
     // minimum distance from spawnpoint to object
     private const float MinDistance = 2;
     private const float SpawnDistanceToPlayer = 5;
@@ -55,14 +56,14 @@ public class EnemyManager : MonoBehaviour
     
     private void OnGameStart()
     {
-        SpawnEnemiesForThatLevel();
+        StartCoroutine(SpawnEnemiesForThatLevel());
     }
     
     private void OnNextLevel(int level)
     {
         ChangeEnemySpawnData(level);
         InstantiateRuins(level);
-        SpawnEnemiesForThatLevel();
+        StartCoroutine(SpawnEnemiesForThatLevel());
     }
     
     private void OnGameOver()
@@ -70,8 +71,9 @@ public class EnemyManager : MonoBehaviour
         ResetEverythingForAnewGame();
     }
 
-    private void SpawnEnemiesForThatLevel()
+    private IEnumerator SpawnEnemiesForThatLevel()
     {
+        yield return new WaitForSeconds(WaitSecondsFirstSpawn);
         StartCoroutine(SpawnEnemy());
     }
 

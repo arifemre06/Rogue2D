@@ -77,9 +77,10 @@ public class Character_Movement_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameController.gameState != GameState.InGamePanel) return;
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
-        
+        Debug.Log("speed "+speed);
         transform.position += new Vector3(_horizontal*speed*Time.deltaTime, _vertical*speed*Time.deltaTime,0);
         
         if (_horizontal > 0 && !_facingRight)
@@ -93,7 +94,8 @@ public class Character_Movement_Controller : MonoBehaviour
             // ... flip the player.
             FlipHorizontal();
         }
-        
+
+
         /*
         if (_vertical > 0 && _facingUp)
         {

@@ -87,8 +87,11 @@ namespace Enemies
         {
             _facingRight = !_facingRight;
             Vector3 theScale = transform.localScale;
+            Vector3 healtbarScale = healthBar.transform.localScale;
             theScale.x *= -1;
+            healtbarScale.x *= -1;
             transform.localScale = theScale;
+            healthBar.transform.localScale = healtbarScale;
         }
             
             

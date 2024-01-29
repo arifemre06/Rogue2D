@@ -214,9 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d296d099b4409234ebdab8046733f35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireCooldown: 2
+  FireCooldown: 0.5
   CollisionDamage: 0
-  Damage: 50
+  Damage: 12
   ShootingDistance: 8
   DamageProtectionRegenCooldown: 20
   BaseDamage: 50
@@ -229,7 +229,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 3265052173447294708, guid: 04c095420cd8b234ca5a6436b3618893, type: 3}
 --- !u!95 &1552269787
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -246,7 +246,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &7100157892446863977
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -423,6 +424,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: -2090855631
   m_SortingOrder: 0

@@ -96,6 +96,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: -2090855631
   m_SortingOrder: 0
@@ -251,9 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5b04344fd6fdb4d8fc5aec86dccff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireCooldown: 3
+  FireCooldown: 0.8
   CollisionDamage: 0
-  Damage: 15
+  Damage: 4
   ShootingDistance: 6
   DamageProtectionRegenCooldown: 20
   BaseDamage: 15
@@ -265,7 +266,7 @@ MonoBehaviour:
   magicPrefab: {fileID: 6686382520302075000, guid: 1c74e36d5bfbcae438b89b0db546414a, type: 3}
 --- !u!95 &1887576693
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -282,7 +283,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &7395707056455152498
 BoxCollider2D:
   m_ObjectHideFlags: 0

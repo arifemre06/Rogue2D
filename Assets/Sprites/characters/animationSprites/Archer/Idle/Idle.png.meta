@@ -3,7 +3,7 @@ guid: 5f344d3a75039344fb968729820ecd55
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -131,10 +132,10 @@ TextureImporter:
       name: Idle_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 21
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,10 +153,10 @@ TextureImporter:
       name: Idle_1
       rect:
         serializedVersion: 2
-        x: 135
+        x: 149
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +174,10 @@ TextureImporter:
       name: Idle_2
       rect:
         serializedVersion: 2
-        x: 260
+        x: 277
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +195,10 @@ TextureImporter:
       name: Idle_3
       rect:
         serializedVersion: 2
-        x: 385
+        x: 405
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,10 +216,10 @@ TextureImporter:
       name: Idle_4
       rect:
         serializedVersion: 2
-        x: 510
+        x: 533
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +237,10 @@ TextureImporter:
       name: Idle_5
       rect:
         serializedVersion: 2
-        x: 635
+        x: 661
         y: 0
-        width: 125
-        height: 128
+        width: 64
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -264,12 +265,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle_4: 1957293723
-      Idle_1: 2093248860
-      Idle_3: 310764827
-      Idle_5: 729714243
       Idle_0: -1939289831
+      Idle_1: 2093248860
       Idle_2: -184153831
+      Idle_3: 310764827
+      Idle_4: 1957293723
+      Idle_5: 729714243
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

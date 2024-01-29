@@ -242,6 +242,7 @@ namespace DefaultNamespace
                         else
                         {
                             Health -= enemyScript.GetCollisionDamage();
+                            Animator.Play("Hurt");
                             UpdateHealthBar(Health);
                         }
                     }
@@ -281,6 +282,7 @@ namespace DefaultNamespace
                             else
                             {
                                 Health -= rangedAttackScript.GetDamage();
+                                Animator.Play("Hurt");
                                 UpdateHealthBar(Health);
                             }
                         }

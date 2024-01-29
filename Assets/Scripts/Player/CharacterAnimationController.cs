@@ -7,12 +7,17 @@ using UnityEngine;
 public class CharacterAnimationController : MonoBehaviour
 {
     private List<Animator> _charactersAnimatorList;
+    
     private bool _isMoving;
 
     private void Awake()
     {
         _charactersAnimatorList = new List<Animator>();
     }
+
+   
+    
+
 
     public void SetAnimators(List<Animator> animators )
     {
@@ -24,6 +29,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             _charactersAnimatorList.Add(animator);
         }
+        Debug.Log("character animator list "+_charactersAnimatorList.Count);
         
     }
 
