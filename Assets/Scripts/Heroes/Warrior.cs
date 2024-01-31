@@ -12,12 +12,13 @@ namespace DefaultNamespace.Heroes
         [SerializeField] WarriorAttackObject warriorattackPrefab;
 
         protected override void Attack(BaseEnemy target)
-        {
+        {   
+            base.Attack(target);
             Animator.Play("Attack");
             var middlePoint = (target.transform.position + transform.position) / 2;
             WarriorAttackObject tmpAttack = Instantiate(warriorattackPrefab, middlePoint,
                 Quaternion.LookRotation(target.transform.position - middlePoint) * Quaternion.Euler(0, 90, -90));
-            tmpAttack.SetDamage(Damage);
+            tmpAttack.SetDamage(DamageToDeal);
         }
         
         protected override void OnCollisionEnter2D(Collision2D col)

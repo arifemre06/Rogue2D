@@ -24,6 +24,7 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     [SerializeField] private int basePrice;
     private bool _clicked;
     private RelicTypes _relicTypes;
+    private int currentBasePrice;
     
     private ColorBlock _purchaseButtonBaseColors;
     
@@ -40,6 +41,7 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     private void Awake()
     {
         price = basePrice;
+        currentBasePrice = basePrice;
         purchaseButton.onClick.AddListener(OnPurchaseButtonClicked);
         EventManager.ReRollShop += OnReRollShop;
         EventManager.UpdateShopPrices += UpdatePrice;
@@ -61,6 +63,7 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     
     private void OnNextLevel(int obj)
     {
+        
         price = (int)(basePrice * priceIncreaseModifierForLevelUp * obj);
         priceText.text = price.ToString();
         SetUIWhenStart();
@@ -73,18 +76,16 @@ public class RelicPurchaseUITemplate : MonoBehaviour
             _clicked = true;
             EventManager.OnGoldAndExpChanged(-price,0);
             EventManager.OnRelicTaken(_relicTypes);
-            EventManager.OnUpdateShopPrices();
+            //EventManager.OnUpdateShopPrices();
             UpdateToSoldUI();
         }
     }
 
     private void UpdatePrice()
-    {
-        if (!_clicked)
-        {
-            price =(int)(price * priceIncreaseModifier);
-            priceText.text = price.ToString();
-        }
+    {   
+        currentBasePrice = (int)(currentBasePrice * priceIncreaseModifier);
+        price = currentBasePrice;
+        priceText.text = price.ToString();
     }
     
     private void OnReRollShop()
@@ -94,7 +95,6 @@ public class RelicPurchaseUITemplate : MonoBehaviour
         headerText.text = _relicTypes.ToString();
         descriptionText.text = relicScriptableObject.GetRelicText(_relicTypes);
         soldImage.enabled = false;
-        price = (int)(basePrice * priceIncreaseModifierForLevelUp * gameController.LevelIndex);
         SetUIWhenStart();
         purchaseButton.colors = _purchaseButtonBaseColors;
         _clicked = false;
@@ -102,17 +102,16 @@ public class RelicPurchaseUITemplate : MonoBehaviour
     public RelicTypes GetRandomRelic()
     {
         float randomRarity = Random.Range(0,100);
-        Debug.Log("kac attık reis "+randomRarity);
         if (randomRarity < LegendaryPossibilities)
         {
-            price = (int)(price * LegendaryRelicPriceIncreaseMultiplier);
+            price = (int)(currentBasePrice * LegendaryRelicPriceIncreaseMultiplier);
             priceText.text = price.ToString();
             return GetRandomLegendaryRelic();
             
         }
         else if (randomRarity is > LegendaryPossibilities and < RarePossibilities)
         {
-            price = (int)(price * RareRelicPriceIncreaseMultiplier);
+            price = (int)(currentBasePrice * RareRelicPriceIncreaseMultiplier);
             priceText.text = price.ToString();
             return GetRandomRareRelic(); 
         }

@@ -10,6 +10,7 @@ public class EventManager : MonoBehaviour
 {
     public static event Action<Sprite,string> RelicCollected;
     public static event Action<RelicTypes> RelicTaken;
+    
     public static event Action<float,int> AttackSpeedRelicCollected;
     public static event Action<float,int> AttackDamageRelicCollected;
     public static event Action<float,int> LifeStealRelicCollected;
@@ -18,6 +19,10 @@ public class EventManager : MonoBehaviour
     public static event Action<float,int> MoreShootingDistanceRelicCollected;
     public static event Action<float,int> DodgeChanceRelicCollected;
     public static event Action<int> DamageProtectionRelicCollected;
+    public static event Action<float,int> DefenseRelicCollected;
+    public static event Action<float,int> CritChanceRelicCollected;
+    public static event Action<float,float, int> AttackSpeedOnCritCollected;
+    public static event Action<float, int> MoreLifeRelicCollected; 
 
     public static event Action<RuinTypes> RuinEffectTaken;
     public static event Action RuinGiveMeTrioTaken;
@@ -190,5 +195,25 @@ public class EventManager : MonoBehaviour
     public static void OnPreGameStarted()
     {
         PreGameStarted?.Invoke();
+    }
+
+    public static void OnDefenseRelicCollected(float modifier ,int obj)
+    {
+        DefenseRelicCollected?.Invoke(modifier,obj);
+    }
+
+    public static void OnCritChanceRelicCollected(float modifier,int obj)
+    {
+        CritChanceRelicCollected?.Invoke(modifier,obj);
+    }
+
+    public static void OnAttackSpeedOnCritCollected(float arg1,float arg2, int arg3)
+    {
+        AttackSpeedOnCritCollected?.Invoke(arg1, arg2,arg3);
+    }
+
+    public static void OnMoreLifeRelicCollected(float arg1, int arg2)
+    {
+        MoreLifeRelicCollected?.Invoke(arg1, arg2);
     }
 }

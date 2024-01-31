@@ -12,21 +12,32 @@ namespace DefaultNamespace
     public class UpgradePanel : UIPanel
     {
         [SerializeField] private Button nextLevel;
+        [SerializeField] private TextMeshProUGUI nextLevelText;
         [SerializeField] private TextMeshProUGUI goldText;
         private void Awake()
         {
             nextLevel.onClick.AddListener(OnNextLevelClicked);
             EventManager.GoldAndExpChanged += OnGoldChanged;
+            EventManager.UpGradePanelOpened += OnUpgradePanelOpened;
         }
 
         private void OnDestroy()
         {
             EventManager.GoldAndExpChanged -= OnGoldChanged;
+            EventManager.UpGradePanelOpened -= OnUpgradePanelOpened;
+        }
+
+        private void OnUpgradePanelOpened(int obj)
+        {
+            int wave = gameController.LevelIndex;
+            nextLevelText.text = "Wave:" + (wave + 1);
         }
 
         private void Start()
         {
             goldText.text = "Gold:" + gameController.GetGold();
+            int wave = gameController.LevelIndex;
+            nextLevelText.text = "Wave:" + (wave + 1);
         }
 
         public override void ActivatePanel()
@@ -46,7 +57,7 @@ namespace DefaultNamespace
 
         private void OnNextLevelClicked()
         {   
-            Debug.Log("level ındex "+gameController.LevelIndex);
+            
             EventManager.OnNextLevel(gameController.LevelIndex);
         }
         

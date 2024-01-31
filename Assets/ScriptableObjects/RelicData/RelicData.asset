@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8485a7f067a5514380bf02542a9459e, type: 3}
   m_Name: RelicData
   m_EditorClassIdentifier: 
-  relicTypes: 00000000010000000300000004000000050000000600000007000000
+  relicTypes: 0000000001000000030000000400000005000000060000000700000008000000090000000a0000000b000000
   sprites:
   - {fileID: 21300000, guid: b60216f24a5d5d94b8c95f581a4e211c, type: 3}
   - {fileID: 21300000, guid: 14ddbb104c802ed49b2062dd209452e5, type: 3}
@@ -21,6 +21,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3f08a90f11f109a4c90eb30b5bbd9f0c, type: 3}
   - {fileID: 21300000, guid: cbc68ea2bee4684438545781c744103c, type: 3}
   - {fileID: 21300000, guid: 32c64713d5b490c40bd6395b4d72a038, type: 3}
+  - {fileID: 21300000, guid: b7e566a7263429f429659f5000da4d36, type: 3}
+  - {fileID: 21300000, guid: 2fcf207a985a07945860b3bab13c0c5f, type: 3}
+  - {fileID: 21300000, guid: dcd7a418c35f19241bbdd9da6988c580, type: 3}
+  - {fileID: 21300000, guid: a409f6eb1b69df44dae42132b85bac9d, type: 3}
   itemDetailText:
   - Attack Speed Increased
   - Attack Damage Increased
@@ -29,7 +33,11 @@ MonoBehaviour:
   - Range Increased
   - Dodge Chance Increased
   - Damage Protection Increased
+  - Defense Increased
+  - CritChance Increased
+  - Attack Speed Increase On Crit
+  - Life Increased
   rarity: 
-  commonRelics: 0000000001000000030000000400000005000000
-  rareRelics: 06000000
+  commonRelics: 00000000010000000300000004000000050000000b000000
+  rareRelics: 0600000008000000090000000a000000
   legendaryRelics: 07000000

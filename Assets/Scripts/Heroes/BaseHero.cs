@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Enemies;
 using ScriptableObjectsScripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -13,22 +14,33 @@ namespace DefaultNamespace
     public abstract class BaseHero : MonoBehaviour
     { 
         protected float Health;
-        [SerializeField] protected float FireCooldown;
+        [SerializeField] protected float BaseAttackSpeed;
         [SerializeField] protected float CollisionDamage;
-        [SerializeField] protected float Damage;
-        [SerializeField] protected float ShootingDistance;
+        [SerializeField] protected float BaseCritChance = 0;
+        
         [SerializeField] protected float DamageProtectionRegenCooldown;
         
         [SerializeField] protected float BaseDamage;
         [SerializeField] protected float BaseShootingDistance;
+        [SerializeField] protected float BaseDefense;
+        protected float Defense;
         
             
         protected float LifeSteal = 0;
         protected float LifeRegen = 0;
         protected const int LifeRegenTimeInterval = 5;
+        protected const float CritMultiplier = 2;
         protected int MaxDamageProtectionAmount = 0;
         protected int CurrentDamageProtectionAmount = 0;
         protected float DodgeChance = 0;
+        protected float CritChance;
+        protected float Damage;
+        protected float ShootingDistance;
+        protected float AttackSpeed;
+        protected int AttackSpeedOnCritAmount;
+        protected float AttackSpeedOnCritModifier;
+        protected float AttackSpeedOnCritDuration;
+        protected bool OnAttackSpeedOnCritEffect = false;
 
         [SerializeField] protected Animator Animator;
         
@@ -43,6 +55,7 @@ namespace DefaultNamespace
         protected bool CanLifeRegen = true;
         protected bool CanDamageProtection = true;
 
+        protected float DamageToDeal;
         protected bool CollidedWithEnemies;
         private bool _isDead;
         
@@ -57,9 +70,14 @@ namespace DefaultNamespace
             EventManager.MoreShootingDistanceRelicCollected += OnMoreShootingDistanceRelicCollected;
             EventManager.DodgeChanceRelicCollected += OnDodgeChanceRelicCollected;
             EventManager.DamageProtectionRelicCollected += OnDamageProtectionRelicCollected;
+            EventManager.DefenseRelicCollected += OnDefenseRelicCollected;
+            EventManager.CritChanceRelicCollected += OnCritRelicCollected;
+            EventManager.AttackSpeedOnCritCollected += OnAttackSpeedOnCritCollected;
+            EventManager.MoreLifeRelicCollected += OnMoreLifeCollected;
             EventManager.EnemySpawned += OnEnemySpawnedUpdateEnemiesTransform;
             EventManager.EnemyKilled += OnEnemyKilledUpdateEnemiesTransform;
             EventManager.NextLevel += OnNextLevel;
+            EventManager.UpGradePanelOpened += OnUpgradePanelOpened;
             EventManager.GameOver += OnGameOver;
             CanShoot = true;
             gameController.HeroCountOnScene += 1;
@@ -73,27 +91,61 @@ namespace DefaultNamespace
             EventManager.LifeStealRelicCollected -= OnLifeStealRelicTaken;
             EventManager.LifeRegenRelicCollected -= OnLifeRegenRelicCollected;
             EventManager.MovementSpeedRelicCollected -= OnMovementSpeedRelicCollected;
-            EventManager.MoreShootingDistanceRelicCollected += OnMoreShootingDistanceRelicCollected;
-            EventManager.DodgeChanceRelicCollected += OnDodgeChanceRelicCollected;
-            EventManager.DamageProtectionRelicCollected += OnDamageProtectionRelicCollected;
+            EventManager.MoreShootingDistanceRelicCollected -= OnMoreShootingDistanceRelicCollected;
+            EventManager.DodgeChanceRelicCollected -= OnDodgeChanceRelicCollected;
+            EventManager.DamageProtectionRelicCollected -= OnDamageProtectionRelicCollected;
+            EventManager.DefenseRelicCollected -= OnDefenseRelicCollected;
+            EventManager.CritChanceRelicCollected -= OnCritRelicCollected;
+            EventManager.AttackSpeedOnCritCollected -= OnAttackSpeedOnCritCollected;
+            EventManager.MoreLifeRelicCollected -= OnMoreLifeCollected;
             EventManager.EnemySpawned -= OnEnemySpawnedUpdateEnemiesTransform;
             EventManager.EnemyKilled -= OnEnemyKilledUpdateEnemiesTransform;
             EventManager.NextLevel -= OnNextLevel;
+            EventManager.UpGradePanelOpened -= OnUpgradePanelOpened;
             EventManager.GameOver -= OnGameOver;
         }
-
 
         private void Start()
         {
             allTargets = new List<BaseEnemy>();
             //_heroMaxHealth = Health;
             Health = _heroMaxHealth;
+            Defense = BaseDefense;
+            ShootingDistance = BaseShootingDistance;
+            Damage = BaseDamage;
+            CritChance = BaseCritChance;
+            AttackSpeed = BaseAttackSpeed;
+            AttackSpeedOnCritAmount = 0;
+            OnAttackSpeedOnCritEffect = false;
             UpdateHealthBar(Health);
         }
 
-        protected abstract void Attack(BaseEnemy target);
+        protected virtual void Attack(BaseEnemy target)
+        {
+            if (CritChance > 0)
+            {
+                int randomNum = Random.Range(0, 100);
+                if (randomNum < CritChance)
+                {
+                    DamageToDeal = Damage * CritMultiplier;
+                    if (AttackSpeedOnCritAmount > 0)
+                    {
+                        StartCoroutine(OnAttackSpeedOnCritCollectedTimer(AttackSpeedOnCritModifier, AttackSpeedOnCritDuration,
+                            AttackSpeedOnCritAmount));
+                        Debug.Log("attack speed " + AttackSpeed);
+                    }
+                }
+                else
+                {
+                    DamageToDeal = Damage;
+                }
+            }
+            else
+            {
+                DamageToDeal = Damage;
+            }
+        }
         
-
         protected void Update()
         {
             if (!_isDead)
@@ -131,6 +183,12 @@ namespace DefaultNamespace
         private void OnNextLevel(int obj)
         {
             ReviveHero();
+            heroCanvas.enabled = true;
+        }
+        
+        private void OnUpgradePanelOpened(int obj)
+        {
+            heroCanvas.enabled = false;
         }
         
         private void OnGameOver()
@@ -184,7 +242,8 @@ namespace DefaultNamespace
         
         protected IEnumerator StartAttackCooldown()
         {
-            yield return new WaitForSeconds(FireCooldown);
+            float waitDuration = 1 / AttackSpeed;
+            yield return new WaitForSeconds(waitDuration);
             CanShoot = true;
         }
         
@@ -216,11 +275,62 @@ namespace DefaultNamespace
         {
             if (col.collider.CompareTag("Enemy") && !CollidedWithEnemies)
             {
+                TakeDamageFromEnemyCollision(col);
+            }
+            if (col.collider.CompareTag("EnemyAttack"))
+            {
+               TakeDamageFromEnemyAttack(col);
+            }
+        }
+
+        private void TakeDamageFromEnemyCollision(Collision2D col)
+        {
+            CollidedWithEnemies = true;
+            StartCoroutine(WaitBetweenEnemyCollides());
+            GameObject tempEnemy = col.gameObject;
+            BaseEnemy enemyScript = tempEnemy.GetComponent<BaseEnemy>();
+            enemyScript.SetHealth(CollisionDamage);
+            if (!CheckDodge())
+            {
+                if (CheckDamageProtection())
+                {
+                    Debug.Log("hasardan korunduk");
+                }
+                else
+                {   
+                    if (Health - CalculateDamageAfterDamageReduction(enemyScript.GetCollisionDamage()) < 0)
+                    {
+                        if (gameController.HeroCountOnScene <= 1)
+                        {
+                            EventManager.OnGameOver();
+                        }
+
+                        HeroDeadState();
+                        //Destroy(gameObject);
+                    }
+                    else
+                    {
+                        Health -= CalculateDamageAfterDamageReduction(enemyScript.GetCollisionDamage());
+                        Animator.Play("Hurt");
+                        UpdateHealthBar(Health);
+                    }
+                }
+            }
+            if (enemyScript.GetHealth() <= 0)
+            {
+                Destroy(col.gameObject);
+            }
+        }
+
+        private void TakeDamageFromEnemyAttack(Collision2D col)
+        {
+            if (!CollidedWithEnemies)
+            {   
                 CollidedWithEnemies = true;
                 StartCoroutine(WaitBetweenEnemyCollides());
                 GameObject tempEnemy = col.gameObject;
-                BaseEnemy enemyScript = tempEnemy.GetComponent<BaseEnemy>();
-                enemyScript.SetHealth(CollisionDamage);
+                EnemyRangedAttackObject rangedAttackScript = tempEnemy.GetComponent<EnemyRangedAttackObject>();
+                    
                 if (!CheckDodge())
                 {
                     if (CheckDamageProtection())
@@ -228,8 +338,8 @@ namespace DefaultNamespace
                         Debug.Log("hasardan korunduk");
                     }
                     else
-                    {   
-                        if (Health - enemyScript.GetCollisionDamage() < 0)
+                    {
+                        if (Health - CalculateDamageAfterDamageReduction(rangedAttackScript.GetDamage()) < 0)
                         {
                             if (gameController.HeroCountOnScene <= 1)
                             {
@@ -241,57 +351,21 @@ namespace DefaultNamespace
                         }
                         else
                         {
-                            Health -= enemyScript.GetCollisionDamage();
+                            Health -= CalculateDamageAfterDamageReduction(rangedAttackScript.GetDamage());
                             Animator.Play("Hurt");
                             UpdateHealthBar(Health);
                         }
                     }
                 }
-                if (enemyScript.GetHealth() <= 0)
-                {
-                    Destroy(col.gameObject);
-                }
             }
-            if (col.collider.CompareTag("EnemyAttack"))
-            {
-                if (!CollidedWithEnemies)
-                {   
-                    CollidedWithEnemies = true;
-                    StartCoroutine(WaitBetweenEnemyCollides());
-                    GameObject tempEnemy = col.gameObject;
-                    EnemyRangedAttackObject rangedAttackScript = tempEnemy.GetComponent<EnemyRangedAttackObject>();
-                    
-                    if (!CheckDodge())
-                    {
-                        if (CheckDamageProtection())
-                        {
-                            Debug.Log("hasardan korunduk");
-                        }
-                        else
-                        {
-                            if (Health - rangedAttackScript.GetDamage() < 0)
-                            {
-                                if (gameController.HeroCountOnScene <= 1)
-                                {
-                                    EventManager.OnGameOver();
-                                }
-
-                                HeroDeadState();
-                                //Destroy(gameObject);
-                            }
-                            else
-                            {
-                                Health -= rangedAttackScript.GetDamage();
-                                Animator.Play("Hurt");
-                                UpdateHealthBar(Health);
-                            }
-                        }
-                    }
-                }
-                Destroy(col.gameObject);
-            }
+            Destroy(col.gameObject);
         }
-        
+
+        private float CalculateDamageAfterDamageReduction(float damage)
+        {
+            return Utils.DamageReductionFormula(damage, Defense);
+        }
+
         private IEnumerator WaitBetweenEnemyCollides()
         {
             yield return new WaitForSeconds(0.1f);
@@ -349,10 +423,7 @@ namespace DefaultNamespace
 
         protected void OnAttackSpeedRelicTaken(float mainModifier,int amount)
         {   
-            //we will turn back here to look for adjustment
-            //attack speed doesnt use basestats so it doesnt have a lineer increase
-            float decreaseAmount = FireCooldown * mainModifier;
-            FireCooldown = FireCooldown - decreaseAmount;
+            AttackSpeed = ConstantStatIncrease(BaseAttackSpeed, mainModifier, amount);
         }
         
         private void OnLifeStealRelicTaken(float mainModifier,int amount)
@@ -385,7 +456,48 @@ namespace DefaultNamespace
             //we are increasing range with percentage we add 1 to the hyperbolic increase because we take base range %100
             ShootingDistance = BaseShootingDistance * (1 + HyperBolicIncrease(mainModifier, amount));
         }
+        
+        private void OnDefenseRelicCollected(float modifier,int obj)
+        {
+            Defense = ConstantStatIncrease(BaseDefense, modifier, obj);
+        }
+        
+        private void OnCritRelicCollected(float modifier, int amount)
+        {
+            CritChance = ConstantStatIncrease(BaseCritChance, modifier, amount);
+        }
+        
+        private void OnAttackSpeedOnCritCollected(float mainModifier, float duration, int amount)
+        {
+            AttackSpeedOnCritAmount = amount;
+            AttackSpeedOnCritModifier = mainModifier;
+            AttackSpeedOnCritDuration = duration;
+        }
+        
+        private IEnumerator OnAttackSpeedOnCritCollectedTimer(float mainModifier, float duration, int amount)
+        {
+            if (!OnAttackSpeedOnCritEffect)
+            {   
+                OnAttackSpeedOnCritEffect = true;
+                float effect = mainModifier * amount;
+                AttackSpeed = AttackSpeed + effect;
+                yield return new WaitForSeconds(duration);
+                OnAttackSpeedOnCritEffect = false;
+                AttackSpeed = AttackSpeed - effect;
+            }
+        }
+        
+        
+        private void OnMoreLifeCollected(float modifier, int amount)
+        {
+            ConstantStatIncrease(Health, modifier, amount);
+        }
 
+        
+        private float ConstantStatIncrease(float baseStat, float mainModifier, int amount)
+        {
+            return baseStat + mainModifier * amount;
+        }
         private float LineerStatsIncrease(float baseStat ,float mainModifier,int amount)
         {
             return baseStat + baseStat * mainModifier * amount;
@@ -395,6 +507,8 @@ namespace DefaultNamespace
         {
             return 1 - 1 / (1 + mainModifier * amount);
         }
+
+        
 
         private void HeroDeadState()
         {

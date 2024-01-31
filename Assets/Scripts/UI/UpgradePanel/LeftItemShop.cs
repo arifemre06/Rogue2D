@@ -12,6 +12,7 @@ public class LeftItemShop : MonoBehaviour
     [SerializeField] private float priceIncreaseModifier;
     [SerializeField] private TextMeshProUGUI priceText;
     private int _baseRerollPrice;
+    private int _rerollAmount;
     private const float priceIncreaseModifierForLevelUp = 1.3f;
 
     private void Awake()
@@ -35,6 +36,7 @@ public class LeftItemShop : MonoBehaviour
     {
         rerollPrice = (int)(_baseRerollPrice * priceIncreaseModifierForLevelUp * obj);
         priceText.text = "reroll: " + rerollPrice;
+        _rerollAmount = 0;
     }
     
     private void OnReRollButtonClicked()
@@ -48,8 +50,9 @@ public class LeftItemShop : MonoBehaviour
 
     private void UpdateRerollPrice()
     {
+        _rerollAmount += 1;
         EventManager.OnGoldAndExpChanged(-rerollPrice,0);
-        rerollPrice =(int)(_baseRerollPrice * priceIncreaseModifier);
+        rerollPrice =(int)(_baseRerollPrice * (1+(priceIncreaseModifier * (_rerollAmount+1))));
         priceText.text = "reroll: " + rerollPrice;
     }
 }

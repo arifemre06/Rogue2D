@@ -10,5 +10,9 @@
         MoreShootingDistance,
         DodgeChance,
         DamageProtection,
+        Defense,
+        CritChance,
+        AttackSpeedOnCrit,
+        MoreLife
     }
 }

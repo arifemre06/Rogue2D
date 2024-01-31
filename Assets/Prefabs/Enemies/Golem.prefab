@@ -112,7 +112,7 @@ MonoBehaviour:
   enemyHealth: 130
   enemySpeed: 1.1
   enemyColDamage: 5
-  goldDrop: 10
+  goldDrop: 10000
   experienceDrop: 50
   healthBar: {fileID: 7998095318136800572}
   enemyCanvas: {fileID: 5148244448762757616}

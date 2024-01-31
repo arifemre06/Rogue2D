@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using Enemies;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyManager : MonoBehaviour
 {   
@@ -17,6 +19,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Transform player; // player transform
      
     [SerializeField] private List<BaseEnemy> enemyPrefabs;
+    [SerializeField] private GameObject warningPrefab;
     [SerializeField] private int totalEnemyPowerForFirstLevel;
     
     private int _remainingEnemyPowerToSpawn;
@@ -118,7 +121,7 @@ public class EnemyManager : MonoBehaviour
                     int enemyCountForThatSpawn = (int)UnityEngine.Random.Range(MinEnemyCountForOneSpawn, MaxEnemyCountForOneSpawn);
                     for (var i = 0; i < enemyCountForThatSpawn; i++)
                     {   
-                        yield return new WaitForSeconds(0.2f);
+                        
                         int whichEnemyWillSpawn = (int)UnityEngine.Random.Range(0, enemyPrefabs.Count);
                         Vector2 spawnPosition =
                             new Vector2(
@@ -126,9 +129,13 @@ public class EnemyManager : MonoBehaviour
                                     spawnPoint.x + GroupSpawnRange),
                                 UnityEngine.Random.Range(spawnPoint.y - GroupSpawnRange,
                                     spawnPoint.y + GroupSpawnRange));
+
+                        GameObject warningSprite = Instantiate(warningPrefab, spawnPosition, Quaternion.identity);
+                        yield return new WaitForSeconds(0.3f);
+                        Destroy(warningSprite);
+                        
                         BaseEnemy newEnemy = (BaseEnemy)Instantiate(enemyPrefabs[whichEnemyWillSpawn],spawnPosition , Quaternion.identity);
                         _remainingEnemyPowerToSpawn -= newEnemy.GetPower();
-                        Debug.Log("remaining "+ _remainingEnemyPowerToSpawn);
                         spawnedEnemyCount += 1;
                         EventManager.OnEnemySpawned(newEnemy);
                         activeEnemies.Add(newEnemy);

@@ -123,6 +123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6867609154964788551}
+  - component: {fileID: 2491238002555075651}
   m_Layer: 5
   m_Name: HealthUI
   m_TagString: Untagged
@@ -152,6 +153,17 @@ RectTransform:
   m_AnchoredPosition: {x: -960.3482, y: -539.4421}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!210 &2491238002555075651
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200253496523401349}
+  m_Enabled: 1
+  m_SortingLayerID: -245328455
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &6293455596644249139
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,13 +340,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0982722ec4d945bc5b7ee5dc683a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireCooldown: 0.5
+  BaseAttackSpeed: 1
   CollisionDamage: 0
-  Damage: 10
-  ShootingDistance: 2
+  BaseCritChance: 0
   DamageProtectionRegenCooldown: 20
-  BaseDamage: 30
+  BaseDamage: 8
   BaseShootingDistance: 2
+  BaseDefense: 20
   Animator: {fileID: 786297381}
   healthBar: {fileID: 6598000225623854536}
   heroCanvas: {fileID: 6321803161151328043}

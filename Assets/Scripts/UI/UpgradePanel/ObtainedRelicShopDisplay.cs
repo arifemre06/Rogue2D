@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using ScriptableObjectsScripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +11,13 @@ public class ObtainedRelicShopDisplay : MonoBehaviour
 {
         [SerializeField] private Transform relicInfoUITemplate;
         [SerializeField] private RelicScriptableObject _relicScriptableObject;
-        private List<Sprite> _relicImage;
+        private Dictionary<RelicTypes,int> _relicCountDictionary;
         private List<Transform> _UITemplates;
+    
         
         private void Awake()
         {
-            _relicImage = new List<Sprite>();
+            _relicCountDictionary = new Dictionary<RelicTypes, int>();
             _UITemplates = new List<Transform>();
             EventManager.RelicCollected += OnRelicCollected;
             EventManager.UpGradePanelOpened += OnUpgradePanelOpened;
@@ -34,12 +36,18 @@ public class ObtainedRelicShopDisplay : MonoBehaviour
 
         private void OnRelicCollected(Sprite arg1, string arg2)
         {
-            UpdateInfoPanel();
+            StartCoroutine(WaitForTakenRelicUpdate());
+            
         }
 
         private void Start()
         {
-            relicInfoUITemplate.gameObject.SetActive(false);
+            UpdateInfoPanel();
+        }
+
+        IEnumerator WaitForTakenRelicUpdate()
+        {
+            yield return new WaitForSeconds(0.2f);
             UpdateInfoPanel();
         }
         
@@ -49,33 +57,36 @@ public class ObtainedRelicShopDisplay : MonoBehaviour
             {
                 Destroy(_UITemplates[i].gameObject);
             }
-            if (_UITemplates != null)
-            {
-                _UITemplates.Clear();
-            }
 
-            if (_relicImage != null)
-            {
-                _relicImage.Clear();
-            }
+            _UITemplates?.Clear();
+
+            _relicCountDictionary?.Clear();
 
             List<RelicTypes> takenRelics = new List<RelicTypes>();
             takenRelics = TakenRelics.TakenRelicsList;
             if (takenRelics == null)
             {
-                Debug.Log("tam olarak burdan donmuyoz mu");
+                Debug.Log("taken relics is null");
                 return;
             }
             foreach (RelicTypes takenRelic in takenRelics)
             {
-                _relicImage.Add(_relicScriptableObject.GetPrefab(takenRelic));
+                if (_relicCountDictionary.ContainsKey(takenRelic))
+                {
+                    _relicCountDictionary[takenRelic] += 1;
+                }
+                else
+                {
+                    _relicCountDictionary.Add(takenRelic,1);
+                }
+                
             }
             
             int _index = 0;
             int xindex = 0;
-            foreach (Sprite relicSprite in _relicImage)
+            foreach (RelicTypes relicSprite in _relicCountDictionary.Keys)
             {   
-                Transform collectableUITransform =Instantiate(relicInfoUITemplate, transform);
+                Transform collectableUITransform =(Transform)Instantiate(relicInfoUITemplate, transform);
                 _UITemplates.Add(collectableUITransform);
                 collectableUITransform.gameObject.SetActive(true);
                 float offset = -160f;
@@ -87,11 +98,11 @@ public class ObtainedRelicShopDisplay : MonoBehaviour
                     xindex = 0;
                 }
                 //baslangıc konumu ayarlamak icin sihirli sayılar kullanıldı.
-                collectableUITransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(xindex * xoffset + 50, _index * offset -50);
-                collectableUITransform.Find("Image").GetComponent<Image>().sprite = relicSprite;
+                relicInfoUITemplate template = collectableUITransform.GetComponent<relicInfoUITemplate>();
+                collectableUITransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(xindex * xoffset + 75, _index * offset -75);
+                template.SetAmountAndSprite(_relicScriptableObject.GetPrefab(relicSprite),"x"+_relicCountDictionary[relicSprite].ToString());
                 xindex++;
                 
-
             }
         }
 }

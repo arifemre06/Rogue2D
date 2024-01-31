@@ -12,11 +12,12 @@ namespace DefaultNamespace.Heroes
 
         protected override void Attack(BaseEnemy target)
         {   
+            base.Attack(target);
             Animator.Play("Attack");
             Quaternion rotation2 = transform.rotation;
             rotation2 *= Quaternion.Euler(0, 0, 90);
             MagicAttackObject tmpMagic = Instantiate(magicPrefab, target.transform.position, rotation2);
-            tmpMagic.SetDamage(Damage);
+            tmpMagic.SetDamage(DamageToDeal);
             
         }
 

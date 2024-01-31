@@ -61,7 +61,9 @@ public class Character_Movement_Controller : MonoBehaviour
                 heroesInScene.Add(tempHero);
                 xIndex++;
             }
-            
+
+        _facingRight = true;
+
     }
     private void OnMovementSpeedRelicTaken(float increaseModifier,int amount)
     {
@@ -80,7 +82,6 @@ public class Character_Movement_Controller : MonoBehaviour
         if (gameController.gameState != GameState.InGamePanel) return;
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
-        Debug.Log("speed "+speed);
         transform.position += new Vector3(_horizontal*speed*Time.deltaTime, _vertical*speed*Time.deltaTime,0);
         
         if (_horizontal > 0 && !_facingRight)

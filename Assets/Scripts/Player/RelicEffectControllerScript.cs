@@ -17,6 +17,11 @@ namespace DefaultNamespace
         private float _mainMovementSpeedModifier = 0.1f;
         private float _mainShootingDistanceModifier = 0.1f;
         private float _mainDodgeChanceModifier = 0.05f;
+        private float _mainDefenseModifier = 10;
+        private float _mainCritModifier = 5;
+        private float _mainAttackSpeedOnCritModifier = 0.3f;
+        private float _attackSpeedOnCritDuration = 3;
+        private float _moreLifeModifier = 20;
         private int _mainDamageProtectionAmount = 0;
 
         private Dictionary<RelicTypes, int> _relicAmountDictionary;
@@ -51,7 +56,6 @@ namespace DefaultNamespace
                 case RelicTypes.AttackSpeed:
                     AttackSpeedRelicCollected();
                     break;
-
                 case RelicTypes.AttackDamage:
                     AttackDamageRelicCollected();
                     break;
@@ -73,8 +77,21 @@ namespace DefaultNamespace
                 case RelicTypes.DamageProtection:
                     DamageProtectionRelicCollected();
                     break;
+                case RelicTypes.Defense:
+                    DefenseRelicCollected();
+                    break;
+                case RelicTypes.CritChance:
+                    CritChanceRelicCollected();
+                    break;
+                case RelicTypes.AttackSpeedOnCrit:
+                    AttackSpeedOnCritCollected();
+                    break;
+                case RelicTypes.MoreLife:
+                    MoreLifeRelicCollected();
+                    break;
             }
         }
+
         private void OnTriggerEnter2D(Collider2D other)
         {   
             
@@ -152,7 +169,31 @@ namespace DefaultNamespace
             RaiseRelicCollected(RelicTypes.MoreShootingDistance);
         }
 
-
+        private void DefenseRelicCollected()
+        {
+            EventManager.OnDefenseRelicCollected(_mainDefenseModifier,_relicAmountDictionary[RelicTypes.Defense]);
+            RaiseRelicCollected(RelicTypes.Defense);
+        }
+        
+        private void CritChanceRelicCollected()
+        {
+            EventManager.OnCritChanceRelicCollected(_mainCritModifier,_relicAmountDictionary[RelicTypes.CritChance]);
+            RaiseRelicCollected(RelicTypes.CritChance);
+        }
+        
+        private void AttackSpeedOnCritCollected()
+        {
+            EventManager.OnAttackSpeedOnCritCollected(_mainAttackSpeedOnCritModifier,_attackSpeedOnCritDuration,_relicAmountDictionary[RelicTypes.AttackSpeedOnCrit]);
+            RaiseRelicCollected(RelicTypes.AttackSpeedOnCrit);
+        }
+        
+        private void MoreLifeRelicCollected()
+        {
+            EventManager.OnMoreLifeRelicCollected(_moreLifeModifier,_relicAmountDictionary[RelicTypes.MoreLife]);
+            RaiseRelicCollected(RelicTypes.MoreLife);
+        }
+        
+        
         private void RaiseRelicCollected(RelicTypes type)
         {
             Debug.Log("type "+type);
@@ -160,6 +201,8 @@ namespace DefaultNamespace
             string text = relicScriptableObject.GetRelicText(type);
             EventManager.OnRelicCollected(sprite,text);
         }
+        
+        
         
         public RelicTypes GetRandomRelic()
         {
